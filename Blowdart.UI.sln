@@ -16,6 +16,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		THIRD-PARTY-NOTICES.txt = THIRD-PARTY-NOTICES.txt
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "build", "build", "{2B0D491F-D630-4B7F-A3ED-E892B50CA68E}"
+	ProjectSection(SolutionItems) = preProject
+		build\build.props = build\build.props
+		build\package.props = build\package.props
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -25,20 +31,20 @@ Global
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{FA13861A-5F1C-4DB4-A61E-668377B172DF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{FA13861A-5F1C-4DB4-A61E-668377B172DF}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{FA13861A-5F1C-4DB4-A61E-668377B172DF}.Package|Any CPU.ActiveCfg = Debug|Any CPU
-		{FA13861A-5F1C-4DB4-A61E-668377B172DF}.Package|Any CPU.Build.0 = Debug|Any CPU
+		{FA13861A-5F1C-4DB4-A61E-668377B172DF}.Package|Any CPU.ActiveCfg = Package|Any CPU
+		{FA13861A-5F1C-4DB4-A61E-668377B172DF}.Package|Any CPU.Build.0 = Package|Any CPU
 		{FA13861A-5F1C-4DB4-A61E-668377B172DF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FA13861A-5F1C-4DB4-A61E-668377B172DF}.Release|Any CPU.Build.0 = Release|Any CPU
 		{7B55DC2A-39DA-4A19-BCC9-D2BD935C2E7D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{7B55DC2A-39DA-4A19-BCC9-D2BD935C2E7D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7B55DC2A-39DA-4A19-BCC9-D2BD935C2E7D}.Package|Any CPU.ActiveCfg = Debug|Any CPU
-		{7B55DC2A-39DA-4A19-BCC9-D2BD935C2E7D}.Package|Any CPU.Build.0 = Debug|Any CPU
+		{7B55DC2A-39DA-4A19-BCC9-D2BD935C2E7D}.Package|Any CPU.ActiveCfg = Package|Any CPU
+		{7B55DC2A-39DA-4A19-BCC9-D2BD935C2E7D}.Package|Any CPU.Build.0 = Package|Any CPU
 		{7B55DC2A-39DA-4A19-BCC9-D2BD935C2E7D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7B55DC2A-39DA-4A19-BCC9-D2BD935C2E7D}.Release|Any CPU.Build.0 = Release|Any CPU
 		{9BA1EDE4-A528-4B20-977D-2530BC3A5E5F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{9BA1EDE4-A528-4B20-977D-2530BC3A5E5F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9BA1EDE4-A528-4B20-977D-2530BC3A5E5F}.Package|Any CPU.ActiveCfg = Debug|Any CPU
-		{9BA1EDE4-A528-4B20-977D-2530BC3A5E5F}.Package|Any CPU.Build.0 = Debug|Any CPU
+		{9BA1EDE4-A528-4B20-977D-2530BC3A5E5F}.Package|Any CPU.ActiveCfg = Release|Any CPU
+		{9BA1EDE4-A528-4B20-977D-2530BC3A5E5F}.Package|Any CPU.Build.0 = Release|Any CPU
 		{9BA1EDE4-A528-4B20-977D-2530BC3A5E5F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9BA1EDE4-A528-4B20-977D-2530BC3A5E5F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection

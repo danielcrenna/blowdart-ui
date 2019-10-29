@@ -1,10 +1,14 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
 
+  <Import Project="$(ProjectDir)..\..\build\package.props" />
+  <Import Project="$(ProjectDir)..\..\build\build.props" />
+
   <PropertyGroup>
     <TargetFramework>netcoreapp3.0</TargetFramework>
     <AddRazorSupportForMvc>true</AddRazorSupportForMvc>
     <RazorLangVersion>3.0</RazorLangVersion>
     <LangVersion>8.0</LangVersion>
+    <Configurations>Debug;Release;Package</Configurations>
   </PropertyGroup>
 
   <ItemGroup>
