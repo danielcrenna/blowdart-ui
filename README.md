@@ -6,6 +6,8 @@ Blowdart UI lets you create user interfaces in pure C#.
 
 It has the ambitious aim of running on multiple platforms, including native mobile applications.
 
+![screenshot](https://github.com/Blowdart-UI/blowdart-ui/blob/master/docs/screenshot.png "Screenshot")
+
 ### Hello, World!
 
 First, you need to grab the package from [NuGet](https://nuget.org/Blowdart.UI)
