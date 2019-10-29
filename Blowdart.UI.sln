@@ -1,0 +1,51 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.28803.452
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blowdart.UI", "src\Blowdart.UI\Blowdart.UI.csproj", "{FA13861A-5F1C-4DB4-A61E-668377B172DF}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blowdart.UI.Web", "src\Blowdart.UI.Web\Blowdart.UI.Web.csproj", "{7B55DC2A-39DA-4A19-BCC9-D2BD935C2E7D}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blowdart.UI.Demo", "src\Blowdart.UI.Demo\Blowdart.UI.Demo.csproj", "{9BA1EDE4-A528-4B20-977D-2530BC3A5E5F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{514BD255-E489-453B-8796-88721EA52E64}"
+	ProjectSection(SolutionItems) = preProject
+		LICENSE = LICENSE
+		README.md = README.md
+		THIRD-PARTY-NOTICES.txt = THIRD-PARTY-NOTICES.txt
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Package|Any CPU = Package|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FA13861A-5F1C-4DB4-A61E-668377B172DF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FA13861A-5F1C-4DB4-A61E-668377B172DF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FA13861A-5F1C-4DB4-A61E-668377B172DF}.Package|Any CPU.ActiveCfg = Debug|Any CPU
+		{FA13861A-5F1C-4DB4-A61E-668377B172DF}.Package|Any CPU.Build.0 = Debug|Any CPU
+		{FA13861A-5F1C-4DB4-A61E-668377B172DF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FA13861A-5F1C-4DB4-A61E-668377B172DF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7B55DC2A-39DA-4A19-BCC9-D2BD935C2E7D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7B55DC2A-39DA-4A19-BCC9-D2BD935C2E7D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7B55DC2A-39DA-4A19-BCC9-D2BD935C2E7D}.Package|Any CPU.ActiveCfg = Debug|Any CPU
+		{7B55DC2A-39DA-4A19-BCC9-D2BD935C2E7D}.Package|Any CPU.Build.0 = Debug|Any CPU
+		{7B55DC2A-39DA-4A19-BCC9-D2BD935C2E7D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7B55DC2A-39DA-4A19-BCC9-D2BD935C2E7D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9BA1EDE4-A528-4B20-977D-2530BC3A5E5F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9BA1EDE4-A528-4B20-977D-2530BC3A5E5F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9BA1EDE4-A528-4B20-977D-2530BC3A5E5F}.Package|Any CPU.ActiveCfg = Debug|Any CPU
+		{9BA1EDE4-A528-4B20-977D-2530BC3A5E5F}.Package|Any CPU.Build.0 = Debug|Any CPU
+		{9BA1EDE4-A528-4B20-977D-2530BC3A5E5F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9BA1EDE4-A528-4B20-977D-2530BC3A5E5F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {DA870D36-B848-4360-A630-5732FB4BF704}
+	EndGlobalSection
+EndGlobal

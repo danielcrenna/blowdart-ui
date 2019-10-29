@@ -1,0 +1,9 @@
+* text=auto
+
+*.html  filter=tabspace
+*.js  filter=tabspace
+*.css  filter=tabspace
+
+*.cs filter=tabspace
+*.json  filter=tabspace
+*.xml filter=tabspace
