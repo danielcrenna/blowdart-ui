@@ -64,4 +64,5 @@ namespace Blowdart.UI.Demo
 - [ ] tvOS
 - [ ] macOS
 - [ ] Android
-- [ ] Modern.Forms
+- [ ] WinForms / Modern.Forms
+- [ ] CLI
