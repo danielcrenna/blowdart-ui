@@ -3,15 +3,15 @@
 
 namespace Blowdart.UI.Instructions
 {
-	public enum ButtonType
-    {
-        Primary,
-        Secondary,
-        Success,
-        Danger,
-        Warning,
-        Info,
-        Light,
-        Dark
-    }
+	public class LogInstruction : RenderInstruction
+	{
+		public string Message { get; }
+
+		public LogInstruction(string message)
+		{
+			Message = message;
+		}
+
+		public override string DebuggerDisplay => "Log";
+	}
 }

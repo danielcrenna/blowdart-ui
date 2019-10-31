@@ -33,10 +33,10 @@ namespace Blowdart.UI.Web.Extensions
             var id = imgui.Ui.NextIdHash;
             b.BeginElement(Strings.Button, @class);
             b.AddAttribute(b.NextSequence(), Strings.Id, id);
-            b.AddAttribute(b.NextSequence(), Strings.OnClick, imgui.OnClickCallback(id));
+            b.AddAttribute(b.NextSequence(), Events.OnClick, imgui.OnClickCallback(id));
             fragment?.Invoke();
             b.CloseElement();
-            return imgui.Ui.OnEvent(Strings.OnClick, id);
+            return imgui.Ui.OnEvent(Events.OnClick, id);
         }
 
         public static void BeginSpan(this RenderTreeBuilder b, string @class) => b.BeginElement(Strings.Span, @class);

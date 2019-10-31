@@ -12,29 +12,31 @@ namespace Blowdart.UI.Web
 {
     internal class WebRenderTarget : RenderTarget
     {
-        private readonly List<RenderFragment> _fragments;
+	    private readonly List<RenderFragment> _fragments;
         private readonly Dictionary<Type, IWebRenderer> _renderers;
 
         public WebRenderTarget(ImGui imGui)
         {
-            _fragments = new List<RenderFragment>();
+	        _fragments = new List<RenderFragment>();
 
             var elementRenderer = new ElementRenderer();
             _renderers = new Dictionary<Type, IWebRenderer>
             {
                 {typeof(BeginElementInstruction), elementRenderer},
                 {typeof(EndElementInstruction), elementRenderer},
-                {typeof(LiteralInstruction), new LiteralRenderer()},
                 {typeof(TextInstruction), new TextRenderer()},
+                {typeof(TextBlockInstruction), new TextBlockRenderer()},
                 {typeof(CodeInstruction), new CodeRenderer()},
                 {typeof(SeparatorInstruction), new SeparatorRenderer()},
 				{typeof(ButtonInstruction), new ButtonRenderer(imGui)},
-                {typeof(LinkInstruction), new LinkRenderer()},
+				{typeof(CheckBoxInstruction), new CheckBoxRenderer(imGui)},
+				{typeof(LinkInstruction), new LinkRenderer()},
                 {typeof(HeaderInstruction), new HeaderRenderer()},
                 {typeof(SidebarInstruction), new SidebarRenderer(imGui)},
                 {typeof(EditorInstruction), new EditorRenderer()},
                 {typeof(InlineIconInstruction), new InlineIconRenderer()},
-                {typeof(ObjectTableInstruction), new ObjectTableRenderer()}
+                {typeof(ObjectTableInstruction), new ObjectTableRenderer()},
+                //{typeof(LogInstruction), new LogRenderer(imGui)}
 			};
         }
 

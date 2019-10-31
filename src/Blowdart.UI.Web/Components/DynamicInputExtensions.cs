@@ -51,7 +51,7 @@ namespace Blowdart.UI.Web.Components
             if (boundValue != default)
                 b.AddAttribute(b.NextSequence(), Strings.Value, boundValue);
 
-            b.AddAttribute(b.NextSequence(), Strings.OnChange, EventCallback.Factory.CreateBinder<string>(input, x => input.CurrentValueAsString = x, input.CurrentValueAsString));
+            b.AddAttribute(b.NextSequence(), Events.OnChange, EventCallback.Factory.CreateBinder<string>(input, x => input.CurrentValueAsString = x, input.CurrentValueAsString));
             b.AddMultipleAttributes(b.NextSequence(), input.AdditionalAttributes);
 
             b.CloseElement();

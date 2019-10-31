@@ -2,13 +2,16 @@
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
 using System;
+using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading.Tasks;
 using Blowdart.UI.Instructions;
+using Blowdart.UI.Web.Configuration;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Rendering;
 using Microsoft.AspNetCore.Components.Web;
+using Microsoft.Extensions.Options;
 using Microsoft.JSInterop;
 
 namespace Blowdart.UI.Web
@@ -16,17 +19,24 @@ namespace Blowdart.UI.Web
     [SuppressMessage("ReSharper", "UnusedAutoPropertyAccessor.Local")]
     internal sealed class ImGui : ComponentBase, IDisposable
 	{
-        private readonly WebRenderTarget _target;
+		private WebRenderTarget _target;
 
         public Ui Ui { get; }
 
         [Parameter] public Action<Ui> Handler { get; set; }
-        
-        public ImGui()
+		
+		[Inject] public IOptionsMonitor<BlowdartOptions> Options { get; set; }
+
+		public ImGui()
         {
-            _target = new WebRenderTarget(this);
-            Ui = new Ui();
+	        Ui = new Ui();
         }
+
+		protected override Task OnParametersSetAsync()
+		{
+			_target = new WebRenderTarget(this);
+			return base.OnParametersSetAsync();
+		}
 
 		protected override void BuildRenderTree(RenderTreeBuilder builder)
         {
@@ -50,10 +60,20 @@ namespace Blowdart.UI.Web
         
         public void OnClick(MouseEventArgs args, Value128 id)
         {
-            Ui.AddEvent("onclick", id);
-            Begin();
-            Handler(Ui);
+	        OnEvent(id, Events.OnClick);
         }
+
+        private void OnEvent(Value128 id, string eventType)
+        {
+	        var instructionCount = Ui.Instructions.Count;
+
+	        Ui.AddEvent(eventType, id);
+	        Begin();
+	        Handler(Ui);
+
+			if (Ui.Instructions.Count != instructionCount)
+				LogToTargets();
+		}
 
         public EventCallback<MouseEventArgs> OnClickCallback(Value128 id)
         {
@@ -62,7 +82,7 @@ namespace Blowdart.UI.Web
                 OnClick(args, id);
             });
         }
-
+		
         [Inject] private IServiceProvider ServiceProvider { get; set; }
 
         protected override async Task OnInitializedAsync()
@@ -71,17 +91,19 @@ namespace Blowdart.UI.Web
             await base.OnInitializedAsync();
         }
 
-        [Inject] private IJSRuntime Js { get; set; }
+        [Inject] internal IJSRuntime Js { get; set; }
 
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
 	        foreach (var _ in Ui.Instructions.OfType<CodeInstruction>())
 	        {
-		        await Js.InvokeVoidAsync("blowdart.highlight");
+		        await Js.InvokeVoidAsync(Interop.SyntaxHighlight);
 		        break;
 	        }
 
-            if(await Ui.DispatchDataLoaders())
+			LogToTargets();
+
+			if (await Ui.DispatchDataLoaders())
             {
                 Begin();
                 Handler(Ui);
@@ -89,5 +111,35 @@ namespace Blowdart.UI.Web
                     StateHasChanged();
             }
         }
-    }
+
+        private void LogToTargets()
+        {
+	        foreach (var log in Ui.Instructions.OfType<LogInstruction>())
+	        {
+		        LogInstruction(log);
+		        break;
+	        }
+        }
+
+        public void LogInstruction(LogInstruction log)
+        {
+	        foreach (var target in Options.CurrentValue.LogTargets)
+	        {
+				switch (target)
+				{
+					case LogTarget.Trace:
+						Trace.WriteLine(log.Message);
+						break;
+					case LogTarget.Console:
+						Console.WriteLine(log.Message);
+						break;
+					case LogTarget.Browser:
+						Js.InvokeVoidAsync(Interop.Log, log.Message);
+						break;
+					default:
+						throw new ArgumentOutOfRangeException();
+				}
+			}
+        }
+	}
 }

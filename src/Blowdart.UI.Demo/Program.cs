@@ -16,7 +16,8 @@ namespace Blowdart.UI.Demo
             builder.AddPage("/", HelloWorld.Index);
             builder.AddPage("/counter", HelloWorld.Counter);
             builder.AddPage("/fetchdata", HelloWorld.FetchData);
-            builder.AddPage("/editor", HelloWorld.Editor);
+            builder.AddPage("/elements", HelloWorld.Elements);
+			builder.AddPage("/editor", HelloWorld.Editor);
             builder.AddPage("/styles", HelloWorld.Styles);
 		});
     }

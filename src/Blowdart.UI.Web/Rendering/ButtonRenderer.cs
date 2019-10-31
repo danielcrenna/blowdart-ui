@@ -16,9 +16,9 @@ namespace Blowdart.UI.Web.Rendering
             _imGui = imGui;
         }
 
-        public void Render(RenderTreeBuilder b, ButtonInstruction table)
+        public void Render(RenderTreeBuilder b, ButtonInstruction button)
         {
-            RenderButton(b, table);
+            RenderButton(b, button);
         }
 
         public void Render(RenderTreeBuilder b, RenderInstruction instruction)
@@ -46,7 +46,7 @@ namespace Blowdart.UI.Web.Rendering
             b.OpenElement(b.NextSequence(), Strings.Button);
             b.AddAttribute(b.NextSequence(), Strings.Id, button.Id);
             b.AddAttribute(b.NextSequence(), Strings.Class, css);
-            b.AddAttribute(b.NextSequence(), Strings.OnClick, onclick);
+            b.AddAttribute(b.NextSequence(), Events.OnClick, onclick);
             b.AddContent(b.NextSequence(), button.Text);
             b.CloseElement();
         }

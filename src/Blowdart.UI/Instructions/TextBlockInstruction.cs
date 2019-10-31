@@ -3,15 +3,15 @@
 
 namespace Blowdart.UI.Instructions
 {
-    public class LiteralInstruction : RenderInstruction
+    public class TextBlockInstruction : RenderInstruction
     {
-        public string Text { get; }
+        public string Value { get; }
 
-        public LiteralInstruction(string text)
+        public TextBlockInstruction(string value)
         {
-            Text = text;
+            Value = value;
         }
 
-        public override string DebuggerDisplay => Text;
+        public override string DebuggerDisplay => $"p: {Value}";
     }
 }

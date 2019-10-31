@@ -5,13 +5,13 @@ namespace Blowdart.UI.Instructions
 {
     public class TextInstruction : RenderInstruction
     {
-        public string Value { get; }
+        public string Text { get; }
 
-        public TextInstruction(string value)
+        public TextInstruction(string text)
         {
-            Value = value;
+            Text = text;
         }
 
-        public override string DebuggerDisplay => $"p: {Value}";
+        public override string DebuggerDisplay => Text;
     }
 }

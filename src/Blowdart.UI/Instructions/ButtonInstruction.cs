@@ -1,6 +1,8 @@
 // Copyright (c) Daniel Crenna & Contributors. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
+using System;
+
 namespace Blowdart.UI.Instructions
 {
     public class ButtonInstruction : RenderInstruction
@@ -18,6 +20,6 @@ namespace Blowdart.UI.Instructions
             Text = text;
         }
 
-        public override string DebuggerDisplay => $"button: {Text}";
+        public override string DebuggerDisplay => $"Button: {Text}";
     }
 }

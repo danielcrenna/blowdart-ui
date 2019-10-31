@@ -3,7 +3,7 @@
 
 namespace Blowdart.UI.Web
 {
-    internal static class Strings
+	internal static class Strings
     {
         public static readonly string Div = "div";
         public static readonly string Section = "section";
@@ -40,9 +40,6 @@ namespace Blowdart.UI.Web
         public static readonly string Password = "password";
         public static readonly string Text = "text";
         public static readonly string Date = "date";
-
-        public static readonly string OnClick = "onclick";
-        public static readonly string OnChange = "onchange";
 
         public static readonly string ScreenReaderScope = "scope";
     }

@@ -3,7 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
@@ -344,9 +343,9 @@ namespace Blowdart.UI
 
 		#region Commands 
 
-		public void Text(string value)
+		public void TextBlock(string value)
 		{
-			Instructions.Add(new TextInstruction(value));
+			Instructions.Add(new TextBlockInstruction(value));
 		}
 
 		public void CodeBlock(string value)
@@ -359,9 +358,9 @@ namespace Blowdart.UI
 			Instructions.Add(new CodeInstruction(value, false));
 		}
 
-		public void Literal(string text)
+		public void Text(string text)
         {
-            Instructions.Add(new LiteralInstruction(text));
+            Instructions.Add(new TextInstruction(text));
         }
 
         public void Header(int level, string innerText)
@@ -374,10 +373,21 @@ namespace Blowdart.UI
             NextId();
             var id = NextIdHash;
             Instructions.Add(new ButtonInstruction(this, id, type, text));
-            return OnEvent("onclick", id);
+            return OnEvent(Events.OnClick, id);
         }
-        
-        internal bool OnEvent(string eventType, Value128 id)
+
+        public bool CheckBox(ref bool value, string text, CheckBoxAlignment alignment = CheckBoxAlignment.Left)
+        {
+	        NextId();
+	        var id = NextIdHash;
+	        Instructions.Add(new CheckBoxInstruction(this, id, text, alignment, value));
+	        var clicked = OnEvent(Events.OnClick, id);
+	        if (clicked)
+		        value = !value;
+	        return clicked;
+        }
+		
+		internal bool OnEvent(string eventType, Value128 id)
         {
             var clicked = _events.Contains(eventType, id);
             if (clicked)
@@ -408,6 +418,11 @@ namespace Blowdart.UI
         public void Editor<T>(T instance)
         {
             Instructions.Add(new EditorInstruction<T>(instance));
+        }
+
+		public void Log(string message)
+        {
+	        Instructions.Add(new LogInstruction(message));
         }
 
 		#region Tables

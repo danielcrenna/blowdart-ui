@@ -10,15 +10,12 @@ namespace Blowdart.UI.Demo
 {
     public class HelloWorld
     {
-        private static int _currentCount;
-        private static IEnumerable<WeatherForecast> _forecasts;
-
         public static void Index(Ui ui)
         {
             MainLayout(ui, () =>
             {
                 ui.Header(1, "Hello, world!");
-                ui.Literal("Welcome to your new app.");
+                ui.Text("Welcome to your new app.");
 
                 #region Code
 
@@ -30,17 +27,19 @@ ui.Literal(""Welcome to your new app."");");
             });
         }
 
-        public static void Counter(Ui ui)
+		private static int _currentCount;
+
+		public static void Counter(Ui ui)
         {
 	        MainLayout(ui, () =>
 	        {
 		        ui.Header(1, "Counter");
-		        ui.Text($"Current count: {_currentCount}");
+		        ui.TextBlock($"Current count: {_currentCount}");
 		        if (ui.Button("Click me"))
 		        {
 			        _currentCount++;
 		        }
-
+				
 				#region Code
 
 				SampleCode(ui, @"
@@ -52,8 +51,10 @@ if (ui.Button(""Click me""))
 				#endregion
 			});
 		}
-        
-        public static void FetchData(Ui ui)
+
+		private static IEnumerable<WeatherForecast> _forecasts;
+
+		public static void FetchData(Ui ui)
         {
             MainLayout(ui, () =>
             {
@@ -63,11 +64,11 @@ if (ui.Button(""Click me""))
 
 				ui.Header(1, "Weather forecast");
 
-                ui.Text("This component demonstrates fetching data from the server.");
+                ui.TextBlock("This component demonstrates fetching data from the server.");
 
                 if (_forecasts == null)
                 {
-                    ui.Text("Loading...");
+                    ui.TextBlock("Loading...");
                 }
                 else
                 {
@@ -98,7 +99,29 @@ else
             });
         }
 
-        private static readonly WeatherForecast EditObject = new WeatherForecast();
+        private static bool _checked;
+
+		public static void Elements(Ui ui)
+        {
+	        MainLayout(ui, () =>
+	        { 
+		        if (ui.CheckBox(ref _checked, "Remember me", CheckBoxAlignment.Right))
+		        {
+			        ui.Log($"checked the box: ({_checked})");
+		        }
+
+		        #region Code
+
+		        SampleCode(ui, @"
+if (ui.CheckBox(ref _checked, ""Remember me""))
+{
+    ui.Log($""checked the box: ({_checked})""); // logs to configured log target
+}");
+		        #endregion
+	        });
+        }
+
+		private static readonly WeatherForecast EditObject = new WeatherForecast();
 
         public static void Editor(Ui ui)
         {
@@ -128,7 +151,7 @@ else
 					{
 						ui.InlineIcon(icon);
 						ui.NextColumn(ref i);
-						ui.Literal(icon.ToCssCase());
+						ui.Text(icon.ToCssCase());
 						ui.NextColumn(ref i);
 					}
 				});
@@ -164,7 +187,8 @@ ui.ListTable(Icons.InGroupsOf(5), icons =>
                 new SidebarPage(OpenIconicIcons.Home, "/", "Home"),
                 new SidebarPage(OpenIconicIcons.Plus, "/counter", "Counter"),
                 new SidebarPage(OpenIconicIcons.ListRich, "/fetchdata", "Fetch Data"),
-                new SidebarPage(OpenIconicIcons.Folder, "/editor", "Editor"),
+                new SidebarPage(OpenIconicIcons.Code, "/elements", "Elements"),
+				new SidebarPage(OpenIconicIcons.Folder, "/editor", "Editor"),
                 new SidebarPage(OpenIconicIcons.Aperture, "/styles", "Styles")
 			);
 
