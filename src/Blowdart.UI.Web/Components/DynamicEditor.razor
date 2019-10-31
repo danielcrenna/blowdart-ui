@@ -1,5 +1,5 @@
 @typeparam T
-    <EditForm EditContext="@_editContext" OnValidSubmit="@HandleValidSubmit" OnInvalidSubmit="@HandleInvalidSubmit">
+    <EditForm EditContext="@_editContext" OnValidSubmit="@OnValidSubmit" OnInvalidSubmit="@OnInvalidSubmit">
         @if (ShowStatusMessage)
         {
             <div class="alert @_statusClass">@_statusMessage</div>
@@ -74,14 +74,14 @@
         return base.OnInitializedAsync();
     }
 
-    protected void HandleValidSubmit()
+    protected void OnValidSubmit()
     {
         _statusClass = "alert-info";
         _statusMessage = SuccessMessage;
         OnSave.InvokeAsync(_editContext);
     }
  
-    protected void HandleInvalidSubmit()
+    protected void OnInvalidSubmit()
     {
         _statusClass = "alert-danger";
         _statusMessage = FailureMessage;

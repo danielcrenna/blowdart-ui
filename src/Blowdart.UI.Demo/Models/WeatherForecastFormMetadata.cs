@@ -14,8 +14,8 @@ namespace Blowdart.UI.Demo.Models
         [DisplayName("Date")]
         [DataType(DataType.Date)]
         [Display(Name = "Date", Prompt = "Enter the date of the forecast")]
-        public DateTime Date { get; set; }
-
+        public DateTime? Date { get; set; }
+		
         [Required]
         [Display(Name = "Temp. (C)", Prompt = "Enter temperature in celsius")]
         [DisplayName("Temp. (C)")]

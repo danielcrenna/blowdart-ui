@@ -7,5 +7,10 @@ namespace Blowdart.UI
 	{
 		public static readonly string OnClick = "onclick";
 		public static readonly string OnChange = "onchange";
+
+		public static readonly string OnFocus = "onfocus";
+		public static readonly string OnFocusIn = "onfocusin";
+		public static readonly string OnBlur = "onblur";
+		public static readonly string OnFocusOut = "onfocusout";
 	}
 }

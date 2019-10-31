@@ -10,6 +10,7 @@ using Blowdart.UI.Web.Extensions;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.AspNetCore.Components.Rendering;
+using Microsoft.AspNetCore.Components.Web;
 using TypeKitchen;
 
 namespace Blowdart.UI.Web.Components
@@ -32,13 +33,22 @@ namespace Blowdart.UI.Web.Components
         [Inject] public IInputTransformer Transformer { get; set; }
 
 		private EventCallback<ChangeEventArgs> OnChange { get; set; }
-
-        protected override Task OnParametersSetAsync()
+		
+		protected override Task OnParametersSetAsync()
         {
 	        SetModelAndElementType();
-			var onChangeMethod = OnChangeCallbackMethod.MakeGenericMethod(ElementType);
+			
+	        var onChangeMethod = OnChangeCallbackMethod.MakeGenericMethod(ElementType);
 	        OnChange = (EventCallback<ChangeEventArgs>) onChangeMethod.Invoke(this, null);
-	        return Task.CompletedTask;
+
+	        //SetValueOnBlur = WebEventCallbackFactoryEventArgsExtensions.Create(EventCallback.Factory, this,
+			//new Action<FocusEventArgs>(args =>
+			//{
+			//	var currentValueString = Transformer.ToString(CurrentValue, FieldIdentifier.Model, FieldName);
+			//	setValueMethod.Invoke(this, new[] { Value });
+			//}));
+
+			return Task.CompletedTask;
         }
 
         protected override void BuildRenderTree(RenderTreeBuilder b)
@@ -78,16 +88,16 @@ namespace Blowdart.UI.Web.Components
 			}
 			else if (FieldIdentifier.IsDate() || FieldIdentifier.IsDateTime())
 			{
-				// HTML5 date picker
-				// b.AddAttribute(b.NextSequence(), Strings.Type, Strings.Date);
-
 				// bootstrap-datepicker:
+				b.AddAttribute(_(), Strings.AutoComplete, Strings.Off);
 				b.AddAttribute(b.NextSequence(), Strings.Type, Strings.Text);
 				b.AddAttribute(b.NextSequence(), Strings.Class, "datepicker");
 				b.AddAttribute(b.NextSequence(), "data-provide", "datepicker");
-				b.AddAttribute(b.NextSequence(), "data-date-format", FieldIdentifier.GetDateFormat());
+				b.AddAttribute(b.NextSequence(), "data-date-format", GetDateFormat());
+				//b.AddAttribute(b.NextSequence(), Events.OnBlur, SetValueOnBlur);
+				b.AddAttribute(b.NextSequence(), Events.OnClick, OnClick);
 			}
-			
+
 			var boundValue = BindConverter.FormatValue(Value);
 			if (boundValue != default)
 				b.AddAttribute(b.NextSequence(), Strings.Value, boundValue);
@@ -96,20 +106,32 @@ namespace Blowdart.UI.Web.Components
 			b.AddMultipleAttributes(b.NextSequence(), AdditionalAttributes);
 
 			b.CloseElement();
-		}
+
+			int _()
+			{
+				return b.NextSequence();
+			}
+        }
+
+        private string GetDateFormat()
+        {
+	        // bootstrap-datepicker treats "MM" as "October" vs "10"
+			return FieldIdentifier.GetDateFormat().Replace("MM", "mm");
+        }
 
         private static readonly MethodInfo OnChangeCallbackMethod = typeof(DynamicInput).GetMethod(nameof(OnChangeCallback), BindingFlags.Instance | BindingFlags.NonPublic);
-
-        private EventCallback<ChangeEventArgs> OnChangeCallback<T>()
+		private EventCallback<ChangeEventArgs> OnChangeCallback<T>()
         {
 			return EventCallback.Factory.CreateBinder(this, SetCurrentValue, GetCurrentValue<T>());
         }
-
-        private void SetCurrentValue<T>(T value)
+		
+		private static readonly MethodInfo SetCurrentValueMethod = typeof(DynamicInput).GetMethod(nameof(SetCurrentValue), BindingFlags.Instance | BindingFlags.NonPublic);
+		private void SetCurrentValue<T>(T value)
         {
 	        SetCurrentValueFromString(Transformer.ToString(value, Model, FieldName));
         }
 
+		private static readonly MethodInfo GetCurrentValueMethod = typeof(DynamicInput).GetMethod(nameof(GetCurrentValue), BindingFlags.Instance | BindingFlags.NonPublic);
 		private T GetCurrentValue<T>()
         {
 	        T currentValue = default;

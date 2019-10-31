@@ -36,7 +36,7 @@ namespace Blowdart.UI
                 return true;
             }
 
-            if (elementType == typeof(DateTime) || elementType == typeof(DateTime))
+            if (elementType == typeof(DateTime) || elementType == typeof(DateTime?))
             {
                 if (DateTime.TryParse(value, out var parsed))
                     result = parsed;
@@ -47,7 +47,7 @@ namespace Blowdart.UI
                 return true;
             }
 
-            if (elementType == typeof(DateTimeOffset) || elementType == typeof(DateTimeOffset))
+            if (elementType == typeof(DateTimeOffset) || elementType == typeof(DateTimeOffset?))
             {
                 if (DateTimeOffset.TryParse(value, out var parsed))
                     result = parsed;
