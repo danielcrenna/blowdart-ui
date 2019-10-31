@@ -22,6 +22,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "build", "build", "{2B0D491F
 		build\package.props = build\package.props
 	EndProjectSection
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TypeKitchen", "..\TypeKitchen\src\TypeKitchen\TypeKitchen.csproj", "{B557584F-58FD-4E45-9AD9-7C8D107F5005}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -47,6 +49,12 @@ Global
 		{9BA1EDE4-A528-4B20-977D-2530BC3A5E5F}.Package|Any CPU.Build.0 = Release|Any CPU
 		{9BA1EDE4-A528-4B20-977D-2530BC3A5E5F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9BA1EDE4-A528-4B20-977D-2530BC3A5E5F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B557584F-58FD-4E45-9AD9-7C8D107F5005}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B557584F-58FD-4E45-9AD9-7C8D107F5005}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B557584F-58FD-4E45-9AD9-7C8D107F5005}.Package|Any CPU.ActiveCfg = Package|Any CPU
+		{B557584F-58FD-4E45-9AD9-7C8D107F5005}.Package|Any CPU.Build.0 = Package|Any CPU
+		{B557584F-58FD-4E45-9AD9-7C8D107F5005}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B557584F-58FD-4E45-9AD9-7C8D107F5005}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
