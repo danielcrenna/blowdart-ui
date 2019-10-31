@@ -13,10 +13,11 @@ using TypeKitchen;
 
 namespace Blowdart.UI
 {
-    public partial class Ui : IDisposable
+    public partial class Ui : IDisposable, IServiceProvider
 	{
         internal List<RenderInstruction> Instructions { get; }
-        public IServiceProvider UiServices { get; internal set; }
+
+        internal IServiceProvider UiServices { get; set; }
 
         public Ui()
         {
@@ -635,5 +636,14 @@ namespace Blowdart.UI
         {
 	        Instructions.Add(new SeparatorInstruction());
         }
+
+		#region IServiceProvider
+
+		public object GetService(Type serviceType)
+        {
+	        return UiServices.GetService(serviceType);
+        }
+
+		#endregion
 	}
 }

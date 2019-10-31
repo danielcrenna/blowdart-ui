@@ -34,8 +34,9 @@ namespace Blowdart.UI.Web
         public static readonly string Href = "href";
         public static readonly string Placeholder = "placeholder";
         public static readonly string Disabled = "disabled";
+        public static readonly string Checked = "checked";
 
-        public static readonly string Checkbox = "checkbox";
+		public static readonly string Checkbox = "checkbox";
         public static readonly string Email = "email";
         public static readonly string Password = "password";
         public static readonly string Text = "text";

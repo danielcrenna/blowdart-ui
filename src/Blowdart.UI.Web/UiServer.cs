@@ -17,7 +17,7 @@ using Microsoft.Extensions.Options;
 
 namespace Blowdart.UI.Web
 {
-    public class UiServer
+	public class UiServer
     {
         public static void Main(string[] args) { /* just here to support Web SDK */ }
 

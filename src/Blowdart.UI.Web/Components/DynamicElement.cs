@@ -25,8 +25,14 @@ namespace Blowdart.UI.Web.Components
 		{
 			await base.SetParametersAsync(parameters);
 
+			SetModelAndElementType();
+		}
+
+		protected void SetModelAndElementType()
+		{
 			ModelType = Model.GetType();
-			var members = AccessorMembers.Create(ModelType, AccessorMemberTypes.Properties | AccessorMemberTypes.Fields, AccessorMemberScope.Public);
+			var members = AccessorMembers.Create(ModelType, AccessorMemberTypes.Properties | AccessorMemberTypes.Fields,
+				AccessorMemberScope.Public);
 			if (members.TryGetValue(FieldName, out var member))
 				ElementType = member.Type;
 		}

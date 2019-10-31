@@ -23,8 +23,8 @@ namespace Blowdart.UI
                 var result = dateTimeOffset.ToString(dateFormat);
                 return result;
             }
-            
-            return value?.ToString();
+			
+			return value?.ToString();
         }
 
         public bool FromString(Type elementType, string value, out object result, out string errorMessage)
@@ -36,7 +36,7 @@ namespace Blowdart.UI
                 return true;
             }
 
-            if (elementType == typeof(DateTime))
+            if (elementType == typeof(DateTime) || elementType == typeof(DateTime))
             {
                 if (DateTime.TryParse(value, out var parsed))
                     result = parsed;
@@ -47,7 +47,7 @@ namespace Blowdart.UI
                 return true;
             }
 
-            if (elementType == typeof(DateTimeOffset))
+            if (elementType == typeof(DateTimeOffset) || elementType == typeof(DateTimeOffset))
             {
                 if (DateTimeOffset.TryParse(value, out var parsed))
                     result = parsed;
@@ -58,7 +58,18 @@ namespace Blowdart.UI
                 return true;
             }
 
-            if (elementType == typeof(int) || elementType == typeof(int?))
+            if (elementType == typeof(short) || elementType == typeof(short?))
+            {
+	            if (short.TryParse(value, out var parsed))
+		            result = parsed;
+	            else
+		            result = value;
+
+	            errorMessage = null;
+	            return true;
+            }
+
+			if (elementType == typeof(int) || elementType == typeof(int?))
             {
                 if (int.TryParse(value, out var parsed))
                     result = parsed;
@@ -68,9 +79,30 @@ namespace Blowdart.UI
                 errorMessage = null;
                 return true;
             }
-            
 
-            throw new NotSupportedException();
+            if (elementType == typeof(long) || elementType == typeof(long?))
+            {
+	            if (long.TryParse(value, out var parsed))
+		            result = parsed;
+	            else
+		            result = value;
+
+	            errorMessage = null;
+	            return true;
+            }
+
+			if (elementType == typeof(bool) || elementType == typeof(bool?))
+            {
+	            if (bool.TryParse(value, out var parsed))
+		            result = parsed;
+	            else
+		            result = value;
+
+	            errorMessage = null;
+	            return true;
+            }
+
+			throw new NotSupportedException();
         }
 
         private static AccessorMembers PublicProperties(object model)
