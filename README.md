@@ -13,7 +13,7 @@ It has the ambitious aim of running on multiple platforms, including native mobi
 First, you need to grab the package from [NuGet](https://www.nuget.org/packages/Blowdart.UI)
 
 ```powershell
-PM> Install-Package Blowdart.UI -IncludePrerelease
+PM> Install-Package Blowdart.UI.Web -IncludePrerelease
 ```
 
 Then, construct a UI in a `netcoreapp3.0` console application:
