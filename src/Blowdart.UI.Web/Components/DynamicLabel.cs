@@ -10,20 +10,20 @@ namespace Blowdart.UI.Web.Components
 	{
 		protected override void BuildRenderTree(RenderTreeBuilder b)
 		{
-            b.OpenElement(b.NextSequence(), Strings.Label);
+            b.OpenElement(Strings.Label);
 
-            b.AddAttribute(b.NextSequence(), Strings.For, FieldIdentifier.FieldName.ToLowerInvariant());
+            b.AddAttribute(Strings.For, FieldIdentifier.FieldName.ToLowerInvariant());
 
             if (CssClass != null)
-                b.AddAttribute(b.NextSequence(), Strings.Class, CssClass);
+                b.AddAttribute(Strings.Class, CssClass);
 
             if (AdditionalAttributes != null)
-                b.AddMultipleAttributes(b.NextSequence(), AdditionalAttributes);
+                b.AddMultipleAttributes(AdditionalAttributes);
 
             if (ChildContent != null)
-                b.AddContent(b.NextSequence(), ChildContent);
+                b.AddContent(ChildContent);
 
-            b.AddContent(b.NextSequence(), FieldIdentifier.DisplayName());
+            b.AddContent(FieldIdentifier.DisplayName());
 
             b.CloseElement();
         }

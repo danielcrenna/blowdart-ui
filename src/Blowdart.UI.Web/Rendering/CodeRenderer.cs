@@ -5,6 +5,7 @@ using System;
 using System.Linq;
 using Blowdart.UI.Instructions;
 using Blowdart.UI.Internal;
+using Blowdart.UI.Web.Extensions;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Rendering;
 
@@ -16,11 +17,11 @@ namespace Blowdart.UI.Web.Rendering
 		{
 			if (code.Block)
 			{
-				b.OpenElement(b.NextSequence(), Strings.Pre);
-				b.AddAttribute(b.NextSequence(), Strings.Class, ".pre-scrollable");
+				b.OpenElement(Strings.Pre);
+				b.AddAttribute(Strings.Class, ".pre-scrollable");
 			}
-			b.OpenElement(b.NextSequence(), Strings.Code);
-			b.AddContent(b.NextSequence(), EscapeAngleBrackets(code.Value));
+			b.OpenElement(Strings.Code);
+			b.AddContent(EscapeAngleBrackets(code.Value));
 			b.CloseElement();
 			if(code.Block)
 				b.CloseElement();

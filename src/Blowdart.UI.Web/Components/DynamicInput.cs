@@ -56,61 +56,56 @@ namespace Blowdart.UI.Web.Components
 	        if (!FieldIdentifier.IsVisible())
 				return;
 
-			b.OpenElement(b.NextSequence(), Strings.Input);
+			b.OpenElement(Strings.Input);
 
-			b.AddAttribute(b.NextSequence(), Strings.Id, FieldIdentifier.FieldName.ToLowerInvariant());
+			b.AddAttribute(Strings.Id, FieldIdentifier.FieldName.ToLowerInvariant());
 
 			if (CssClass != null)
-				b.AddAttribute(b.NextSequence(), Strings.Class, CssClass);
+				b.AddAttribute(Strings.Class, CssClass);
 
 			if (FieldIdentifier.IsReadOnly())
-				b.AddAttribute(b.NextSequence(), Strings.Disabled, true);
+				b.AddAttribute(Strings.Disabled, true);
 
 			var prompt = Placeholder ?? FieldIdentifier.Prompt();
 			if (!string.IsNullOrWhiteSpace(prompt))
-				b.AddAttribute(b.NextSequence(), Strings.Placeholder, prompt);
+				b.AddAttribute(Strings.Placeholder, prompt);
 
 			if (ElementType == typeof(bool))
 			{
-				b.AddAttribute(b.NextSequence(), Strings.Type, Strings.Checkbox);
+				b.AddAttribute(Strings.Type, Strings.Checkbox);
 
 				if(Value is bool flag)
-					b.AddAttribute(b.NextSequence(), Strings.Checked, flag);
+					b.AddAttribute(Strings.Checked, flag);
 
 			}
 			else if (FieldIdentifier.IsEmailAddress())
 			{
-				b.AddAttribute(b.NextSequence(), Strings.Type, Strings.Email);
+				b.AddAttribute(Strings.Type, Strings.Email);
 			}
 			else if (FieldIdentifier.IsPassword())
 			{
-				b.AddAttribute(b.NextSequence(), Strings.Type, Strings.Password);
+				b.AddAttribute(Strings.Type, Strings.Password);
 			}
 			else if (FieldIdentifier.IsDate() || FieldIdentifier.IsDateTime())
 			{
 				// bootstrap-datepicker:
-				b.AddAttribute(_(), Strings.AutoComplete, Strings.Off);
-				b.AddAttribute(b.NextSequence(), Strings.Type, Strings.Text);
-				b.AddAttribute(b.NextSequence(), Strings.Class, "datepicker");
-				b.AddAttribute(b.NextSequence(), "data-provide", "datepicker");
-				b.AddAttribute(b.NextSequence(), "data-date-format", GetDateFormat());
-				//b.AddAttribute(b.NextSequence(), Events.OnBlur, SetValueOnBlur);
-				b.AddAttribute(b.NextSequence(), Events.OnClick, OnClick);
+				b.AddAttribute(Strings.AutoComplete, Strings.Off);
+				b.AddAttribute(Strings.Type, Strings.Text);
+				b.AddAttribute(Strings.Class, "datepicker");
+				b.AddAttribute("data-provide", "datepicker");
+				b.AddAttribute("data-date-format", GetDateFormat());
+				//b.AddAttribute(Events.OnBlur, SetValueOnBlur);
+				//b.AddAttribute(Events.OnClick, OnClick);
 			}
 
 			var boundValue = BindConverter.FormatValue(Value);
 			if (boundValue != default)
-				b.AddAttribute(b.NextSequence(), Strings.Value, boundValue);
+				b.AddAttribute(Strings.Value, boundValue);
 
-			b.AddAttribute(b.NextSequence(), Events.OnChange, OnChange);
-			b.AddMultipleAttributes(b.NextSequence(), AdditionalAttributes);
+			b.AddAttribute(Events.OnChange, OnChange);
+			b.AddMultipleAttributes(AdditionalAttributes);
 
 			b.CloseElement();
-
-			int _()
-			{
-				return b.NextSequence();
-			}
         }
 
         private string GetDateFormat()

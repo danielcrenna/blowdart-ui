@@ -32,8 +32,8 @@ namespace Blowdart.UI.Web.Extensions
             imgui.Ui.NextId();
             var id = imgui.Ui.NextIdHash;
             b.BeginElement(Strings.Button, @class);
-            b.AddAttribute(b.NextSequence(), Strings.Id, id);
-            b.AddAttribute(b.NextSequence(), Events.OnClick, imgui.OnClickCallback(id));
+            b.AddAttribute(Strings.Id, id);
+            b.AddAttribute(Events.OnClick, imgui.OnClickCallback(id));
             fragment?.Invoke();
             b.CloseElement();
             return imgui.Ui.OnEvent(Events.OnClick, id);
@@ -76,7 +76,7 @@ namespace Blowdart.UI.Web.Extensions
 
 		public static void InlineIcon(this RenderTreeBuilder b, OpenIconicIcons icon)
         {
-            b.OpenElement(b.NextSequence(), Strings.Span);
+            b.OpenElement(Strings.Span);
 			b.Class($"oi oi-{icon.ToCssCase()}");
 			b.AriaHidden();
             b.CloseElement();
@@ -113,7 +113,7 @@ namespace Blowdart.UI.Web.Extensions
 
         public static void BeginElement(this RenderTreeBuilder b, string elementName, string @class)
         {
-            b.OpenElement(b.NextSequence(), elementName);
+            b.OpenElement(elementName);
 			b.Class(@class);
         }
 
@@ -142,18 +142,18 @@ namespace Blowdart.UI.Web.Extensions
 		public static void Class(this RenderTreeBuilder b, string @class)
         {
 	        if (!string.IsNullOrWhiteSpace(@class))
-		        b.AddAttribute(b.NextSequence(), Strings.Class, @class);
+		        b.AddAttribute(Strings.Class, @class);
         }
 
         private static void Href(this RenderTreeBuilder b, string href)
         {
 	        if (!string.IsNullOrWhiteSpace(href))
-		        b.AddAttribute(b.NextSequence(), Strings.Href, href);
+		        b.AddAttribute(Strings.Href, href);
         }
 
 		public static void AriaHidden(this RenderTreeBuilder b)
         {
-	        b.AddAttribute(b.NextSequence(), "aria-hidden", "true");
+	        b.AddAttribute("aria-hidden", "true");
 		}
 
 		#endregion

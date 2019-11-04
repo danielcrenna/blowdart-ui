@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Routing;
 using Microsoft.Extensions.Logging;
+using Blowdart.UI.Web.Extensions;
 
 namespace Blowdart.UI.Web
 {
@@ -78,8 +79,8 @@ namespace Blowdart.UI.Web
             {
                 _renderFragment = builder =>
                 {
-                    builder.OpenComponent<ImGui>(NextSequence);
-                    builder.AddAttribute(NextSequence, nameof(ImGui.Handler), handler);
+                    builder.OpenComponent<ImGui>();
+                    builder.AddAttribute(nameof(ImGui.Handler), handler);
                     builder.CloseComponent();
                 };
             }
@@ -105,8 +106,6 @@ namespace Blowdart.UI.Web
 
             NavigationManager.LocationChanged -= OnLocationChanged;
         }
-
-        private int NextSequence => this.NextSequence();
 
         private void OnLocationChanged(object sender, LocationChangedEventArgs args)
         {

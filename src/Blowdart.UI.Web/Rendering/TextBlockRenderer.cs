@@ -4,6 +4,7 @@
 using System.Net;
 using Blowdart.UI.Instructions;
 using Microsoft.AspNetCore.Components.Rendering;
+using Blowdart.UI.Web.Extensions;
 
 namespace Blowdart.UI.Web.Rendering
 {
@@ -11,8 +12,8 @@ namespace Blowdart.UI.Web.Rendering
     {
         public void Render(RenderTreeBuilder b, TextBlockInstruction textBlock)
         {
-            b.OpenElement(b.NextSequence(), Strings.Paragraph);
-            b.AddContent(b.NextSequence(), textBlock.Value);
+            b.OpenElement(Strings.Paragraph);
+            b.AddContent(textBlock.Value);
             b.CloseElement();
         }
 

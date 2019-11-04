@@ -57,8 +57,8 @@ namespace Blowdart.UI.Web.Components
 			{
                 b.Div(CssClass ?? "validation-message", () =>
                 {
-                    b.AddMultipleAttributes(b.NextSequence(), AdditionalAttributes);
-                    b.AddContent(b.NextSequence(), message);
+                    b.AddMultipleAttributes(AdditionalAttributes);
+                    b.AddContent(message);
                 });
 			}
         }

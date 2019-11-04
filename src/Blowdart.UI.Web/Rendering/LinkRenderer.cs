@@ -2,6 +2,7 @@
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
 using Blowdart.UI.Instructions;
+using Blowdart.UI.Web.Extensions;
 using Microsoft.AspNetCore.Components.Rendering;
 
 namespace Blowdart.UI.Web.Rendering
@@ -10,10 +11,10 @@ namespace Blowdart.UI.Web.Rendering
     {
         public void Render(RenderTreeBuilder b, LinkInstruction link)
         {
-            b.OpenElement(b.NextSequence(), "a");
-            b.AddAttribute(b.NextSequence(), "href", link.Href);
-            b.AddAttribute(b.NextSequence(), "target", "_blank");
-            b.AddContent(b.NextSequence(), link.Title);
+            b.OpenElement(Strings.Anchor);
+            b.AddAttribute(Strings.Href, link.Href);
+            b.AddAttribute(Strings.Target, "_blank");
+            b.AddContent(link.Title);
             b.CloseElement();
         }
 

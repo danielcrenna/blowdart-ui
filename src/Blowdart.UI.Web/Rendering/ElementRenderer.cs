@@ -77,8 +77,8 @@ namespace Blowdart.UI.Web.Rendering
 	                        if (instruction.Ordinal.HasValue)
 	                        {
 		                        b.BeginTableHeader(null);
-		                        b.AddAttribute(b.NextSequence(), Strings.ScreenReaderScope, "row");
-		                        b.AddContent(b.NextSequence(), instruction.Ordinal.ToString());
+		                        b.AddAttribute(Strings.ScreenReaderScope, "row");
+		                        b.AddContent(instruction.Ordinal.ToString());
 		                        b.CloseElement();
 	                        }
 							*/

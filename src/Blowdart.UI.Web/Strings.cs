@@ -39,6 +39,7 @@ namespace Blowdart.UI.Web
         public static readonly string Disabled = "disabled";
         public static readonly string Checked = "checked";
         public static readonly string AutoComplete = "autocomplete";
+        public static readonly string Target = "target";
 
 		public static readonly string Checkbox = "checkbox";
         public static readonly string Email = "email";
@@ -49,5 +50,5 @@ namespace Blowdart.UI.Web
         public static readonly string Off = "off";
 
 		public static readonly string ScreenReaderScope = "scope";
-	}
+    }
 }

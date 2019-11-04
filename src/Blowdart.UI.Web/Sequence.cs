@@ -21,19 +21,13 @@ namespace Blowdart.UI.Web
             private set;
         }
 
-        public static int NextSequence(this object host, [CallerLineNumber] int? lineNumber = null)
+        public static int NextSequence(this object host, [CallerMemberName] string callerMemberName = null, [CallerLineNumber] int? callerLineNumber = null)
         {
             if (_lastHost != host)
                 Current += 10000;
             _lastHost = host;
-            Current += lineNumber.GetValueOrDefault();
+            Current += callerLineNumber.GetValueOrDefault();
             return Current;
-        }
-
-        public static int NextSequence([CallerLineNumber] int? lineNumber = null)
-        {
-            // ReSharper disable once ExplicitCallerInfoArgument
-            return NextSequence(host: null, lineNumber);
         }
     }
 }

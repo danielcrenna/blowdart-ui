@@ -3,6 +3,7 @@
 
 using System;
 using Blowdart.UI.Instructions;
+using Blowdart.UI.Web.Extensions;
 using Microsoft.AspNetCore.Components.Rendering;
 
 namespace Blowdart.UI.Web.Rendering
@@ -32,19 +33,19 @@ namespace Blowdart.UI.Web.Rendering
 
 			void RenderLabel()
 			{
-				b.OpenElement(b.NextSequence(), Strings.Label);
+				b.OpenElement(Strings.Label);
 				{
-					b.AddAttribute(_(), Strings.Class, "form-check-label");
-					b.AddAttribute(_(), Strings.For, checkBox.Id);
-					b.AddContent(_(), checkBox.Text);
+					b.AddAttribute(Strings.Class, "form-check-label");
+					b.AddAttribute(Strings.For, checkBox.Id);
+					b.AddContent(checkBox.Text);
 
 					b.CloseElement();
 				}
 			}
 
-			b.OpenElement(b.NextSequence(), Strings.Div);
+			b.OpenElement(Strings.Div);
 			{
-				b.AddAttribute(_(), Strings.Class, "form-inline");
+				b.AddAttribute(Strings.Class, "form-inline");
 
 				switch (checkBox.Alignment)
 				{
@@ -62,21 +63,16 @@ namespace Blowdart.UI.Web.Rendering
 
                 b.CloseElement();
 			}
-
-			int _()
-			{
-				return b.NextSequence();
-			}
-
+			
 			void RenderInput()
 			{
-				b.OpenElement(b.NextSequence(), Strings.Input);
+				b.OpenElement(Strings.Input);
 				{
-					b.AddAttribute(_(), Strings.Class, "form-check-input");
-					b.AddAttribute(_(), Strings.Type, Strings.Checkbox);
-					b.AddAttribute(_(), Strings.Value, checkBox.Value);
-					b.AddAttribute(_(), Strings.Id, checkBox.Id);
-					b.AddAttribute(_(), Events.OnClick, onclick);
+					b.AddAttribute(Strings.Class, "form-check-input");
+					b.AddAttribute(Strings.Type, Strings.Checkbox);
+					b.AddAttribute(Strings.Value, checkBox.Value);
+					b.AddAttribute(Strings.Id, checkBox.Id);
+					b.AddAttribute(Events.OnClick, onclick);
 
 					b.CloseElement();
 				}

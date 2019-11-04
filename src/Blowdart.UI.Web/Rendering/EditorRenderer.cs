@@ -3,6 +3,7 @@
 
 using Blowdart.UI.Instructions;
 using Blowdart.UI.Web.Components;
+using Blowdart.UI.Web.Extensions;
 using Microsoft.AspNetCore.Components.Rendering;
 
 namespace Blowdart.UI.Web.Rendering
@@ -12,8 +13,8 @@ namespace Blowdart.UI.Web.Rendering
         public void Render(RenderTreeBuilder b, EditorInstruction editor)
         {
             var type = typeof(DynamicEditor<>).MakeGenericType(editor.Type);
-            b.OpenComponent(b.NextSequence(), type);
-            b.AddAttribute(b.NextSequence(), nameof(DynamicEditor<object>.Model), editor.Object);
+            b.OpenComponent(type);
+            b.AddAttribute(nameof(DynamicEditor<object>.Model), editor.Object);
             b.CloseComponent();
         }
 

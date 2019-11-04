@@ -4,6 +4,7 @@
 using System;
 using Blowdart.UI.Instructions;
 using Microsoft.AspNetCore.Components.Rendering;
+using Blowdart.UI.Web.Extensions;
 
 namespace Blowdart.UI.Web.Rendering
 {
@@ -43,11 +44,11 @@ namespace Blowdart.UI.Web.Rendering
 
             var onclick = _imGui.OnClickCallback(button.Id);
 
-            b.OpenElement(b.NextSequence(), Strings.Button);
-            b.AddAttribute(b.NextSequence(), Strings.Id, button.Id);
-            b.AddAttribute(b.NextSequence(), Strings.Class, css);
-            b.AddAttribute(b.NextSequence(), Events.OnClick, onclick);
-            b.AddContent(b.NextSequence(), button.Text);
+            b.OpenElement(Strings.Button);
+            b.AddAttribute(Strings.Id, button.Id);
+            b.AddAttribute(Strings.Class, css);
+            b.AddAttribute(Events.OnClick, onclick);
+            b.AddContent(button.Text);
             b.CloseElement();
         }
     }

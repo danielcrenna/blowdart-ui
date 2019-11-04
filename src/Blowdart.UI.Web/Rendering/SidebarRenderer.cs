@@ -22,7 +22,7 @@ namespace Blowdart.UI.Web.Rendering
             {
                 b.Div("top-row pl-4 navbar navbar-dark", () =>
                 {
-                    b.Anchor("navbar-brand", "", () => b.AddContent(b.NextSequence(), sidebar.Title));
+                    b.Anchor("navbar-brand", "", () => b.AddContent(sidebar.Title));
                     if (b.Button(_imGui, "navbar-toggler", () => b.Span("navbar-toggler-icon")))
                     {
                         _collapseNavMenu = !_collapseNavMenu;
@@ -40,7 +40,7 @@ namespace Blowdart.UI.Web.Rendering
                                 b.Anchor("nav-link", page.Template, () =>
                                 {
                                     b.InlineIcon(page.Icon);
-                                    b.AddContent(b.NextSequence(), page.Title);
+                                    b.AddContent(page.Title);
                                 });
                             });
                         }
