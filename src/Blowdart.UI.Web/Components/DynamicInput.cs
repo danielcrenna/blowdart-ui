@@ -70,13 +70,12 @@ namespace Blowdart.UI.Web.Components
 			if (!string.IsNullOrWhiteSpace(prompt))
 				b.AddAttribute(Strings.Placeholder, prompt);
 
-			if (ElementType == typeof(bool))
+			if (ElementType == typeof(bool) || ElementType == typeof(bool?))
 			{
 				b.AddAttribute(Strings.Type, Strings.Checkbox);
 
 				if(Value is bool flag)
 					b.AddAttribute(Strings.Checked, flag);
-
 			}
 			else if (FieldIdentifier.IsEmailAddress())
 			{

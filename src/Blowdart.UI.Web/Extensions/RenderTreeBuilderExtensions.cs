@@ -36,6 +36,21 @@ namespace Blowdart.UI.Web.Extensions
 			b.AddMultipleAttributes(b.GetNextSequence(callerMemberName, callerLineNumber), value);
 		}
 
+		public static void AddContent(this RenderTreeBuilder b, RenderFragment fragment, [CallerMemberName] string callerMemberName = null, [CallerLineNumber] int? callerLineNumber = null)
+		{
+			b.AddContent(b.GetNextSequence(callerMemberName, callerLineNumber), fragment);
+		}
+
+		public static void AddContent<T>(this RenderTreeBuilder b, RenderFragment<T> fragment, [CallerMemberName] string callerMemberName = null, [CallerLineNumber] int? callerLineNumber = null)
+		{
+			b.AddContent(b.GetNextSequence(callerMemberName, callerLineNumber), fragment);
+		}
+
+		public static void AddContent(this RenderTreeBuilder b, MarkupString markupContent, [CallerMemberName] string callerMemberName = null, [CallerLineNumber] int? callerLineNumber = null)
+		{
+			b.AddContent(b.GetNextSequence(callerMemberName, callerLineNumber), markupContent);
+		}
+
 		public static void AddContent(this RenderTreeBuilder b, string textContent, [CallerMemberName] string callerMemberName = null, [CallerLineNumber] int? callerLineNumber = null)
 		{
 			b.AddContent(b.GetNextSequence(callerMemberName, callerLineNumber), textContent);
@@ -64,7 +79,7 @@ namespace Blowdart.UI.Web.Extensions
 		private static int GetNextSequence(this RenderTreeBuilder b, string callerMemberName, int? callerLineNumber)
 		{
             var sequence = b.NextSequence(callerMemberName, callerLineNumber);
-            Trace.TraceInformation($"sequence:{callerMemberName}:{callerLineNumber} = {sequence}");
+            //Trace.TraceInformation($"sequence:{callerMemberName}:{callerLineNumber} = {sequence}");
 			return sequence;
 		}
 	}
