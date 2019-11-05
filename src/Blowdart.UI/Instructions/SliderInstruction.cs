@@ -3,15 +3,15 @@
 
 namespace Blowdart.UI.Instructions
 {
-	public class CheckBoxInstruction : RenderInstruction
+	public class SliderInstruction : RenderInstruction
 	{
 		public Ui Ui { get; }
 		public Value128 Id { get; }
 		public string Text { get; }
 		public ElementAlignment Alignment { get; }
-		public bool Value { get; }
+		public int Value { get; }
 
-		public CheckBoxInstruction(Ui ui, Value128 id, string text, ElementAlignment alignment, bool value)
+		public SliderInstruction(Ui ui, Value128 id, string text, ElementAlignment alignment, int value)
 		{
 			Ui = ui;
 			Id = id;

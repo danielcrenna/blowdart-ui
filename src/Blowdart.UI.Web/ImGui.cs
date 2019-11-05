@@ -60,14 +60,19 @@ namespace Blowdart.UI.Web
         
         public void OnClick(MouseEventArgs args, Value128 id)
         {
-	        OnEvent(id, Events.OnClick);
+	        OnEvent(id, Events.OnClick, null);
         }
 
-        private void OnEvent(Value128 id, string eventType)
+        public void OnChange(ChangeEventArgs args, Value128 id)
+        {
+	        OnEvent(id, Events.OnChange, args.Value);
+        }
+
+		private void OnEvent(Value128 id, string eventType, object data)
         {
 	        var instructionCount = Ui.Instructions.Count;
 
-	        Ui.AddEvent(eventType, id);
+	        Ui.AddEvent(eventType, id, data);
 	        Begin();
 	        Handler(Ui);
 
@@ -82,8 +87,16 @@ namespace Blowdart.UI.Web
                 OnClick(args, id);
             });
         }
-		
-        [Inject] private IServiceProvider ServiceProvider { get; set; }
+
+        public EventCallback<ChangeEventArgs> OnChangeCallback(Value128 id)
+        {
+	        return EventCallback.Factory.Create<ChangeEventArgs>(this, args =>
+	        {
+		        OnChange(args, id);
+	        });
+        }
+
+		[Inject] private IServiceProvider ServiceProvider { get; set; }
 
         protected override async Task OnInitializedAsync()
         {

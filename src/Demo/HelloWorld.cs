@@ -101,22 +101,33 @@ else
         }
 
         private static bool _checked;
+        private static int _slider;
 
 		public static void Elements(Ui ui)
         {
 	        MainLayout(ui, () =>
 	        { 
-		        if (ui.CheckBox(ref _checked, "Remember me", CheckBoxAlignment.Right))
+		        if (ui.CheckBox(ref _checked, "Check me", ElementAlignment.Right))
 		        {
 			        ui.Log($"checked the box: ({_checked})");
 		        }
 
-		        #region Code
+		        if (ui.Slider(ref _slider, "Slide me"))
+		        {
+			        ui.Log($"changed slider: ({_slider})");
+		        }
 
-		        SampleCode(ui, @"
-if (ui.CheckBox(ref _checked, ""Remember me""))
+				#region Code
+
+				SampleCode(ui, @"
+if (ui.CheckBox(ref _checked, ""Remember me"", ElementAlignment.Right))
 {
     ui.Log($""checked the box: ({_checked})""); // logs to configured log target
+}
+
+if (ui.Slider(ref _slider, ""Slide me""))
+{
+    ui.Log($""changed slider: ({_slider})"");
 }");
 		        #endregion
 	        });

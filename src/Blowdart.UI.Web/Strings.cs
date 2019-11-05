@@ -1,6 +1,7 @@
 // Copyright (c) Daniel Crenna & Contributors. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
+using System;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.RenderTree;
 
@@ -42,7 +43,8 @@ namespace Blowdart.UI.Web
         public static readonly string Target = "target";
 
 		public static readonly string Checkbox = "checkbox";
-        public static readonly string Email = "email";
+		public static readonly string Range = "range";
+		public static readonly string Email = "email";
         public static readonly string Password = "password";
         public static readonly string Text = "text";
         public static readonly string Date = "date";

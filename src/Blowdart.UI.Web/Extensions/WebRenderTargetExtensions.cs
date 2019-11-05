@@ -36,7 +36,7 @@ namespace Blowdart.UI.Web.Extensions
             b.AddAttribute(Events.OnClick, imgui.OnClickCallback(id));
             fragment?.Invoke();
             b.CloseElement();
-            return imgui.Ui.OnEvent(Events.OnClick, id);
+            return imgui.Ui.OnEvent(Events.OnClick, id, out _);
         }
 
         public static void BeginSpan(this RenderTreeBuilder b, string @class) => b.BeginElement(Strings.Span, @class);

@@ -500,26 +500,44 @@ namespace Blowdart.UI
             NextId();
             var id = NextIdHash;
             Instructions.Add(new ButtonInstruction(this, id, type, text));
-            return OnEvent(Events.OnClick, id);
+            return OnEvent(Events.OnClick, id, out _);
         }
 
-        public bool CheckBox(ref bool value, string text, CheckBoxAlignment alignment = CheckBoxAlignment.Left)
+        public bool CheckBox(ref bool value, string text, ElementAlignment alignment = ElementAlignment.Left)
         {
 	        NextId();
 	        var id = NextIdHash;
 	        Instructions.Add(new CheckBoxInstruction(this, id, text, alignment, value));
-	        var clicked = OnEvent(Events.OnClick, id);
+	        var clicked = OnEvent(Events.OnClick, id, out _);
 	        if (clicked)
 		        value = !value;
 	        return clicked;
         }
-		
-		internal bool OnEvent(string eventType, Value128 id)
+
+        public bool Slider(ref int value, string text, ElementAlignment alignment = ElementAlignment.Left)
+		{
+	        NextId();
+	        var id = NextIdHash;
+	        Instructions.Add(new SliderInstruction(this, id, text, alignment, value));
+	        var changed = OnEvent(Events.OnChange, id, out var data);
+	        if (changed && data != default && data is string dataString)
+				int.TryParse(dataString, out value);
+			return changed;
+        }
+
+		internal bool OnEvent(string eventType, Value128 id, out object data)
         {
-            var clicked = _events.Contains(eventType, id);
-            if (clicked)
-                _events.Remove(eventType, id);
-            return clicked;
+            var contains = _events.Contains(eventType, id);
+            if (contains)
+            {
+	            _events.Remove(eventType, id);
+	            if (_eventData.TryGetValue(id, out data))
+					_eventData.Remove(id);
+	            return true;
+            }
+
+            data = default;
+            return false;
         }
 		
 		public void Component(Action<Ui> handler)
@@ -593,10 +611,14 @@ namespace Blowdart.UI
         private readonly MultiValueDictionary<string, Value128> _events =
             MultiValueDictionary<string, Value128>.Create<HashSet<Value128>>();
 
-        public void AddEvent(string eventType, Value128 id)
+        private readonly Dictionary<Value128, object> _eventData = new Dictionary<Value128, object>();
+
+		public void AddEvent(string eventType, Value128 id, object data)
         {
             _events.Add(eventType, id);
-        }
+            if (data != null)
+				_eventData.Add(id, data);
+		}
 
         internal void Begin()
         {

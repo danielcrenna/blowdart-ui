@@ -3,7 +3,7 @@
 
 namespace Blowdart.UI.Instructions
 {
-	public enum CheckBoxAlignment
+	public enum ElementAlignment
 	{
 		Left,
 		Right

@@ -8,36 +8,34 @@ using Microsoft.AspNetCore.Components.Rendering;
 
 namespace Blowdart.UI.Web.Rendering
 {
-	internal sealed class CheckBoxRenderer : IWebRenderer<CheckBoxInstruction>
+	internal sealed class SliderRenderer : IWebRenderer<SliderInstruction>
 	{
 		private readonly ImGui _imGui;
 
-		public CheckBoxRenderer(ImGui imGui)
+		public SliderRenderer(ImGui imGui)
 		{
 			_imGui = imGui;
 		}
 
-		public void Render(RenderTreeBuilder b, CheckBoxInstruction checkBox)
+		public void Render(RenderTreeBuilder b, SliderInstruction slider)
 		{
-			RenderButton(b, checkBox);
+			RenderButton(b, slider);
 		}
 
 		public void Render(RenderTreeBuilder b, RenderInstruction instruction)
 		{
-			RenderButton(b, instruction as CheckBoxInstruction);
+			RenderButton(b, instruction as SliderInstruction);
 		}
 
-		private void RenderButton(RenderTreeBuilder b, CheckBoxInstruction checkBox)
+		private void RenderButton(RenderTreeBuilder b, SliderInstruction slider)
 		{
-			var onclick = _imGui.OnClickCallback(checkBox.Id);
-
 			void RenderLabel()
 			{
 				b.OpenElement(Strings.Label);
 				{
 					b.AddAttribute(Strings.Class, "form-check-label");
-					b.AddAttribute(Strings.For, checkBox.Id);
-					b.AddContent(checkBox.Text);
+					b.AddAttribute(Strings.For, slider.Id);
+					b.AddContent(slider.Text);
 
 					b.CloseElement();
 				}
@@ -47,7 +45,7 @@ namespace Blowdart.UI.Web.Rendering
 			{
 				b.AddAttribute(Strings.Class, "form-inline");
 
-				switch (checkBox.Alignment)
+				switch (slider.Alignment)
 				{
 					case ElementAlignment.Left:
 						RenderInput();
@@ -61,18 +59,18 @@ namespace Blowdart.UI.Web.Rendering
 						throw new ArgumentOutOfRangeException();
 				}
 
-                b.CloseElement();
+				b.CloseElement();
 			}
-			
+
 			void RenderInput()
 			{
 				b.OpenElement(Strings.Input);
 				{
-					b.AddAttribute(Strings.Class, "form-check-input");
-					b.AddAttribute(Strings.Type, Strings.Checkbox);
-					b.AddAttribute(Strings.Value, checkBox.Value);
-					b.AddAttribute(Strings.Id, checkBox.Id);
-					b.AddAttribute(Events.OnClick, onclick);
+					b.AddAttribute(Strings.Class, "form-range-input");
+					b.AddAttribute(Strings.Type, Strings.Range);
+					b.AddAttribute(Strings.Value, slider.Value);
+					b.AddAttribute(Strings.Id, slider.Id);
+					b.AddAttribute(Events.OnChange, _imGui.OnChangeCallback(slider.Id));
 
 					b.CloseElement();
 				}
