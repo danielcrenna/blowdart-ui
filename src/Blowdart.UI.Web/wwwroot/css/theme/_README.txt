@@ -1,0 +1,1 @@
+﻿This folder is required by the SCSS compiler in order to locate relative imports.

@@ -12,6 +12,7 @@ namespace Blowdart.UI.Web
             app.UseRouting();
             app.UseEndpoints(endpoints =>
             {
+	            endpoints.MapControllers();
                 endpoints.MapRazorPages();
                 endpoints.MapBlazorHub();
                 endpoints.MapFallbackToPage("/_Host");

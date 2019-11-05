@@ -14,7 +14,8 @@ namespace Blowdart.UI.Web
             var pages = new PageMap();
 
             services.AddSingleton(pages);
-            services.AddSingleton<IInputTransformer, UI.InputTransformer>();
+            services.AddSingleton<IThemeProvider, WebThemeProvider>();
+            services.AddSingleton<IInputTransformer, InputTransformer>();
 
             services.AddRazorPages(o =>
             {
