@@ -4,7 +4,7 @@
 using System;
 using System.Linq;
 
-namespace Blowdart.UI.Demo.Models
+namespace Demo.Models
 {
     public class WeatherForecastService
     {

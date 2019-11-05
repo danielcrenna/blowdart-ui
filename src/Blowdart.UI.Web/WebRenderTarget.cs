@@ -32,11 +32,12 @@ namespace Blowdart.UI.Web
 				{typeof(CheckBoxInstruction), new CheckBoxRenderer(imGui)},
 				{typeof(LinkInstruction), new LinkRenderer()},
                 {typeof(HeaderInstruction), new HeaderRenderer()},
-                {typeof(SidebarInstruction), new SidebarRenderer(imGui)},
                 {typeof(EditorInstruction), new EditorRenderer()},
                 {typeof(InlineIconInstruction), new InlineIconRenderer()},
                 {typeof(ObjectTableInstruction), new ObjectTableRenderer()},
-                //{typeof(LogInstruction), new LogRenderer(imGui)}
+                {typeof(MenuItemInstruction), new MenuItemRenderer()},
+                {typeof(BeginCollapsibleInstruction), new BeginCollapsibleRenderer(imGui)},
+                {typeof(EndCollapsibleInstruction), new EndCollapsibleRenderer()},
 			};
         }
 

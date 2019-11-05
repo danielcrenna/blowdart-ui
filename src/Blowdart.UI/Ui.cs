@@ -340,6 +340,132 @@ namespace Blowdart.UI
 
 		#endregion
 
+		#region Menu
+
+		public void BeginMenu(string title)
+		{
+			Instructions.Add(new BeginElementInstruction(ElementType.Menu));
+			_inMenu = true;
+			_menuTitle = title;
+		}
+
+		public void EndMenu()
+		{
+			if (_hasMenuItems)
+			{
+				Instructions.Add(new EndCollapsibleInstruction());
+			}
+			
+			Instructions.Add(new EndElementInstruction(ElementType.Menu));
+
+			_inMenu = false;
+			_hasMenuItems = false;
+			_menuTitle = null;
+		}
+
+		#endregion
+
+		#region Tables
+
+		public void ObjectTable<T>(IEnumerable<T> data)
+		{
+			Instructions.Add(new ObjectTableInstruction<T>(data));
+		}
+
+		public void ListTable<T>(IEnumerable<T> data, Action<Ui, T> template)
+		{
+			Instructions.Add(new BeginElementInstruction(ElementType.Table));
+			var ordinal = 0;
+			foreach (var item in data)
+			{
+				Instructions.Add(new BeginElementInstruction(ElementType.TableRow));
+				Instructions.Add(new BeginElementInstruction(ElementType.TableColumn, ordinal: ++ordinal));
+				_inTable = true;
+				template(this, item);
+				_inTable = false;
+				Instructions.Add(new BeginElementInstruction(ElementType.TableColumn));
+				Instructions.Add(new EndElementInstruction(ElementType.TableRow));
+			}
+			Instructions.Add(new EndElementInstruction(ElementType.Table));
+		}
+
+		public void ListTable<T>(IList<T> data, Action<int, T> template)
+		{
+			Instructions.Add(new BeginElementInstruction(ElementType.Table));
+			var ordinal = 0;
+			foreach (var item in data)
+			{
+				Instructions.Add(new BeginElementInstruction(ElementType.TableRow));
+				Instructions.Add(new BeginElementInstruction(ElementType.TableColumn, ordinal: ++ordinal));
+				_inTable = true;
+				template(ordinal, item);
+				_inTable = false;
+				Instructions.Add(new EndElementInstruction(ElementType.TableColumn));
+				Instructions.Add(new EndElementInstruction(ElementType.TableRow));
+			}
+			Instructions.Add(new EndElementInstruction(ElementType.Table));
+		}
+
+		#endregion
+
+		#region Lists
+
+		public void List<T>(ListDirection direction, IEnumerable<T> data, Action<Ui, T> template)
+		{
+			var style = GetListStyle(direction);
+			Instructions.Add(new BeginElementInstruction(ElementType.List, style));
+			foreach (var item in data)
+			{
+				Instructions.Add(new BeginElementInstruction(ElementType.ListItem, "border-0"));
+				template(this, item);
+				Instructions.Add(new EndElementInstruction(ElementType.ListItem));
+			}
+			Instructions.Add(new EndElementInstruction(ElementType.List));
+		}
+
+		public void List<T>(IList<T> list, Action<Ui, T> template)
+		{
+			List(ListDirection.TopToBottom, list, template);
+		}
+
+		public void List<T>(ListDirection direction, IEnumerable<T> data, Action<T> template)
+		{
+			var style = GetListStyle(direction);
+			Instructions.Add(new BeginElementInstruction(ElementType.List, style));
+			foreach (var item in data)
+			{
+				Instructions.Add(new BeginElementInstruction(ElementType.ListItem, "border-0"));
+				template(item);
+				Instructions.Add(new EndElementInstruction(ElementType.ListItem));
+			}
+			Instructions.Add(new EndElementInstruction(ElementType.List));
+		}
+
+		public void List<T>(IList<T> list, Action<T> template)
+		{
+			List(ListDirection.TopToBottom, list, template);
+		}
+
+		private static string GetListStyle(ListDirection direction)
+		{
+			string style = null;
+			switch (direction)
+			{
+				case ListDirection.LeftToRight:
+					style = "list-group-horizontal";
+					break;
+				case ListDirection.TopToBottom:
+					break;
+				default:
+					throw new ArgumentOutOfRangeException(nameof(direction), direction, null);
+			}
+
+			return style;
+		}
+
+		#endregion
+
+
 		#endregion
 
 		#region Commands 
@@ -410,12 +536,7 @@ namespace Blowdart.UI
         {
             Instructions.Add(new LinkInstruction(href, title));
         }
-
-        public void Sidebar(string title, params SidebarPage[] pages)
-        {
-            Instructions.Add(new SidebarInstruction(title, pages));
-        }
-
+        
         public void Editor<T>(T instance)
         {
             Instructions.Add(new EditorInstruction<T>(instance));
@@ -425,106 +546,6 @@ namespace Blowdart.UI
         {
 	        Instructions.Add(new LogInstruction(message));
         }
-
-		#region Tables
-
-		public void ObjectTable<T>(IEnumerable<T> data)
-		{
-			Instructions.Add(new ObjectTableInstruction<T>(data));
-		}
-
-		public void ListTable<T>(IEnumerable<T> data, Action<Ui, T> template)
-        {
-			Instructions.Add(new BeginElementInstruction(ElementType.Table));
-			var ordinal = 0;
-			foreach (var item in data)
-			{
-				Instructions.Add(new BeginElementInstruction(ElementType.TableRow));
-				Instructions.Add(new BeginElementInstruction(ElementType.TableColumn, ordinal: ++ordinal));
-				_inTable = true;
-				template(this, item);
-				_inTable = false;
-				Instructions.Add(new BeginElementInstruction(ElementType.TableColumn));
-				Instructions.Add(new EndElementInstruction(ElementType.TableRow));
-			}
-			Instructions.Add(new EndElementInstruction(ElementType.Table));
-		}
-
-		public void ListTable<T>(IList<T> data, Action<int, T> template)
-        {
-			Instructions.Add(new BeginElementInstruction(ElementType.Table));
-			var ordinal = 0;
-			foreach (var item in data)
-			{
-				Instructions.Add(new BeginElementInstruction(ElementType.TableRow));
-				Instructions.Add(new BeginElementInstruction(ElementType.TableColumn, ordinal: ++ordinal));
-				_inTable = true;
-				template(ordinal, item);
-				_inTable = false;
-				Instructions.Add(new EndElementInstruction(ElementType.TableColumn));
-				Instructions.Add(new EndElementInstruction(ElementType.TableRow));
-			}
-			Instructions.Add(new EndElementInstruction(ElementType.Table));
-		}
-		
-		#endregion
-
-		#region List
-
-		public void List<T>(ListDirection direction, IEnumerable<T> data, Action<Ui, T> template)
-        {
-	        var style = GetListStyle(direction);
-			Instructions.Add(new BeginElementInstruction(ElementType.List, style));
-			foreach (var item in data)
-			{
-				Instructions.Add(new BeginElementInstruction(ElementType.ListItem, "border-0"));
-				template(this, item);
-				Instructions.Add(new EndElementInstruction(ElementType.ListItem));
-			}
-			Instructions.Add(new EndElementInstruction(ElementType.List));
-		}
-
-        public void List<T>(IList<T> list, Action<Ui, T> template)
-        {
-	        List(ListDirection.TopToBottom, list, template);
-        }
-
-		public void List<T>(ListDirection direction, IEnumerable<T> data, Action<T> template)
-        {
-	        var style = GetListStyle(direction);
-	        Instructions.Add(new BeginElementInstruction(ElementType.List, style));
-	        foreach (var item in data)
-	        {
-				Instructions.Add(new BeginElementInstruction(ElementType.ListItem, "border-0"));
-		        template(item);
-		        Instructions.Add(new EndElementInstruction(ElementType.ListItem));
-			}
-	        Instructions.Add(new EndElementInstruction(ElementType.List));
-        }
-
-		public void List<T>(IList<T> list, Action<T> template)
-		{
-			List(ListDirection.TopToBottom, list, template);
-		}
-
-		private static string GetListStyle(ListDirection direction)
-		{
-			string style = null;
-			switch (direction)
-			{
-				case ListDirection.LeftToRight:
-					style = "list-group-horizontal";
-					break;
-				case ListDirection.TopToBottom:
-					break;
-				default:
-					throw new ArgumentOutOfRangeException(nameof(direction), direction, null);
-			}
-
-			return style;
-		}
-
-		#endregion
 
 		public void InlineIcon(OpenIconicIcons icon)
         {

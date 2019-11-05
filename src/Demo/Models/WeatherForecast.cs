@@ -4,7 +4,7 @@
 using System;
 using TypeKitchen;
 
-namespace Blowdart.UI.Demo.Models
+namespace Demo.Models
 {
     [MetadataType("Default", typeof(WeatherForecastFormMetadata))]
     public class WeatherForecast

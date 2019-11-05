@@ -83,7 +83,9 @@ namespace Blowdart.UI.Web.Rendering
 	                        }
 							*/
 							b.BeginTableColumn($"{css}");
-	                        
+	                        break;
+                        case ElementType.Menu:
+	                        b.BeginDiv($"sidebar{css}");
 	                        break;
 						default:
                             throw new ArgumentOutOfRangeException();

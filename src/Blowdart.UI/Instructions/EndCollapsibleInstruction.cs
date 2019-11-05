@@ -3,20 +3,8 @@
 
 namespace Blowdart.UI.Instructions
 {
-    public enum ElementType
-    {
-        Container,
-        Row,
-        Column,
-        Main,
-        TopRow,
-        MainContent,
-        Section,
-		List,
-		ListItem,
-		Table,
-		TableRow,
-		TableColumn,
-		Menu
-    }
+	public class EndCollapsibleInstruction : RenderInstruction
+	{
+		public override string DebuggerDisplay => "EndCollapsible";
+	}
 }

@@ -3,10 +3,11 @@
 
 using System;
 using System.Collections.Generic;
-using Blowdart.UI.Demo.Models;
+using Blowdart.UI;
 using Blowdart.UI.Instructions;
+using Demo.Models;
 
-namespace Blowdart.UI.Demo
+namespace Demo
 {
     public class HelloWorld
     {
@@ -183,14 +184,17 @@ ui.ListTable(Icons.InGroupsOf(5), icons =>
 
 		private static void MainLayout(Ui ui, Action handler)
         {
-            ui.Sidebar("Blowdart.UI Demo",
-                new SidebarPage(OpenIconicIcons.Home, "/", "Home"),
-                new SidebarPage(OpenIconicIcons.Plus, "/counter", "Counter"),
-                new SidebarPage(OpenIconicIcons.ListRich, "/fetchdata", "Fetch Data"),
-                new SidebarPage(OpenIconicIcons.Code, "/elements", "Elements"),
-				new SidebarPage(OpenIconicIcons.Folder, "/editor", "Editor"),
-                new SidebarPage(OpenIconicIcons.Aperture, "/styles", "Styles")
-			);
+			ui.BeginMenu("Blowdart.UI Demo");
+			{
+				ui.MenuItem(OpenIconicIcons.Home, "Home", "/");
+				ui.MenuItem(OpenIconicIcons.Plus, "Counter", "/counter");
+				ui.MenuItem(OpenIconicIcons.ListRich, "Fetch Data", "/fetchdata");
+				ui.MenuItem(OpenIconicIcons.Code, "Elements", "/elements");
+				ui.MenuItem(OpenIconicIcons.Folder, "Editor", "/editor");
+				ui.MenuItem(OpenIconicIcons.Aperture, "Styles", "/styles");
+
+				ui.EndMenu();
+			}
 
             ui.Main(() =>
             {

@@ -5,7 +5,7 @@ using System;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
-namespace Blowdart.UI.Demo.Models
+namespace Demo.Models
 {
     [DisplayName("Forecast")]
     public class WeatherForecastFormMetadata
