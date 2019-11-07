@@ -107,6 +107,7 @@ else
 
 		private static bool _checked;
 		private static int _slider;
+		private static bool _radioButton;
 
 		public static void Elements(Ui ui)
 		{
@@ -120,18 +121,29 @@ else
 				ui.Log($"changed slider: ({_slider})");
 			}
 
+			if (ui.RadioButton(ref _radioButton, "Press me"))
+			{
+				ui.Log($"changed radio button: ({_radioButton})");
+			}
+
 			#region Code
 
 			SampleCode(ui, @"
 if (ui.CheckBox(ref _checked, ""Remember me"", ElementAlignment.Right))
 {
-    ui.Log($""checked the box: ({_checked})""); // logs to configured log target
+    ui.Log($""checked the box: ({_checked})"");
 }
 
 if (ui.Slider(ref _slider, ""Slide me""))
 {
     ui.Log($""changed slider: ({_slider})"");
-}");
+}
+
+if (ui.RadioButton(ref _radioButton, ""Press me""))
+{
+	ui.Log($""changed radio button: ({_radioButton})"");
+}
+");
 			#endregion
 		}
 

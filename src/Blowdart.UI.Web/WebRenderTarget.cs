@@ -31,6 +31,7 @@ namespace Blowdart.UI.Web
                 {typeof(SeparatorInstruction), new SeparatorRenderer()},
 				{typeof(ButtonInstruction), new ButtonRenderer(imGui)},
 				{typeof(CheckBoxInstruction), new CheckBoxRenderer(imGui)},
+				{typeof(RadioButtonInstruction), new RadioButtonRenderer(imGui)},
 				{typeof(SliderInstruction), new SliderRenderer(imGui)},
 				{typeof(LinkInstruction), new LinkRenderer()},
                 {typeof(HeaderInstruction), new HeaderRenderer()},

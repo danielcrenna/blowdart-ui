@@ -41,8 +41,9 @@ namespace Blowdart.UI.Web
         public static readonly string Checked = "checked";
         public static readonly string AutoComplete = "autocomplete";
         public static readonly string Target = "target";
-
+        
 		public static readonly string Checkbox = "checkbox";
+		public static readonly string Radio = "radio";
 		public static readonly string Range = "range";
 		public static readonly string Email = "email";
         public static readonly string Password = "password";

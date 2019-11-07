@@ -46,6 +46,8 @@ namespace Blowdart.UI.Web.Components
             {
 	            Ui.SetLayoutBody(Handler);
 	            Layout(Ui);
+	            if (!Ui.CalledLayout)
+		            throw new BlowdartException("Layout did not call ui.LayoutBody();");
             }
             else
             {

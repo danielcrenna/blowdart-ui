@@ -527,6 +527,17 @@ namespace Blowdart.UI
 			return changed;
         }
 
+        public bool RadioButton(ref bool value, string text, ElementAlignment alignment = ElementAlignment.Left)
+        {
+	        NextId();
+	        var id = NextIdHash;
+	        Instructions.Add(new RadioButtonInstruction(this, id, text, alignment, value));
+	        var clicked = OnEvent(Events.OnClick, id, out _);
+	        if (clicked)
+		        value = !value;
+	        return clicked;
+        }
+
 		internal bool OnEvent(string eventType, Value128 id, out object data)
         {
             var contains = _events.Contains(eventType, id);
@@ -628,7 +639,7 @@ namespace Blowdart.UI
             NextIdHash = default;
             _count = default;
             _body = default;
-            _layout = default;
+            CalledLayout = default;
         }
 
         private readonly List<IPromise> _dataLoaders = new List<IPromise>();
@@ -721,12 +732,13 @@ namespace Blowdart.UI
 
 		#region Layouts
 
-		private bool _layout;
 		private Action<Ui> _body;
+
+		internal bool CalledLayout { get; private set; }
 
 		public Action<Ui> LayoutBody()
 		{
-			_layout = true;
+			CalledLayout = true;
 			return _body ?? throw new BlowdartException("Missing layout body");
 		}
 
