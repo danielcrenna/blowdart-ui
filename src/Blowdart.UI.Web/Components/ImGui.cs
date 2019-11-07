@@ -23,8 +23,9 @@ namespace Blowdart.UI.Web.Components
 
         public Ui Ui { get; }
 
-        [Parameter] public Action<Ui> Handler { get; set; }
-		
+        [Parameter] public Action<Ui> Layout { get; set; }
+		[Parameter] public Action<Ui> Handler { get; set; }
+        
 		[Inject] public IOptionsMonitor<BlowdartOptions> Options { get; set; }
 
 		public ImGui()
@@ -41,7 +42,15 @@ namespace Blowdart.UI.Web.Components
 		protected override void BuildRenderTree(RenderTreeBuilder builder)
         {
             Begin();
-            Handler(Ui);
+            if (Layout != null)
+            {
+	            Ui.SetLayoutBody(Handler);
+	            Layout(Ui);
+            }
+            else
+            {
+	            Handler(Ui);
+            }
             Ui.RenderToTarget(_target, builder);
         }
         

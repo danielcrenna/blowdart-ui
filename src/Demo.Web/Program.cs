@@ -2,10 +2,11 @@
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
 using Blowdart.UI.Web;
-using Demo.Models;
+using Demo.Examples;
+using Demo.Examples.Models;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Demo
+namespace Demo.Web
 {
     public class Program
     {
@@ -13,12 +14,12 @@ namespace Demo
         {
             builder.AddSingleton<WeatherForecastService>();
 
-            builder.AddPage("/", HelloWorld.Index);
-            builder.AddPage("/counter", HelloWorld.Counter);
-            builder.AddPage("/fetchdata", HelloWorld.FetchData);
-            builder.AddPage("/elements", HelloWorld.Elements);
-			builder.AddPage("/editor", HelloWorld.Editor);
-            builder.AddPage("/styles", HelloWorld.Styles);
+            builder.AddPage("/", WebLayout.Index, HelloWorld.Index);
+            builder.AddPage("/counter", WebLayout.Index, HelloWorld.Counter);
+            builder.AddPage("/fetchdata", WebLayout.Index, HelloWorld.FetchData);
+            builder.AddPage("/elements", WebLayout.Index, HelloWorld.Elements);
+			builder.AddPage("/editor", WebLayout.Index, HelloWorld.Editor);
+            builder.AddPage("/styles", WebLayout.Index, HelloWorld.Styles);
 		});
     }
 }

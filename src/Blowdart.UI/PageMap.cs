@@ -9,17 +9,26 @@ namespace Blowdart.UI
     public class PageMap
     {
         private readonly Dictionary<string, Action<Ui>> _handlers;
-        
-        public PageMap()
+        private readonly Dictionary<string, Action<Ui>> _layouts;
+
+		public PageMap()
         {
             _handlers = new Dictionary<string, Action<Ui>>();
-        }
+            _layouts = new Dictionary<string, Action<Ui>>();
+		}
 
         public Action<Ui> GetHandler(string template) => _handlers.TryGetValue(template, out var handler) ?  handler : null;
-        
-        public void AddPage(string template, Action<Ui> handler, Type layout = null)
+        public Action<Ui> GetLayout(string template) => _layouts.TryGetValue(template, out var handler) ? handler : null;
+
+		public void AddPage(string template, Action<Ui> handler)
         {
             _handlers.Add(template, handler);
+        }
+
+        public void AddPage(string template, Action<Ui> layout, Action<Ui> handler)
+        {
+			_layouts.Add(template, layout);
+	        _handlers.Add(template, handler);
         }
     }
 }

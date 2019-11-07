@@ -4,7 +4,7 @@
 using System;
 using TypeKitchen;
 
-namespace Demo.Models
+namespace Demo.Examples.Models
 {
     [MetadataType("Default", typeof(WeatherForecastFormMetadata))]
     public class WeatherForecast

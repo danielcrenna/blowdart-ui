@@ -5,7 +5,7 @@ using System;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
-namespace Demo.Models
+namespace Demo.Examples.Models
 {
     [DisplayName("Forecast")]
     public class WeatherForecastFormMetadata

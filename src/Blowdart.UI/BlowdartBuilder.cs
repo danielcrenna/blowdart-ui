@@ -23,8 +23,13 @@ namespace Blowdart.UI
         {
             _pages.AddPage(template, handler);
         }
-        
-        public IEnumerator<ServiceDescriptor> GetEnumerator()
+
+        public void AddPage(string template, Action<Ui> layout, Action<Ui> handler)
+        {
+	        _pages.AddPage(template, layout, handler);
+        }
+
+		public IEnumerator<ServiceDescriptor> GetEnumerator()
         {
             return _services.GetEnumerator();
         }

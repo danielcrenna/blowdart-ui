@@ -78,12 +78,26 @@ namespace Blowdart.UI.Web
 
             if (handler != null)
             {
-                _renderFragment = builder =>
-                {
-                    builder.OpenComponent<ImGui>();
-                    builder.AddAttribute(nameof(ImGui.Handler), handler);
-                    builder.CloseComponent();
-                };
+	            var layout = Pages.GetLayout(path);
+				if (layout != null)
+	            {
+		            _renderFragment = builder =>
+		            {
+			            builder.OpenComponent<ImGui>();
+						builder.AddAttribute(nameof(ImGui.Layout), layout);
+						builder.AddAttribute(nameof(ImGui.Handler), handler);
+						builder.CloseComponent();
+		            };
+				}
+				else
+				{
+					_renderFragment = builder =>
+					{
+						builder.OpenComponent<ImGui>();
+						builder.AddAttribute(nameof(ImGui.Handler), handler);
+						builder.CloseComponent();
+					};
+				}
             }
             
             if (_renderFragment != null)

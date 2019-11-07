@@ -1,5 +1,6 @@
 ﻿using Blowdart.UI;
 using Blowdart.UI.FNA;
+using Demo.Examples;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Demo.FNA

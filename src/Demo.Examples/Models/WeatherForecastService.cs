@@ -4,7 +4,7 @@
 using System;
 using System.Linq;
 
-namespace Demo.Models
+namespace Demo.Examples.Models
 {
     public class WeatherForecastService
     {

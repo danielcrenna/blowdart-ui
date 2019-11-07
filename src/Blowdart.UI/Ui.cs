@@ -627,6 +627,8 @@ namespace Blowdart.UI
             Instructions.Clear();
             NextIdHash = default;
             _count = default;
+            _body = default;
+            _layout = default;
         }
 
         private readonly List<IPromise> _dataLoaders = new List<IPromise>();
@@ -691,12 +693,14 @@ namespace Blowdart.UI
 
 		#endregion
 
+		#region Split Testing
+
 		//public void SplitTest(string name, string description, Action a, Action b, params Action[] moreActions)
 		//{
 		//	var identifier = UiServices.GetService<ICohortIdentifier>();
 		//	if (identifier == null)
 		//	{
-  //              Trace.TraceWarning("No split testing identifier was registered, skipping test");
+		//      Trace.TraceWarning("No split testing identifier was registered, skipping test");
 		//		a();
 		//		return;
 		//	}
@@ -712,5 +716,25 @@ namespace Blowdart.UI
 		//	var experiment = new Experiment(identifier, name, description, options, "foo");
 		//	return Experiments.Inner.GetOrAdd(new ExperimentKey(name), experiment);
 		//}
+
+		#endregion
+
+		#region Layouts
+
+		private bool _layout;
+		private Action<Ui> _body;
+
+		public Action<Ui> LayoutBody()
+		{
+			_layout = true;
+			return _body ?? throw new BlowdartException("Missing layout body");
+		}
+
+		public void SetLayoutBody(Action<Ui> body)
+		{
+			_body = body;
+		}
+
+		#endregion
 	}
 }

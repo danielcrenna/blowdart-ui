@@ -5,9 +5,9 @@ using System;
 using System.Collections.Generic;
 using Blowdart.UI;
 using Blowdart.UI.Instructions;
-using Demo.Models;
+using Demo.Examples.Models;
 
-namespace Demo
+namespace Demo.Examples
 {
     public class HelloWorld
     {
@@ -15,51 +15,45 @@ namespace Demo
 
 	    public static void Index(Ui ui)
 	    {
-		    MainLayout(ui, () =>
-		    {
-			    ui.Header(1, "Hello, world!");
-			    ui.Text("Welcome to your new app.");
+			ui.Header(1, "Hello, world!");
+			ui.Text("Welcome to your new app.");
 
-			    #region Code
+			#region Code
 
-			    SampleCode(ui, @"
+			SampleCode(ui, @"
 ui.Header(1, ""Hello, world!"");
 ui.Literal(""Welcome to your new app."");");
 
-			    #endregion
-		    });
-	    }
+			#endregion
+		}
 
-	    #endregion
+		#endregion
 
-        #region Counter Page
+		#region Counter Page
 
-        private static int _currentCount;
+		private static int _currentCount;
 
         public static void Counter(Ui ui)
         {
-	        MainLayout(ui, () =>
-	        {
-		        ui.Header(1, "Counter");
-		        ui.TextBlock($"Current count: {_currentCount}");
-		        if (ui.Button("Click me"))
-		        {
-			        _currentCount++;
-		        }
-				
-		        #region Code
+			ui.Header(1, "Counter");
+			ui.TextBlock($"Current count: {_currentCount}");
+			if (ui.Button("Click me"))
+			{
+				_currentCount++;
+			}
 
-		        SampleCode(ui, @"
+			#region Code
+
+			SampleCode(ui, @"
 ui.Header(1, ""Counter"");
 ui.Text($""Current count: {_currentCount}"");
 if (ui.Button(""Click me""))
 	_currentCount++;");
 
-		        #endregion
-	        });
-        }
+			#endregion
+		}
 
-        #endregion
+		#endregion
 
 		#region Fetch Data Page
 
@@ -67,28 +61,26 @@ if (ui.Button(""Click me""))
 
 		public static void FetchData(Ui ui)
 		{
-			MainLayout(ui, () =>
+			ui.DataLoader<WeatherForecastService, WeatherForecast[]>(
+				getData: service => service.GetWeatherForecasts(),
+				setData: d => { _forecasts = d; });
+
+			ui.Header(1, "Weather forecast");
+
+			ui.TextBlock("This component demonstrates fetching data from the server.");
+
+			if (_forecasts == null)
 			{
-				ui.DataLoader<WeatherForecastService, WeatherForecast[]>(
-					getData: service => service.GetWeatherForecasts(),
-					setData: d => { _forecasts = d; });
+				ui.TextBlock("Loading...");
+			}
+			else
+			{
+				ui.ObjectTable(_forecasts);
+			}
 
-				ui.Header(1, "Weather forecast");
+			#region Code
 
-				ui.TextBlock("This component demonstrates fetching data from the server.");
-
-				if (_forecasts == null)
-				{
-					ui.TextBlock("Loading...");
-				}
-				else
-				{
-					ui.ObjectTable(_forecasts);
-				}
-
-				#region Code
-
-				SampleCode(ui, @"
+			SampleCode(ui, @"
 ui.DataLoader<WeatherForecastService, WeatherForecast[]>(
     getData: service => service.GetWeatherForecasts(),
     setData: d => { _forecasts = d; });
@@ -106,8 +98,7 @@ else
 	ui.ObjectTable(_forecasts);
 }");
 
-				#endregion
-			});
+			#endregion
 		}
 
 		#endregion
@@ -119,42 +110,19 @@ else
 
 		public static void Elements(Ui ui)
 		{
-			MainLayout(ui, () =>
-			{ 
-				if (ui.CheckBox(ref _checked, "Check me", ElementAlignment.Right))
-				{
-					ui.Log($"checked the box: ({_checked})");
-				}
+			if (ui.CheckBox(ref _checked, "Check me", ElementAlignment.Right))
+			{
+				ui.Log($"checked the box: ({_checked})");
+			}
 
-				if (ui.Slider(ref _slider, "Slide me"))
-				{
-					ui.Log($"changed slider: ({_slider})");
-				}
+			if (ui.Slider(ref _slider, "Slide me"))
+			{
+				ui.Log($"changed slider: ({_slider})");
+			}
 
-				//https://i.pravatar.cc/150?u=fake@pravatar.com
-				//https://i.pravatar.cc/150?u=a042581f4e29026704d
+			#region Code
 
-				/*
-				 <div class="d-flex align-items-center">
-    <ul class="avatars">
-        @foreach (var user in Model)
-        {
-            <li>
-                <a href="#" data-toggle="tooltip" data-placement="top" title="@($"{user.FirstName} {user.LastName}")">
-                    <img alt="@($"{user.FirstName} {user.LastName}")" class="avatar" src="@user.AvatarUrl" />
-                </a>
-            </li>
-        }
-    </ul>
-    <button class="btn btn-round" data-toggle="modal" data-target="#user-manage-modal" title="Manage Collaborators">
-        <i class="material-icons">add</i>
-    </button>
-</div>
-				 */
-
-				#region Code
-
-				SampleCode(ui, @"
+			SampleCode(ui, @"
 if (ui.CheckBox(ref _checked, ""Remember me"", ElementAlignment.Right))
 {
     ui.Log($""checked the box: ({_checked})""); // logs to configured log target
@@ -164,8 +132,7 @@ if (ui.Slider(ref _slider, ""Slide me""))
 {
     ui.Log($""changed slider: ({_slider})"");
 }");
-				#endregion
-			});
+			#endregion
 		}
 
 		#endregion
@@ -176,16 +143,13 @@ if (ui.Slider(ref _slider, ""Slide me""))
 
 		public static void Editor(Ui ui)
 		{
-			MainLayout(ui, () =>
-			{
-				ui.Editor(EditObject); /* WeatherForecast */
+			ui.Editor(EditObject); /* WeatherForecast */
 
-				#region Code
+			#region Code
 
-				SampleCode(ui, "ui.Editor(new WeatherForecast()); /* WeatherForecast */");
+			SampleCode(ui, "ui.Editor(new WeatherForecast()); /* WeatherForecast */");
 
-				#endregion
-			});
+			#endregion
 		}
 
 		#endregion
@@ -196,24 +160,22 @@ if (ui.Slider(ref _slider, ""Slide me""))
 
 		public static void Styles(Ui ui)
         {
-	        MainLayout(ui, () =>
-	        {
-		        ui.Header(1, "Icons");
+			ui.Header(1, "Icons");
 
-				ui.ListTable(Icons.InGroupsOf(5), (i, icons) =>
+			ui.ListTable(Icons.InGroupsOf(5), (i, icons) =>
+			{
+				foreach (var icon in icons)
 				{
-					foreach (var icon in icons)
-					{
-						ui.InlineIcon(icon);
-						ui.NextColumn(ref i);
-						ui.Text(icon.ToCssCase());
-						ui.NextColumn(ref i);
-					}
-				});
+					ui.InlineIcon(icon);
+					ui.NextColumn(ref i);
+					ui.Text(icon.ToCssCase());
+					ui.NextColumn(ref i);
+				}
+			});
 
-				#region Code
+			#region Code
 
-				SampleCode(ui, @"
+			SampleCode(ui, @"
 ui.Header(1, ""Icons"");
 
 ui.ListTable(Icons.InGroupsOf(5), icons =>
@@ -226,9 +188,8 @@ ui.ListTable(Icons.InGroupsOf(5), icons =>
 		ui.NextColumn();
 	}
 });");
-				#endregion
-			});
-        }
+			#endregion
+		}
 
 		#endregion
 
@@ -238,33 +199,30 @@ ui.ListTable(Icons.InGroupsOf(5), icons =>
 
 		public static void SplitTesting(Ui ui)
 		{
-			MainLayout(ui, () =>
-			{
-				ui.Header(1, "Counter");
-				ui.TextBlock($"Current count: {_buttonClicks}");
+			ui.Header(1, "Counter");
+			ui.TextBlock($"Current count: {_buttonClicks}");
 
-				//ui.SplitTest("test1", "split test demo", () =>
-				//{
-				//	if (ui.Button("Click me"))
-				//	{
-				//		_buttonClicks++;
-				//	}
-				//},
-				//() =>
-				//{
-				//	if (ui.Button("Click me now!"))
-				//	{
-				//		_buttonClicks++;
-				//	}
-				//});
+			//ui.SplitTest("test1", "split test demo", () =>
+			//{
+			//	if (ui.Button("Click me"))
+			//	{
+			//		_buttonClicks++;
+			//	}
+			//},
+			//() =>
+			//{
+			//	if (ui.Button("Click me now!"))
+			//	{
+			//		_buttonClicks++;
+			//	}
+			//});
 
-				#region Code
+			#region Code
 
-				SampleCode(ui, @"
+			SampleCode(ui, @"
 ");
 
-				#endregion
-			});
+			#endregion
 		}
 
 		#endregion
@@ -275,27 +233,5 @@ ui.ListTable(Icons.InGroupsOf(5), icons =>
 			ui.Header(3, "Code");
 			ui.CodeBlock(code);
 		}
-
-		private static void MainLayout(Ui ui, Action handler)
-        {
-			ui.BeginMenu("Blowdart.UI Demo");
-			{
-				ui.MenuItem(OpenIconicIcons.Home, "Home", "/");
-				ui.MenuItem(OpenIconicIcons.Plus, "Counter", "/counter");
-				ui.MenuItem(OpenIconicIcons.ListRich, "Fetch Data", "/fetchdata");
-				ui.MenuItem(OpenIconicIcons.Code, "Elements", "/elements");
-				ui.MenuItem(OpenIconicIcons.Folder, "Editor", "/editor");
-				ui.MenuItem(OpenIconicIcons.Aperture, "Styles", "/styles");
-
-				ui.EndMenu();
-			}
-
-            ui.Main(() =>
-            {
-                ui.TopRow(() => { ui.Link("https://github.com/blowdart-ui/blowdart-ui", "About"); });
-
-                ui.MainContent(handler);
-            });
-        }
     }
 }
