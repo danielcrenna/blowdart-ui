@@ -14,7 +14,7 @@ using Microsoft.AspNetCore.Components.Web;
 using Microsoft.Extensions.Options;
 using Microsoft.JSInterop;
 
-namespace Blowdart.UI.Web
+namespace Blowdart.UI.Web.Components
 {
     [SuppressMessage("ReSharper", "UnusedAutoPropertyAccessor.Local")]
     internal sealed class ImGui : ComponentBase, IDisposable

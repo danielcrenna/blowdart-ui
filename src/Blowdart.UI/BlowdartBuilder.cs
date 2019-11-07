@@ -6,7 +6,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Blowdart.UI.Web
+namespace Blowdart.UI
 {
     public class BlowdartBuilder : IServiceCollection
     {

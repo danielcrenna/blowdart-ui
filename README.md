@@ -54,6 +54,7 @@ namespace Blowdart.UI.Demo
 - [ ] Split Tests
 - [ ] Pattern Languages
 - [ ] Schema-Driven
+- [ ] Mockups
 
 ### Planned Platforms :white_square_button:
 

@@ -104,4 +104,10 @@
         accessor.TryGetValue(model, member.Name, out var value);
         return value;
     }
+
+    public void AddError(string fieldName, string errorMessage)
+    {
+        Validator.AddError(_editContext, fieldName, errorMessage);
+    }
+
 }

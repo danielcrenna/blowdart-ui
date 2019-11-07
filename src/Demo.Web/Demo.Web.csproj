@@ -2,10 +2,12 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.0</TargetFramework>
+    <Platforms>AnyCPU;x64</Platforms>
   </PropertyGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Blowdart.UI.Web\Blowdart.UI.Web.csproj" />
+    <ProjectReference Include="..\Demo.Examples\Demo.Examples.csproj" />
   </ItemGroup>
 
 </Project>

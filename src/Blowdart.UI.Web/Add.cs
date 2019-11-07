@@ -3,6 +3,7 @@
 
 using System;
 using System.Diagnostics;
+//using Blowdart.SplitTesting.AspNetCore;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Blowdart.UI.Web
@@ -11,13 +12,15 @@ namespace Blowdart.UI.Web
     {
         public static IServiceCollection AddBlowdart(this IServiceCollection services, Action<BlowdartBuilder> configureAction)
         {
-            var pages = new PageMap();
+	        //services.AddSplitTesting();
 
-            services.AddSingleton(pages);
+			var pages = new PageMap();
+
+			services.AddSingleton(pages);
             services.AddSingleton<IThemeProvider, WebThemeProvider>();
             services.AddSingleton<IInputTransformer, InputTransformer>();
-
-            services.AddRazorPages(o =>
+            
+			services.AddRazorPages(o =>
             {
                 o.RootDirectory = "/Pages";
             });

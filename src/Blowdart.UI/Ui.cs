@@ -3,6 +3,8 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
@@ -688,5 +690,27 @@ namespace Blowdart.UI
         }
 
 		#endregion
+
+		//public void SplitTest(string name, string description, Action a, Action b, params Action[] moreActions)
+		//{
+		//	var identifier = UiServices.GetService<ICohortIdentifier>();
+		//	if (identifier == null)
+		//	{
+  //              Trace.TraceWarning("No split testing identifier was registered, skipping test");
+		//		a();
+		//		return;
+		//	}
+
+		//	var experiment = AddOrGetExperiment(name, description, a, b, moreActions, identifier);
+		//	experiment.Choose(experiment);
+		//}
+
+		//private static Experiment AddOrGetExperiment(string name, string description, Action a, Action b, Action[] moreActions,
+		//	ICohortIdentifier identifier)
+		//{
+		//	var options = moreActions.Concat(new[] {a, b});
+		//	var experiment = new Experiment(identifier, name, description, options, "foo");
+		//	return Experiments.Inner.GetOrAdd(new ExperimentKey(name), experiment);
+		//}
 	}
 }

@@ -4,7 +4,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Blowdart.UI.Web
+namespace Blowdart.UI
 {
     public class PageMap
     {

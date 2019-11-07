@@ -3,6 +3,7 @@
 
 using System;
 using Blowdart.UI.Instructions;
+using Blowdart.UI.Web.Components;
 using Microsoft.AspNetCore.Components.Rendering;
 using Blowdart.UI.Web.Extensions;
 

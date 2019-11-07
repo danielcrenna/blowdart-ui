@@ -45,7 +45,12 @@ namespace Blowdart.UI.Web.Components
             editContext.NotifyValidationStateChanged();
 		}
 
-        private static void ValidateField(EditContext editContext, ValidationMessageStore messages, in FieldIdentifier fieldIdentifier)
+		public void AddError(EditContext editContext, string fieldName, string errorMessage)
+		{
+			_messageStore.Add(editContext.Field(fieldName), errorMessage);
+		}
+		
+		private static void ValidateField(EditContext editContext, ValidationMessageStore messages, in FieldIdentifier fieldIdentifier)
 		{
             var instance = fieldIdentifier.Model;
 
@@ -63,5 +68,5 @@ namespace Blowdart.UI.Web.Components
 
 			editContext.NotifyValidationStateChanged();
 		}
-    }
+	}
 }
