@@ -11,7 +11,10 @@ namespace Blowdart.UI.Web.Rendering
     {
         public void Render(RenderTreeBuilder b, HeaderInstruction header)
         {
-            b.OpenElement($"h{header.Level}");
+	        if (header.Level < 1 || header.Level > 6)
+		        throw new BlowdartException("Headers can only have six levels of rank");
+
+			b.OpenElement($"h{header.Level}");
             b.AddContent(header.Text);
             b.CloseElement();
         }

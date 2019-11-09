@@ -28,7 +28,7 @@ namespace Blowdart.UI.WinForms.Rendering
 				4 => 16,		// 1em
 				5 => 13.28f,    // 0.83em
 				6 => 10.72f,    // 0.67em
-				_ => throw new NotSupportedException("Headers can only have six levels of rank")
+				_ => throw new BlowdartException("Headers can only have six levels of rank")
 			};
 
 			label.Font = new Font(label.Font.Name, emSize);
