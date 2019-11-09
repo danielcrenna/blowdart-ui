@@ -17,7 +17,9 @@ namespace Blowdart.UI.WinForms
 
 	    public ImGui(string title, IServiceProvider serviceProvider)
 	    {
-		    _target = new FormRenderTarget(this);
+		    Icon = Resources.icon;
+
+			_target = new FormRenderTarget(this);
 
 		    _panel = new FlowLayoutPanel
 		    {
