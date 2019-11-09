@@ -3,15 +3,8 @@
 
 namespace Blowdart.UI.Instructions
 {
-	public enum ButtonType
-    {
-        Primary,
-        Secondary,
-        Success,
-        Danger,
-        Warning,
-        Info,
-        Light,
-        Dark
-    }
+	public class BeginMenuHeaderInstruction : RenderInstruction
+	{
+		public override string DebuggerDisplay => $"BeginCollapsibleHeader";
+	}
 }

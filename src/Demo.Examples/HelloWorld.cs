@@ -104,38 +104,28 @@ else
 
 		#region Elements Page
 
-		private static bool _elementsTabOpen = true;
-		private static bool _groupsTabOpen;
-		private static bool _inputTabOpen;
+		private static bool _alertsTabOpen = true;
+		private static bool _inputControlsTabOpen;
 
 		public static void Elements(Ui ui)
 		{
 			ui.BeginTabList();
 
-			if (ui.Tab("Elements", ref _elementsTabOpen))
+			if (ui.Tab("Alerts", ref _alertsTabOpen))
 			{
-				_groupsTabOpen = false;
-				_inputTabOpen = false;
+				_inputControlsTabOpen = false;
 			}
 
-			if (ui.Tab("Groups", ref _groupsTabOpen))
+			if (ui.Tab("Input Controls", ref _inputControlsTabOpen))
 			{
-				_elementsTabOpen = false;
-				_inputTabOpen = false;
+				_alertsTabOpen = false;
 			}
 
-			if (ui.Tab("Input", ref _inputTabOpen))
-			{
-				_groupsTabOpen = false;
-				_elementsTabOpen = false;
-			}
-			
 			ui.EndTabList();
 
 			ui.BeginTabContent();
-			ui.TabContent("Elements", _elementsTabOpen, ElementsTab);
-			ui.TabContent("Groups", _groupsTabOpen, GroupsTab);
-			ui.TabContent("Input", _inputTabOpen, InputTab);
+			ui.TabContent("Alerts", _alertsTabOpen, AlertsTab);
+			ui.TabContent("Input Controls", _inputControlsTabOpen, InputControlsTab);
 			ui.EndTabContent();
 		}
 
@@ -143,7 +133,7 @@ else
 		private static int _slider;
 		private static bool _radioButton;
 
-		public static void ElementsTab(Ui ui)
+		public static void InputControlsTab(Ui ui)
 		{
 			ui.Push(ElementAlignment.Right);
 			if (ui.CheckBox(ref _checked, "Check me"))
@@ -185,9 +175,34 @@ if (ui.RadioButton(ref _radioButton, ""Press me""))
 			#endregion
 		}
 
-		public static void GroupsTab(Ui ui)
+		public static void AlertsTab(Ui ui)
 		{
-			ui.Text("Groups");
+			ui.Header(3, "Alerts");
+			ui.Separator();
+
+			ui.Push(ElementContext.Primary);
+			ui.Alert("This is a primary alert—check it out!");
+
+			ui.Push(ElementContext.Secondary);
+			ui.Alert("This is a secondary alert—check it out!");
+
+			ui.Push(ElementContext.Success);
+			ui.Alert("This is a success alert—check it out!");
+
+			ui.Push(ElementContext.Danger);
+			ui.Alert("This is a danger alert—check it out!");
+
+			ui.Push(ElementContext.Warning);
+			ui.Alert("This is a warning alert—check it out!");
+
+			ui.Push(ElementContext.Info);
+			ui.Alert("This is an info alert—check it out!");
+
+			ui.Push(ElementContext.Dark);
+			ui.Alert("This is a dark alert—check it out!");
+
+			ui.Push(ElementContext.Light);
+			ui.Alert("This is a light alert—check it out!");
 		}
 
 		public static void InputTab(Ui ui)

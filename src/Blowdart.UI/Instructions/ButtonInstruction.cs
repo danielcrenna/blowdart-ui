@@ -9,10 +9,10 @@ namespace Blowdart.UI.Instructions
     {
         public Ui Ui { get; }
         public Value128 Id { get; }
-        public ButtonType Type { get; }
+        public ElementContext Type { get; }
         public string Text { get; }
 
-        public ButtonInstruction(Ui ui, Value128 id, ButtonType type, string text)
+        public ButtonInstruction(Ui ui, Value128 id, ElementContext type, string text)
         {
             Ui = ui;
             Id = id;

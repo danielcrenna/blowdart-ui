@@ -3,7 +3,7 @@
 
 using System.Collections.Generic;
 
-namespace Blowdart.UI.Instructions
+namespace Blowdart.UI
 {
     public struct TableRow
     {

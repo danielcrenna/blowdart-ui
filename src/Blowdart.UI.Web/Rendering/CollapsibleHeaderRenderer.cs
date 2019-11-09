@@ -9,8 +9,8 @@ using Microsoft.AspNetCore.Components.Rendering;
 namespace Blowdart.UI.Web.Rendering
 {
 	internal sealed class CollapsibleHeaderRenderer : 
-		IWebRenderer<BeginCollapsibleHeaderInstruction>,
-		IWebRenderer<EndCollapsibleHeaderInstruction>
+		IWebRenderer<BeginMenuHeaderInstruction>,
+		IWebRenderer<EndMenuHeaderInstruction>
 	{
 		private readonly ImGui _imGui;
 		private static bool _collapseNavMenu;
@@ -22,12 +22,12 @@ namespace Blowdart.UI.Web.Rendering
 			_imGui = imGui;
 		}
 
-		public void Render(RenderTreeBuilder b, BeginCollapsibleHeaderInstruction begin)
+		public void Render(RenderTreeBuilder b, BeginMenuHeaderInstruction begin)
 		{
 			b.BeginAnchor("navbar-brand");
 		}
 
-		public void Render(RenderTreeBuilder b, EndCollapsibleHeaderInstruction end)
+		public void Render(RenderTreeBuilder b, EndMenuHeaderInstruction end)
 		{
 			b.CloseElement(); // BeginAnchor
 
@@ -43,10 +43,10 @@ namespace Blowdart.UI.Web.Rendering
 		{
 			switch (instruction)
 			{
-				case BeginCollapsibleHeaderInstruction begin:
+				case BeginMenuHeaderInstruction begin:
 					Render(b, begin);
 					break;
-				case EndCollapsibleHeaderInstruction end:
+				case EndMenuHeaderInstruction end:
 					Render(b, end);
 					break;
 			}

@@ -32,14 +32,14 @@ namespace Blowdart.UI.Web.Rendering
         {
             var css = button.Type switch
             {
-                ButtonType.Primary => "btn btn-primary",
-                ButtonType.Secondary => "btn btn-secondary",
-                ButtonType.Success => "btn btn-success",
-                ButtonType.Danger => "btn btn-danger",
-                ButtonType.Warning => "btn btn-warning",
-                ButtonType.Info => "btn btn-info",
-                ButtonType.Light => "btn btn-light",
-                ButtonType.Dark => "btn btn-dark",
+                ElementContext.Primary => "btn btn-primary",
+                ElementContext.Secondary => "btn btn-secondary",
+                ElementContext.Success => "btn btn-success",
+                ElementContext.Danger => "btn btn-danger",
+                ElementContext.Warning => "btn btn-warning",
+                ElementContext.Info => "btn btn-info",
+                ElementContext.Light => "btn btn-light",
+                ElementContext.Dark => "btn btn-dark",
                 _ => throw new ArgumentOutOfRangeException()
             };
 

@@ -94,7 +94,7 @@ namespace Blowdart.UI.Web.Rendering
 	                    case ElementType.TabContent:
                             b.BeginDiv($"tab-content{css}");
 							break;
-							default:
+						default:
                             throw new ArgumentOutOfRangeException();
                     }
 

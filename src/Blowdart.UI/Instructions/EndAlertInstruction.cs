@@ -3,11 +3,8 @@
 
 namespace Blowdart.UI.Instructions
 {
-    public enum ContainerDirection
-    {
-        LeftToRight,
-        RightToLeft,
-        TopToBottom,
-        BottomToTop
-    }
+	public class EndAlertInstruction : RenderInstruction
+	{
+		public override string DebuggerDisplay => $"EndAlert";
+	}
 }

@@ -47,7 +47,14 @@ namespace Blowdart.UI
 
 		private readonly Stack<ElementAlignment> _alignments = new Stack<ElementAlignment>();
 		private readonly Stack<InputActivation> _activations = new Stack<InputActivation>();
-		
+		private readonly Stack<ElementContext> _contexts = new Stack<ElementContext>();
+
+		public ElementContext Push(ElementContext context)
+		{
+			_contexts.Push(context);
+			return context;
+		}
+
 		public InputActivation Push(InputActivation activation)
 		{
 			_activations.Push(activation);
@@ -62,11 +69,20 @@ namespace Blowdart.UI
 
 		internal bool TryPop<T>(out T option)
 		{
-			if(typeof(T) == typeof(InputActivation))
+			if (typeof(T) == typeof(InputActivation))
 			{
 				if (_activations.Count > 0)
 				{
 					option = (T) (object) _activations.Pop();
+					return true;
+				}
+			}
+
+			if (typeof(T) == typeof(ElementContext))
+			{
+				if (_contexts.Count > 0)
+				{
+					option = (T) (object) _contexts.Pop();
 					return true;
 				}
 			}

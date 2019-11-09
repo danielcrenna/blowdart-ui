@@ -3,8 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
@@ -24,6 +22,27 @@ namespace Blowdart.UI
         public Ui()
         {
 	        Instructions = new List<RenderInstruction>();
+        }
+
+        internal void Begin()
+        {
+	        Instructions.Clear();
+	        NextIdHash = default;
+	        _count = default;
+	        _body = default;
+	        CalledLayout = default;
+        }
+
+
+        public void RenderToTarget<T>(RenderTarget target, T renderer)
+        {
+	        target.AddInstructions(Instructions);
+	        target.Render(renderer);
+        }
+
+        public void Dispose()
+        {
+	        Instructions.Clear();
         }
 
 		#region Elements
@@ -361,7 +380,7 @@ namespace Blowdart.UI
 				_hasMenuItems = true;
 			}
 
-			Instructions.Add(new BeginCollapsibleHeaderInstruction());
+			Instructions.Add(new BeginMenuHeaderInstruction());
 		}
 
 		public void EndMenuHeader()
@@ -371,7 +390,7 @@ namespace Blowdart.UI
             if (!_hasMenuItems)
 	            throw new BlowdartException($"{nameof(EndMenuHeader)} was called before {nameof(BeginMenuHeader)}");
 
-			Instructions.Add(new EndCollapsibleHeaderInstruction());
+			Instructions.Add(new EndMenuHeaderInstruction());
 		}
 
 		public void EndMenu()
@@ -581,10 +600,13 @@ namespace Blowdart.UI
             Instructions.Add(new HeaderInstruction(level, innerText));
         }
 
-        public bool Button(string text, ButtonType type = ButtonType.Primary)
+        public bool Button(string text)
         {
 			var id = NextId();
-			Instructions.Add(new ButtonInstruction(this, id, type, text));
+
+			TryPop<ElementContext>(out var context);
+
+			Instructions.Add(new ButtonInstruction(this, id, context, text));
             return OnEvent(DomEvents.OnClick, id, out _);
         }
 
@@ -643,21 +665,6 @@ namespace Blowdart.UI
 	        return clicked;
         }
 
-		internal bool OnEvent(string eventType, Value128 id, out object data)
-        {
-            var contains = _events.Contains(eventType, id);
-            if (contains)
-            {
-	            _events.Remove(eventType, id);
-	            if (_eventData.TryGetValue(id, out data))
-					_eventData.Remove(id);
-	            return true;
-            }
-
-            data = default;
-            return false;
-        }
-		
 		public void Component(Action<Ui> handler)
         {
             handler(this);
@@ -693,22 +700,35 @@ namespace Blowdart.UI
 			Instructions.Add(new InlineImageInstruction(source, width, height));
 		}
 
+		public void Separator()
+		{
+			Instructions.Add(new SeparatorInstruction());
+		}
+
+		public void BeginAlert()
+		{
+			TryPop<ElementContext>(out var context);
+			Instructions.Add(new BeginAlertInstruction(context));
+		}
+
+		public void EndAlert()
+		{
+			Instructions.Add(new EndAlertInstruction());
+		}
+        
+        public void Alert(string text)
+		{
+			TryPop<ElementContext>(out var context);
+			Instructions.Add(new BeginAlertInstruction(context));
+			Instructions.Add(new TextInstruction(text));
+			Instructions.Add(new EndAlertInstruction());
+		}
+
 		#endregion
 
-		public void RenderToTarget<T>(RenderTarget target, T renderer)
-		{
-            target.AddInstructions(Instructions);
-            target.Render(renderer);
-        }
+		#region Hashing 
 
-        public void Dispose()
-        {
-            Instructions.Clear();
-        }
-
-        #region Hashing 
-
-        internal Value128 NextIdHash;
+		internal Value128 NextIdHash;
         private int _count;
 
         public Value128 NextId(string id = null, [CallerMemberName] string callerMemberName = null)
@@ -731,79 +751,88 @@ namespace Blowdart.UI
 
         #endregion
 
+        #region Events
+
         private readonly MultiValueDictionary<string, Value128> _events =
-            MultiValueDictionary<string, Value128>.Create<HashSet<Value128>>();
+	        MultiValueDictionary<string, Value128>.Create<HashSet<Value128>>();
 
         private readonly Dictionary<Value128, object> _eventData = new Dictionary<Value128, object>();
 
-		public void AddEvent(string eventType, Value128 id, object data)
+        public void AddEvent(string eventType, Value128 id, object data)
         {
-            _events.Add(eventType, id);
-            if (data != null)
-				_eventData.Add(id, data);
+	        _events.Add(eventType, id);
+	        if (data != null)
+		        _eventData.Add(id, data);
+        }
+
+        internal bool OnEvent(string eventType, Value128 id, out object data)
+        {
+	        var contains = _events.Contains(eventType, id);
+	        if (contains)
+	        {
+		        _events.Remove(eventType, id);
+		        if (_eventData.TryGetValue(id, out data))
+			        _eventData.Remove(id);
+		        return true;
+	        }
+
+	        data = default;
+	        return false;
+        }
+
+		#endregion
+
+		#region Data Loading
+
+		private readonly List<IPromise> _dataLoaders = new List<IPromise>();
+
+		private interface IPromise
+		{
+			Task LoadAsync(IServiceProvider serviceProvider);
 		}
 
-        internal void Begin()
-        {
-            Instructions.Clear();
-            NextIdHash = default;
-            _count = default;
-            _body = default;
-            CalledLayout = default;
-        }
+		private struct Promise<T> : IPromise
+		{
+			private readonly Func<IServiceProvider, T> _getData;
+			private readonly Action<T> _setData;
 
-        private readonly List<IPromise> _dataLoaders = new List<IPromise>();
+			public Promise(Func<IServiceProvider, T> getData, Action<T> setData)
+			{
+				_getData = getData;
+				_setData = setData;
+			}
 
-        private interface IPromise
-        {
-            Task LoadAsync(IServiceProvider serviceProvider);
-        }
+			public Task LoadAsync(IServiceProvider serviceProvider)
+			{
+				var data = _getData(serviceProvider);
+				_setData(data);
+				return Task.CompletedTask;
+			}
+		}
 
-        private struct Promise<T> : IPromise
-        {
-            private readonly Func<IServiceProvider, T> _getData;
-            private readonly Action<T> _setData;
+		public void DataLoader<T>(Func<IServiceProvider, T> getData, Action<T> setData)
+		{
+			_dataLoaders.Add(new Promise<T>(getData, setData));
+		}
 
-            public Promise(Func<IServiceProvider, T> getData, Action<T> setData)
-            {
-                _getData = getData;
-                _setData = setData;
-            }
+		public void DataLoader<TService, TResult>(Func<TService, TResult> getData, Action<TResult> setData)
+		{
+			TResult Fetch(IServiceProvider r) => getData(r.GetRequiredService<TService>());
 
-            public Task LoadAsync(IServiceProvider serviceProvider)
-            {
-                var data = _getData(serviceProvider);
-                _setData(data);
-                return Task.CompletedTask;
-            }
-        }
-
-        public void DataLoader<T>(Func<IServiceProvider, T> getData, Action<T> setData)
-        {
-            _dataLoaders.Add(new Promise<T>(getData, setData));
-        }
-
-        public void DataLoader<TService, TResult>(Func<TService, TResult> getData, Action<TResult> setData)
-        {
-	        TResult Fetch(IServiceProvider r) => getData(r.GetRequiredService<TService>());
-
-	        _dataLoaders.Add(new Promise<TResult>(Fetch, setData));
-        }
+			_dataLoaders.Add(new Promise<TResult>(Fetch, setData));
+		}
 
 		internal async Task<bool> DispatchDataLoaders()
-        {
-            if (_dataLoaders.Count == 0)
-                return false;
+		{
+			if (_dataLoaders.Count == 0)
+				return false;
 
-            foreach (var dataLoader in _dataLoaders)
-                await dataLoader.LoadAsync(UiServices);
-            return true;
-        }
+			foreach (var dataLoader in _dataLoaders)
+				await dataLoader.LoadAsync(UiServices);
+			return true;
+		}
 
-        public void Separator()
-        {
-	        Instructions.Add(new SeparatorInstruction());
-        }
+		#endregion
 
 		#region IServiceProvider
 
