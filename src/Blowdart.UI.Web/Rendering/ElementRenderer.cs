@@ -87,7 +87,14 @@ namespace Blowdart.UI.Web.Rendering
                         case ElementType.Menu:
 	                        b.BeginDiv($"sidebar{css}");
 	                        break;
-						default:
+                        case ElementType.TabList:
+	                        b.BeginUnorderedList($"nav nav-tabs{css}");
+							b.AddAttribute(HtmlAttributes.Role, "tablist");
+	                        break;
+	                    case ElementType.TabContent:
+                            b.BeginDiv($"tab-content{css}");
+							break;
+							default:
                             throw new ArgumentOutOfRangeException();
                     }
 

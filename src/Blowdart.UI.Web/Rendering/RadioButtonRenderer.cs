@@ -34,19 +34,19 @@ namespace Blowdart.UI.Web.Rendering
 
 			void RenderLabel()
 			{
-				b.OpenElement(Strings.Label);
+				b.OpenElement(HtmlElements.Label);
 				{
-					b.AddAttribute(Strings.Class, "form-radio-label");
-					b.AddAttribute(Strings.For, radioButton.Id);
+					b.AddAttribute(HtmlAttributes.Class, "form-radio-label");
+					b.AddAttribute(HtmlAttributes.For, radioButton.Id);
 					b.AddContent(radioButton.Text);
 
 					b.CloseElement();
 				}
 			}
 
-			b.OpenElement(Strings.Div);
+			b.OpenElement(HtmlElements.Div);
 			{
-				b.AddAttribute(Strings.Class, Strings.Radio);
+				b.AddAttribute(HtmlAttributes.Class, InputTypes.Radio);
 
 				switch (radioButton.Alignment)
 				{
@@ -67,12 +67,12 @@ namespace Blowdart.UI.Web.Rendering
 
 			void RenderInput()
 			{
-				b.OpenElement(Strings.Input);
+				b.OpenElement(HtmlElements.Input);
 				{
-					b.AddAttribute(Strings.Class, "form-radio-input");
-					b.AddAttribute(Strings.Type, Strings.Radio);
-					b.AddAttribute(Strings.Checked, radioButton.Value);
-					b.AddAttribute(Strings.Id, radioButton.Id);
+					b.AddAttribute(HtmlAttributes.Class, "form-radio-input");
+					b.AddAttribute(HtmlAttributes.Type, InputTypes.Radio);
+					b.AddAttribute(HtmlAttributes.Checked, radioButton.Value);
+					b.AddAttribute(HtmlAttributes.Id, radioButton.Id);
 					b.AddAttribute(Events.OnClick, onclick);
 
 					b.CloseElement();

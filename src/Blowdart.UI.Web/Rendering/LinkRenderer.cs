@@ -11,9 +11,9 @@ namespace Blowdart.UI.Web.Rendering
     {
         public void Render(RenderTreeBuilder b, LinkInstruction link)
         {
-            b.OpenElement(Strings.Anchor);
-            b.AddAttribute(Strings.Href, link.Href);
-            b.AddAttribute(Strings.Target, "_blank");
+            b.OpenElement(HtmlElements.Anchor);
+            b.AddAttribute(HtmlAttributes.Href, link.Href);
+            b.AddAttribute(HtmlAttributes.Target, "_blank");
             b.AddContent(link.Title);
             b.CloseElement();
         }

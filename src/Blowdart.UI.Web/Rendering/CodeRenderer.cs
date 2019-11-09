@@ -17,10 +17,10 @@ namespace Blowdart.UI.Web.Rendering
 		{
 			if (code.Block)
 			{
-				b.OpenElement(Strings.Pre);
-				b.AddAttribute(Strings.Class, ".pre-scrollable");
+				b.OpenElement(HtmlElements.Pre);
+				b.AddAttribute(HtmlAttributes.Class, ".pre-scrollable");
 			}
-			b.OpenElement(Strings.Code);
+			b.OpenElement(HtmlElements.Code);
 			b.AddContent(EscapeAngleBrackets(code.Value));
 			b.CloseElement();
 			if(code.Block)

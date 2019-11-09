@@ -367,6 +367,69 @@ namespace Blowdart.UI
 
 		#endregion
 
+		#region Tabs
+
+		private bool _inTabList;
+
+		public void BeginTabList()
+		{
+			Instructions.Add(new BeginElementInstruction(ElementType.TabList));
+			_inTabList = true;
+		}
+
+		public bool Tab(string text, ref bool active)
+		{
+			if (!_inTabList)
+				throw new BlowdartException("Attempted to create a tab outside of a tab block.");
+
+			var id = PushId(NextId());
+			Instructions.Add(new TabListItemInstruction(this, id, text, active));
+			var clicked = OnEvent(Events.OnClick, id, out _);
+			if (clicked)
+				active = !active;
+			return clicked;
+		}
+
+		public void EndTabList()
+		{
+			Instructions.Add(new EndElementInstruction(ElementType.TabList));
+			_inTabList = false;
+		}
+
+		private bool _inTabContent;
+
+		public void BeginTabContent()
+		{
+			Instructions.Add(new BeginElementInstruction(ElementType.TabContent));
+			_inTabContent = true;
+		}
+
+		public void TabContent(string text, bool active, Action<Ui> handler)
+		{
+			if (!_inTabContent)
+				throw new BlowdartException("Attempted to create tab content outside of a tab content block.");
+			Instructions.Add(new BeginTabContentInstruction(this, PopId(), text, active));
+			Component(handler);
+			Instructions.Add(new EndTabContentInstruction());
+		}
+
+		public void TabContent(string text, bool active, Action handler)
+		{
+			if (!_inTabContent)
+				throw new BlowdartException("Attempted to create tab content outside of a tab content block.");
+			Instructions.Add(new BeginTabContentInstruction(this, PopId(), text, active));
+			Component(handler);
+			Instructions.Add(new EndTabContentInstruction());
+		}
+
+		public void EndTabContent()
+		{
+			Instructions.Add(new EndElementInstruction(ElementType.TabContent));
+			_inTabContent = false;
+		}
+
+		#endregion
+
 		#region Tables
 
 		public void ObjectTable<T>(IEnumerable<T> data)
@@ -466,8 +529,7 @@ namespace Blowdart.UI
 		}
 
 		#endregion
-
-
+		
 		#endregion
 
 		#region Commands 

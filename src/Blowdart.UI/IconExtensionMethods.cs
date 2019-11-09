@@ -9,7 +9,13 @@ namespace Blowdart.UI
 	{
 		public static string ToCssCase(this OpenIconicIcons icon)
 		{
-			return string.Concat(icon.ToString().Select((x, i) => i > 0 && char.IsUpper(x) ? $"-{x}" : $"{x}")).ToLowerInvariant();
+			return ToCssCase(icon.ToString());
+		}
+
+		internal static string ToCssCase(this string value)
+		{
+			return string.Concat(value.Select((x, i) => i > 0 && char.IsUpper(x) ? $"-{x}" : $"{x}"))
+				.ToLowerInvariant();
 		}
 	}
 }

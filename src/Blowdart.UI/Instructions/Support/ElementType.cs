@@ -17,6 +17,8 @@ namespace Blowdart.UI.Instructions
 		Table,
 		TableRow,
 		TableColumn,
-		Menu
+		Menu,
+		TabList,
+		TabContent
     }
 }

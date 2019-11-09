@@ -34,19 +34,19 @@ namespace Blowdart.UI.Web.Rendering
 
 			void RenderLabel()
 			{
-				b.OpenElement(Strings.Label);
+				b.OpenElement(HtmlElements.Label);
 				{
-					b.AddAttribute(Strings.Class, "form-check-label");
-					b.AddAttribute(Strings.For, checkBox.Id);
+					b.AddAttribute(HtmlAttributes.Class, "form-check-label");
+					b.AddAttribute(HtmlAttributes.For, checkBox.Id);
 					b.AddContent(checkBox.Text);
 
 					b.CloseElement();
 				}
 			}
 
-			b.OpenElement(Strings.Div);
+			b.OpenElement(HtmlElements.Div);
 			{
-				b.AddAttribute(Strings.Class, "form-inline");
+				b.AddAttribute(HtmlAttributes.Class, "form-inline");
 
 				switch (checkBox.Alignment)
 				{
@@ -67,12 +67,12 @@ namespace Blowdart.UI.Web.Rendering
 			
 			void RenderInput()
 			{
-				b.OpenElement(Strings.Input);
+				b.OpenElement(HtmlElements.Input);
 				{
-					b.AddAttribute(Strings.Class, "form-check-input");
-					b.AddAttribute(Strings.Type, Strings.Checkbox);
-					b.AddAttribute(Strings.Value, checkBox.Value);
-					b.AddAttribute(Strings.Id, checkBox.Id);
+					b.AddAttribute(HtmlAttributes.Class, "form-check-input");
+					b.AddAttribute(HtmlAttributes.Type, InputTypes.Checkbox);
+					b.AddAttribute(HtmlAttributes.Value, checkBox.Value);
+					b.AddAttribute(HtmlAttributes.Id, checkBox.Id);
 					b.AddAttribute(Events.OnClick, onclick);
 
 					b.CloseElement();

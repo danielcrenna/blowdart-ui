@@ -10,12 +10,12 @@ namespace Blowdart.UI.Web.Components
 	{
 		protected override void BuildRenderTree(RenderTreeBuilder b)
 		{
-            b.OpenElement(Strings.Label);
+            b.OpenElement(HtmlElements.Label);
 
-            b.AddAttribute(Strings.For, FieldIdentifier.FieldName.ToLowerInvariant());
+            b.AddAttribute(HtmlAttributes.For, FieldIdentifier.FieldName.ToLowerInvariant());
 
             if (CssClass != null)
-                b.AddAttribute(Strings.Class, CssClass);
+                b.AddAttribute(HtmlAttributes.Class, CssClass);
 
             if (AdditionalAttributes != null)
                 b.AddMultipleAttributes(AdditionalAttributes);

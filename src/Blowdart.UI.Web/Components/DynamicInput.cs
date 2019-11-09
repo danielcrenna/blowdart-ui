@@ -56,41 +56,41 @@ namespace Blowdart.UI.Web.Components
 	        if (!FieldIdentifier.IsVisible())
 				return;
 
-			b.OpenElement(Strings.Input);
+			b.OpenElement(HtmlElements.Input);
 
-			b.AddAttribute(Strings.Id, FieldIdentifier.FieldName.ToLowerInvariant());
+			b.AddAttribute(HtmlAttributes.Id, FieldIdentifier.FieldName.ToLowerInvariant());
 
 			if (CssClass != null)
-				b.AddAttribute(Strings.Class, CssClass);
+				b.AddAttribute(HtmlAttributes.Class, CssClass);
 
 			if (FieldIdentifier.IsReadOnly())
-				b.AddAttribute(Strings.Disabled, true);
+				b.AddAttribute(HtmlAttributes.Disabled, true);
 
 			var prompt = Placeholder ?? FieldIdentifier.Prompt();
 			if (!string.IsNullOrWhiteSpace(prompt))
-				b.AddAttribute(Strings.Placeholder, prompt);
+				b.AddAttribute(HtmlAttributes.Placeholder, prompt);
 
 			if (ElementType == typeof(bool) || ElementType == typeof(bool?))
 			{
-				b.AddAttribute(Strings.Type, Strings.Checkbox);
+				b.AddAttribute(HtmlAttributes.Type, InputTypes.Checkbox);
 
 				if(Value is bool flag)
-					b.AddAttribute(Strings.Checked, flag);
+					b.AddAttribute(HtmlAttributes.Checked, flag);
 			}
 			else if (FieldIdentifier.IsEmailAddress())
 			{
-				b.AddAttribute(Strings.Type, Strings.Email);
+				b.AddAttribute(HtmlAttributes.Type, InputTypes.Email);
 			}
 			else if (FieldIdentifier.IsPassword())
 			{
-				b.AddAttribute(Strings.Type, Strings.Password);
+				b.AddAttribute(HtmlAttributes.Type, InputTypes.Password);
 			}
 			else if (FieldIdentifier.IsDate() || FieldIdentifier.IsDateTime())
 			{
 				// bootstrap-datepicker:
-				b.AddAttribute(Strings.AutoComplete, Strings.Off);
-				b.AddAttribute(Strings.Type, Strings.Text);
-				b.AddAttribute(Strings.Class, "datepicker");
+				b.AddAttribute(HtmlAttributes.AutoComplete, HtmlAttributes.Off);
+				b.AddAttribute(HtmlAttributes.Type, InputTypes.Text);
+				b.AddAttribute(HtmlAttributes.Class, "datepicker");
 				b.AddAttribute("data-provide", "datepicker");
 				b.AddAttribute("data-date-format", GetDateFormat());
 				//b.AddAttribute(Events.OnBlur, SetValueOnBlur);
@@ -99,7 +99,7 @@ namespace Blowdart.UI.Web.Components
 
 			var boundValue = BindConverter.FormatValue(Value);
 			if (boundValue != default)
-				b.AddAttribute(Strings.Value, boundValue);
+				b.AddAttribute(HtmlAttributes.Value, boundValue);
 
 			b.AddAttribute(Events.OnChange, OnChange);
 			b.AddMultipleAttributes(AdditionalAttributes);

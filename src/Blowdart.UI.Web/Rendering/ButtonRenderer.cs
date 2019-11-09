@@ -45,9 +45,9 @@ namespace Blowdart.UI.Web.Rendering
 
             var onclick = _imGui.OnClickCallback(button.Id);
 
-            b.OpenElement(Strings.Button);
-            b.AddAttribute(Strings.Id, button.Id);
-            b.AddAttribute(Strings.Class, css);
+            b.OpenElement(HtmlElements.Button);
+            b.AddAttribute(HtmlAttributes.Id, button.Id);
+            b.AddAttribute(HtmlAttributes.Class, css);
             b.AddAttribute(Events.OnClick, onclick);
             b.AddContent(button.Text);
             b.CloseElement();

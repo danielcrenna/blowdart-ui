@@ -21,6 +21,8 @@ namespace Blowdart.UI.Web
 	        _fragments = new List<RenderFragment>();
 
             var elementRenderer = new ElementRenderer();
+            var tabContentRenderer = new TabContentRenderer();
+
             _renderers = new Dictionary<Type, IWebRenderer>
             {
                 {typeof(BeginElementInstruction), elementRenderer},
@@ -36,7 +38,10 @@ namespace Blowdart.UI.Web
 				{typeof(LinkInstruction), new LinkRenderer()},
                 {typeof(HeaderInstruction), new HeaderRenderer()},
                 {typeof(EditorInstruction), new EditorRenderer()},
-                {typeof(InlineIconInstruction), new InlineIconRenderer()},
+                {typeof(TabListItemInstruction), new TabListItemRenderer(imGui)},
+                {typeof(BeginTabContentInstruction), tabContentRenderer},
+                {typeof(EndTabContentInstruction), tabContentRenderer},
+				{typeof(InlineIconInstruction), new InlineIconRenderer()},
                 {typeof(ObjectTableInstruction), new ObjectTableRenderer()},
                 {typeof(MenuItemInstruction), new MenuItemRenderer()},
                 {typeof(BeginCollapsibleInstruction), new BeginCollapsibleRenderer(imGui)},

@@ -11,12 +11,12 @@ namespace Blowdart.UI.Web.Rendering
     {
         public void Render(RenderTreeBuilder b, ObjectTableInstruction table)
         {
-            b.OpenElement(Strings.Table);
-            b.OpenElement(Strings.TableHeaderSection);
-            b.OpenElement(Strings.TableRow);
+            b.OpenElement(HtmlElements.Table);
+            b.OpenElement(HtmlElements.TableHeaderSection);
+            b.OpenElement(HtmlElements.TableRow);
             foreach (var header in table.Headers)
             {
-                b.OpenElement(Strings.TableHeader);
+                b.OpenElement(HtmlElements.TableHeader);
                 b.AddContent(header);
                 b.CloseElement();
             }
@@ -24,13 +24,13 @@ namespace Blowdart.UI.Web.Rendering
             b.CloseElement();
             b.CloseElement();
 
-            b.OpenElement(Strings.TableBodySection);
+            b.OpenElement(HtmlElements.TableBodySection);
             foreach (var row in table.Rows)
             {
-                b.OpenElement(Strings.TableRow);
+                b.OpenElement(HtmlElements.TableRow);
                 foreach (var column in row.Columns)
                 {
-                    b.OpenElement(Strings.TableColumn);
+                    b.OpenElement(HtmlElements.TableColumn);
                     b.AddContent(column);
                     b.CloseElement();
                 }
@@ -39,7 +39,7 @@ namespace Blowdart.UI.Web.Rendering
 
             b.CloseElement();
 
-            b.OpenElement(Strings.TableFooterSection);
+            b.OpenElement(HtmlElements.TableFooterSection);
             b.CloseElement();
 
             b.CloseElement();

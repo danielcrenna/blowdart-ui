@@ -11,7 +11,7 @@ namespace Blowdart.UI.Web.Rendering
 	{
 		public void Render(RenderTreeBuilder b, SeparatorInstruction text)
 		{
-			b.OpenElement(Strings.HorizontalRule);
+			b.OpenElement(HtmlElements.HorizontalRule);
 			b.CloseElement();
 		}
 

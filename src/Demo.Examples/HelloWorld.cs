@@ -105,11 +105,46 @@ else
 
 		#region Elements Page
 
+		private static bool _elementsTabOpen = true;
+		private static bool _groupsTabOpen;
+		private static bool _inputTabOpen;
+
+		public static void Elements(Ui ui)
+		{
+			ui.BeginTabList();
+
+			if (ui.Tab("Elements", ref _elementsTabOpen))
+			{
+				_groupsTabOpen = false;
+				_inputTabOpen = false;
+			}
+
+			if (ui.Tab("Groups", ref _groupsTabOpen))
+			{
+				_elementsTabOpen = false;
+				_inputTabOpen = false;
+			}
+
+			if (ui.Tab("Input", ref _inputTabOpen))
+			{
+				_groupsTabOpen = false;
+				_elementsTabOpen = false;
+			}
+			
+			ui.EndTabList();
+
+			ui.BeginTabContent();
+			ui.TabContent("Elements", _elementsTabOpen, ElementsTab);
+			ui.TabContent("Groups", _groupsTabOpen, GroupsTab);
+			ui.TabContent("Input", _inputTabOpen, InputTab);
+			ui.EndTabContent();
+		}
+
 		private static bool _checked;
 		private static int _slider;
 		private static bool _radioButton;
 
-		public static void Elements(Ui ui)
+		public static void ElementsTab(Ui ui)
 		{
 			if (ui.CheckBox(ref _checked, "Check me", ElementAlignment.Right))
 			{
@@ -147,6 +182,16 @@ if (ui.RadioButton(ref _radioButton, ""Press me""))
 			#endregion
 		}
 
+		public static void GroupsTab(Ui ui)
+		{
+			ui.Text("Groups");
+		}
+
+		public static void InputTab(Ui ui)
+		{
+			ui.Text("Input");
+		}
+
 		#endregion
 
 		#region Editor Page
@@ -155,11 +200,11 @@ if (ui.RadioButton(ref _radioButton, ""Press me""))
 
 		public static void Editor(Ui ui)
 		{
-			ui.Editor(EditObject); /* WeatherForecast */
+			ui.Editor(EditObject);
 
 			#region Code
 
-			SampleCode(ui, "ui.Editor(new WeatherForecast()); /* WeatherForecast */");
+			SampleCode(ui, "ui.Editor(new WeatherForecast());");
 
 			#endregion
 		}
