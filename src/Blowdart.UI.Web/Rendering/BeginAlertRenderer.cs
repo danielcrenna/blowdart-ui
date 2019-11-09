@@ -11,8 +11,24 @@ namespace Blowdart.UI.Web.Rendering
 	{
 		public void Render(RenderTreeBuilder b, BeginAlertInstruction alert)
 		{
-			b.BeginDiv($"alert alert-{alert.Context.ToString().ToLowerInvariant()}");
+			var context = alert.Context.ToString().ToLowerInvariant();
+			
+			b.BeginDiv($"alert alert-{context} alert-dismissible fade show");
 			b.AddAttribute(HtmlAttributes.Role, "alert");
+            
+            b.BeginElement("button", "close");
+            {
+                b.AddAttribute(HtmlAttributes.Type, HtmlInputTypes.Button);
+	            b.AddAttribute(HtmlAttributes.Data.Dismiss, "alert");
+	            b.AddAttribute(HtmlAttributes.Aria.Label, "close");
+				b.BeginSpan("");
+				{
+                    b.AriaHidden();
+                    b.AddContent("x");
+                    b.CloseElement();
+				}
+	            b.CloseElement();
+			}
 		}
 
 		public void Render(RenderTreeBuilder b, RenderInstruction instruction)

@@ -72,24 +72,24 @@ namespace Blowdart.UI.Web.Components
 
 			if (ElementType == typeof(bool) || ElementType == typeof(bool?))
 			{
-				b.AddAttribute(HtmlAttributes.Type, InputTypes.Checkbox);
+				b.AddAttribute(HtmlAttributes.Type, HtmlInputTypes.Checkbox);
 
 				if(Value is bool flag)
 					b.AddAttribute(HtmlAttributes.Checked, flag);
 			}
 			else if (FieldIdentifier.IsEmailAddress())
 			{
-				b.AddAttribute(HtmlAttributes.Type, InputTypes.Email);
+				b.AddAttribute(HtmlAttributes.Type, HtmlInputTypes.Email);
 			}
 			else if (FieldIdentifier.IsPassword())
 			{
-				b.AddAttribute(HtmlAttributes.Type, InputTypes.Password);
+				b.AddAttribute(HtmlAttributes.Type, HtmlInputTypes.Password);
 			}
 			else if (FieldIdentifier.IsDate() || FieldIdentifier.IsDateTime())
 			{
 				// bootstrap-datepicker:
 				b.AddAttribute(HtmlAttributes.AutoComplete, HtmlAttributes.Off);
-				b.AddAttribute(HtmlAttributes.Type, InputTypes.Text);
+				b.AddAttribute(HtmlAttributes.Type, HtmlInputTypes.Text);
 				b.AddAttribute(HtmlAttributes.Class, "datepicker");
 				b.AddAttribute("data-provide", "datepicker");
 				b.AddAttribute("data-date-format", GetDateFormat());

@@ -46,7 +46,7 @@ namespace Blowdart.UI.Web.Rendering
 
 			b.OpenElement(HtmlElements.Div);
 			{
-				b.AddAttribute(HtmlAttributes.Class, InputTypes.Radio);
+				b.AddAttribute(HtmlAttributes.Class, HtmlInputTypes.Radio);
 
 				switch (radioButton.Alignment)
 				{
@@ -70,7 +70,7 @@ namespace Blowdart.UI.Web.Rendering
 				b.OpenElement(HtmlElements.Input);
 				{
 					b.AddAttribute(HtmlAttributes.Class, "form-radio-input");
-					b.AddAttribute(HtmlAttributes.Type, InputTypes.Radio);
+					b.AddAttribute(HtmlAttributes.Type, HtmlInputTypes.Radio);
 					b.AddAttribute(HtmlAttributes.Checked, radioButton.Value);
 					b.AddAttribute(HtmlAttributes.Id, radioButton.Id);
 					b.AddAttribute(DomEvents.OnClick, onclick);

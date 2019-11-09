@@ -603,9 +603,7 @@ namespace Blowdart.UI
         public bool Button(string text)
         {
 			var id = NextId();
-
 			TryPop<ElementContext>(out var context);
-
 			Instructions.Add(new ButtonInstruction(this, id, context, text));
             return OnEvent(DomEvents.OnClick, id, out _);
         }

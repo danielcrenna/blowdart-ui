@@ -68,7 +68,7 @@ namespace Blowdart.UI.Web.Rendering
 				b.OpenElement(HtmlElements.Input);
 				{
 					b.AddAttribute(HtmlAttributes.Class, "form-range-input");
-					b.AddAttribute(HtmlAttributes.Type, InputTypes.Range);
+					b.AddAttribute(HtmlAttributes.Type, HtmlInputTypes.Range);
 					b.AddAttribute(HtmlAttributes.Value, slider.Value);
 					b.AddAttribute(HtmlAttributes.Id, slider.Id);
 

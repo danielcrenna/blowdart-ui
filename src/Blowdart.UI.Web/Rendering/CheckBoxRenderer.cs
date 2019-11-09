@@ -70,7 +70,7 @@ namespace Blowdart.UI.Web.Rendering
 				b.OpenElement(HtmlElements.Input);
 				{
 					b.AddAttribute(HtmlAttributes.Class, "form-check-input");
-					b.AddAttribute(HtmlAttributes.Type, InputTypes.Checkbox);
+					b.AddAttribute(HtmlAttributes.Type, HtmlInputTypes.Checkbox);
 					b.AddAttribute(HtmlAttributes.Value, checkBox.Value);
 					b.AddAttribute(HtmlAttributes.Id, checkBox.Id);
 					b.AddAttribute(DomEvents.OnClick, onclick);

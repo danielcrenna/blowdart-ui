@@ -36,6 +36,8 @@ ui.Literal(""Welcome to your new app."");");
         {
 			ui.Header(1, "Counter");
 			ui.TextBlock($"Current count: {_currentCount}");
+
+			ui.Push(ElementContext.Light);
 			if (ui.Button("Click me"))
 			{
 				_currentCount++;
@@ -46,6 +48,8 @@ ui.Literal(""Welcome to your new app."");");
 			SampleCode(ui, @"
 ui.Header(1, ""Counter"");
 ui.Text($""Current count: {_currentCount}"");
+
+ui.Push(ElementContext.Light);
 if (ui.Button(""Click me""))
 	_currentCount++;");
 
@@ -203,6 +207,37 @@ if (ui.RadioButton(ref _radioButton, ""Press me""))
 
 			ui.Push(ElementContext.Light);
 			ui.Alert("This is a light alert—check it out!");
+
+			#region Code
+
+			SampleCode(ui, @"
+ui.Header(3, ""Alerts"");
+ui.Separator();
+
+ui.Push(ElementContext.Primary);
+ui.Alert(""This is a primary alert—check it out!"");
+
+ui.Push(ElementContext.Secondary);
+ui.Alert(""This is a secondary alert—check it out!"");
+
+ui.Push(ElementContext.Success);
+ui.Alert(""This is a success alert—check it out!"");
+
+ui.Push(ElementContext.Danger);
+ui.Alert(""This is a danger alert—check it out!"");
+
+ui.Push(ElementContext.Warning);
+ui.Alert(""This is a warning alert—check it out!"");
+
+ui.Push(ElementContext.Info);
+ui.Alert(""This is an info alert—check it out!"");
+
+ui.Push(ElementContext.Dark);
+ui.Alert(""This is a dark alert—check it out!"");
+
+ui.Push(ElementContext.Light);
+ui.Alert(""This is a light alert—check it out!"");");
+			#endregion
 		}
 
 		public static void InputTab(Ui ui)
