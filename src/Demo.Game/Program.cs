@@ -1,5 +1,6 @@
 ﻿using Blowdart.UI.Game;
 using Demo.Examples;
+using Demo.Examples.Pages;
 
 namespace Demo.Game
 {
@@ -13,7 +14,7 @@ namespace Demo.Game
 
 			UiGame.Start(args, game, builder =>
 			{
-				builder.AddPage("/", HelloWorld.Index);
+				builder.AddPage("/", IndexPage.Index);
 			});
 			
 			game.Run();

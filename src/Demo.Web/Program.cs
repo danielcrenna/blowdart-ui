@@ -4,6 +4,7 @@
 using Blowdart.UI.Web;
 using Demo.Examples;
 using Demo.Examples.Models;
+using Demo.Examples.Pages;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Demo.Web
@@ -14,12 +15,12 @@ namespace Demo.Web
         {
             builder.AddSingleton<WeatherForecastService>();
 
-            builder.AddPage("/", WebLayout.Index, HelloWorld.Index);
-            builder.AddPage("/counter", WebLayout.Index, HelloWorld.Counter);
-            builder.AddPage("/fetchdata", WebLayout.Index, HelloWorld.FetchData);
-            builder.AddPage("/elements", WebLayout.Index, HelloWorld.Elements);
-			builder.AddPage("/editor", WebLayout.Index, HelloWorld.Editor);
-            builder.AddPage("/styles", WebLayout.Index, HelloWorld.Styles);
+            builder.AddPage("/", WebLayout.Index, IndexPage.Index);
+            builder.AddPage("/counter", WebLayout.Index, CounterPage.Index);
+            builder.AddPage("/fetchdata", WebLayout.Index, FetchDataPage.Index);
+            builder.AddPage("/elements", WebLayout.Index, ElementsPage.Index);
+			builder.AddPage("/editor", WebLayout.Index, EditorPage.Index);
+            builder.AddPage("/styles", WebLayout.Index, StylesPage.Index);
 		});
     }
 }

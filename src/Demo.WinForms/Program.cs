@@ -1,6 +1,7 @@
 using System;
 using Blowdart.UI.WinForms;
 using Demo.Examples;
+using Demo.Examples.Pages;
 
 namespace Demo.WinForms
 {
@@ -11,7 +12,7 @@ namespace Demo.WinForms
         {
             UiForm.Start(args, "Blowdart.UI Demo", builder =>
             {
-	            builder.AddPage("/", FormLayout.Index, HelloWorld.Index);
+	            builder.AddPage("/", FormLayout.Index, IndexPage.Index);
 			});
 		}
     }

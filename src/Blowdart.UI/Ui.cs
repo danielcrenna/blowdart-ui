@@ -600,11 +600,13 @@ namespace Blowdart.UI
             Instructions.Add(new HeaderInstruction(level, innerText));
         }
 
-        public bool Button(string text)
+        public bool Button(string text = "")
         {
 			var id = NextId();
 			TryPop<ElementContext>(out var context);
-			Instructions.Add(new ButtonInstruction(this, id, context, text));
+			TryPop<ElementDecorator>(out var decorator);
+			TryPop<ElementAlignment>(out var alignment);
+			Instructions.Add(new ButtonInstruction(this, id, context, decorator, alignment, text));
             return OnEvent(DomEvents.OnClick, id, out _);
         }
 

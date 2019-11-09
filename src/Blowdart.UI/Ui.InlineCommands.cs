@@ -9,7 +9,7 @@ namespace Blowdart.UI
 {
     public partial class Ui
 	{
-		#region ID
+		#region Ids
 
 		private readonly Stack<Value128> _ids = new Stack<Value128>();
 		
@@ -48,6 +48,7 @@ namespace Blowdart.UI
 		private readonly Stack<ElementAlignment> _alignments = new Stack<ElementAlignment>();
 		private readonly Stack<InputActivation> _activations = new Stack<InputActivation>();
 		private readonly Stack<ElementContext> _contexts = new Stack<ElementContext>();
+		private readonly Stack<ElementDecorator> _decorators = new Stack<ElementDecorator>();
 
 		public ElementContext Push(ElementContext context)
 		{
@@ -67,13 +68,19 @@ namespace Blowdart.UI
 			return alignment;
 		}
 
+		public ElementDecorator Push(ElementDecorator decorator)
+		{
+			_decorators.Push(decorator);
+			return decorator;
+		}
+
 		internal bool TryPop<T>(out T option)
 		{
-			if (typeof(T) == typeof(InputActivation))
+			if (typeof(T) == typeof(ElementAlignment))
 			{
-				if (_activations.Count > 0)
+				if (_alignments.Count > 0)
 				{
-					option = (T) (object) _activations.Pop();
+					option = (T) (object) _alignments.Pop();
 					return true;
 				}
 			}
@@ -87,11 +94,20 @@ namespace Blowdart.UI
 				}
 			}
 
-			if (typeof(T) == typeof(ElementAlignment))
+			if (typeof(T) == typeof(InputActivation))
 			{
-				if (_alignments.Count > 0)
+				if (_activations.Count > 0)
 				{
-					option = (T) (object) _alignments.Pop();
+					option = (T) (object) _activations.Pop();
+					return true;
+				}
+			}
+
+			if (typeof(T) == typeof(ElementDecorator))
+			{
+				if (_decorators.Count > 0)
+				{
+					option = (T) (object) _decorators.Pop();
 					return true;
 				}
 			}
