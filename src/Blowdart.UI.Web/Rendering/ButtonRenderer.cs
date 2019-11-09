@@ -9,7 +9,7 @@ using Blowdart.UI.Web.Extensions;
 
 namespace Blowdart.UI.Web.Rendering
 {
-    internal sealed class ButtonRenderer : IWebRenderer<ButtonInstruction>
+	internal sealed class ButtonRenderer : IWebRenderer<ButtonInstruction>
     {
         private readonly ImGui _imGui;
 

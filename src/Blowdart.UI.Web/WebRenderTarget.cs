@@ -52,6 +52,7 @@ namespace Blowdart.UI.Web
 				{typeof(EndMenuInstruction), new EndMenuRenderer()},
 				{typeof(BeginAlertInstruction), new BeginAlertRenderer()},
 				{typeof(EndAlertInstruction), new EndAlertRenderer()},
+				{typeof(NextLineInstruction), new NextLineRenderer()},
 			};
         }
 

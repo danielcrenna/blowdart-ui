@@ -4,7 +4,6 @@
 using System;
 using System.Collections.Generic;
 using Blowdart.UI;
-using Blowdart.UI.Instructions;
 using Demo.Examples.Models;
 
 namespace Demo.Examples
@@ -139,17 +138,25 @@ else
 
 		public static void InputControlsTab(Ui ui)
 		{
+			ui.NextLine();
+			ui.Header(3, "Input Controls");
+			ui.Separator();
+
 			ui.Push(ElementAlignment.Right);
 			if (ui.CheckBox(ref _checked, "Check me"))
 			{
 				ui.Log($"checked the box: ({_checked})");
 			}
-
+			
+			ui.NextLine();
+			
 			ui.Push(InputActivation.Continuous);
 			if (ui.Slider(ref _slider, "Slide me"))
 			{
 				ui.Log($"changed slider: ({_slider})");
 			}
+
+			ui.NextLine();
 
 			if (ui.RadioButton(ref _radioButton, "Press me"))
 			{
@@ -159,28 +166,34 @@ else
 			#region Code
 
 			SampleCode(ui, @"
+ui.NextLine();
+
 ui.Push(ElementAlignment.Right);
-if (ui.CheckBox(ref _checked, ""Remember me""))
+if (ui.CheckBox(ref _checked, ""Check me""))
 {
-    ui.Log($""checked the box: ({_checked})"");
+	ui.Log($""checked the box: ({_checked})"");
 }
+
+ui.NextLine();
 
 ui.Push(InputActivation.Continuous);
 if (ui.Slider(ref _slider, ""Slide me""))
 {
-    ui.Log($""changed slider: ({_slider})"");
+	ui.Log($""changed slider: ({_slider})"");
 }
+
+ui.NextLine();
 
 if (ui.RadioButton(ref _radioButton, ""Press me""))
 {
 	ui.Log($""changed radio button: ({_radioButton})"");
-}
-");
+}");
 			#endregion
 		}
 
 		public static void AlertsTab(Ui ui)
 		{
+			ui.NextLine();
 			ui.Header(3, "Alerts");
 			ui.Separator();
 
@@ -239,12 +252,7 @@ ui.Push(ElementContext.Light);
 ui.Alert(""This is a light alert—check it out!"");");
 			#endregion
 		}
-
-		public static void InputTab(Ui ui)
-		{
-			ui.Text("Input");
-		}
-
+		
 		#endregion
 
 		#region Editor Page

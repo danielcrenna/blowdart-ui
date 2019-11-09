@@ -703,6 +703,11 @@ namespace Blowdart.UI
 			Instructions.Add(new SeparatorInstruction());
 		}
 
+		public void NextLine()
+		{
+			Instructions.Add(new NextLineInstruction());
+		}
+
 		public void BeginAlert()
 		{
 			TryPop<ElementContext>(out var context);
