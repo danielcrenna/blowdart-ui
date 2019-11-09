@@ -120,7 +120,7 @@ namespace Blowdart.UI
 
 			if (!_hasMenuItems)
 			{
-				Instructions.Add(new BeginCollapsibleInstruction());
+				Instructions.Add(new BeginMenuInstruction());
 				_hasMenuItems = true;
 			}
 

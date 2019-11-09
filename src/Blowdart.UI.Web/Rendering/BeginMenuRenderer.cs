@@ -2,21 +2,21 @@
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
 using Blowdart.UI.Instructions;
+using Blowdart.UI.Web.Extensions;
 using Microsoft.AspNetCore.Components.Rendering;
 
 namespace Blowdart.UI.Web.Rendering
 {
-	internal sealed class EndCollapsibleRenderer : IWebRenderer<EndCollapsibleInstruction>
+	internal sealed class BeginMenuRenderer : IWebRenderer<BeginMenuInstruction>
 	{
-		public void Render(RenderTreeBuilder b, EndCollapsibleInstruction collapsible)
+		public void Render(RenderTreeBuilder b, BeginMenuInstruction menu)
 		{
-			b.CloseElement(); // BeginUnorderedList
-			b.CloseElement(); // BeginDiv
+            b.BeginDiv("top-row pl-4 navbar navbar-dark");
 		}
 
 		public void Render(RenderTreeBuilder b, RenderInstruction instruction)
 		{
-			Render(b, instruction as EndCollapsibleInstruction);
+			Render(b, instruction as BeginMenuInstruction);
 		}
 	}
 }

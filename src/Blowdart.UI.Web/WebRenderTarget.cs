@@ -46,10 +46,10 @@ namespace Blowdart.UI.Web
 				{typeof(InlineImageInstruction), new InlineImageRenderer()},
 				{typeof(ObjectTableInstruction), new ObjectTableRenderer()},
                 {typeof(MenuItemInstruction), new MenuItemRenderer()},
-                {typeof(BeginCollapsibleInstruction), new BeginCollapsibleRenderer()},
+                {typeof(BeginMenuInstruction), new BeginMenuRenderer()},
                 {typeof(BeginCollapsibleHeaderInstruction), collapsibleHeaderRenderer},
                 {typeof(EndCollapsibleHeaderInstruction), collapsibleHeaderRenderer},
-				{typeof(EndCollapsibleInstruction), new EndCollapsibleRenderer()},
+				{typeof(EndMenuInstruction), new EndMenuRenderer()},
 			};
         }
 

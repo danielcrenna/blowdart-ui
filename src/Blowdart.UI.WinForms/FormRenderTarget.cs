@@ -10,8 +10,6 @@ using TextRenderer = Blowdart.UI.WinForms.Rendering.TextRenderer;
 
 namespace Blowdart.UI.WinForms
 {
-	public delegate void RenderFragment(Panel panel);
-
 	internal sealed class FormRenderTarget : RenderTarget
 	{
 		private readonly List<RenderFragment> _fragments;
@@ -28,6 +26,14 @@ namespace Blowdart.UI.WinForms
 				{typeof(HeaderInstruction), new HeaderRenderer()},
 				{typeof(SeparatorInstruction), new SeparatorRenderer()},
 				{typeof(CodeInstruction), new CodeRenderer()},
+				{typeof(BeginElementInstruction), new ElementRenderer()},
+				{typeof(BeginMenuInstruction), new BeginMenuRenderer()},
+				{typeof(MenuItemInstruction), new MenuItemRenderer()},
+				{typeof(LinkInstruction), new LinkRenderer()},
+				{typeof(InlineIconInstruction), new InlineIconRenderer()},
+
+				{typeof(EndMenuInstruction), new NoRenderer()},
+				{typeof(EndElementInstruction), new NoRenderer()},
 			};
 		}
 		

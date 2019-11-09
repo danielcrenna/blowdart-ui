@@ -357,7 +357,7 @@ namespace Blowdart.UI
 
 			if (!_hasMenuItems)
 			{
-				Instructions.Add(new BeginCollapsibleInstruction());
+				Instructions.Add(new BeginMenuInstruction());
 				_hasMenuItems = true;
 			}
 
@@ -378,7 +378,7 @@ namespace Blowdart.UI
 		{
 			if (_hasMenuItems)
 			{
-				Instructions.Add(new EndCollapsibleInstruction());
+				Instructions.Add(new EndMenuInstruction());
 			}
 			
 			Instructions.Add(new EndElementInstruction(ElementType.Menu));

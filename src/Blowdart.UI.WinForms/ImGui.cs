@@ -30,6 +30,7 @@ namespace Blowdart.UI.WinForms
 				Dock = DockStyle.Fill,
 				Location = Point.Empty
 		    };
+		    Controls.Add(_panel);
 
 			_pages = serviceProvider.GetRequiredService<PageMap>();
 		    _ui = new Ui {UiServices = serviceProvider};
@@ -44,23 +45,34 @@ namespace Blowdart.UI.WinForms
 
 		private void InitializeComponent(string title)
 		{
+			_components = new Container();
+
 			Text = title;
 			AutoScaleMode = AutoScaleMode.Font;
 			ClientSize = new Size(800, 450);
-            _components = new Container();
-
-			Controls.Add(_panel);
-
+            
 			Begin();
 
 			var handler = _pages.GetHandler("/");
-			handler(_ui);
-			
-			SuspendLayout();
+			if (handler != null)
+			{
+				var layout = _pages.GetLayout("/");
+				if (layout != null)
+				{
+					_ui.SetLayoutBody(handler);
+					layout(_ui);
+					if (!_ui.CalledLayout)
+						throw new BlowdartException("Layout did not call ui.LayoutBody();");
+				}
+				else
+				{
+					handler(_ui);
+				}
 
-			_ui.RenderToTarget(_target, _panel);
-
-			ResumeLayout(true);
+				SuspendLayout();
+				_ui.RenderToTarget(_target, _panel);
+				ResumeLayout(true);
+			}
 		}
 
 		protected override void Dispose(bool disposing)

@@ -3,7 +3,7 @@
 
 namespace Blowdart.UI.Instructions
 {
-	public class EndCollapsibleInstruction : RenderInstruction
+	public class EndMenuInstruction : RenderInstruction
 	{
 		public override string DebuggerDisplay => "EndCollapsible";
 	}

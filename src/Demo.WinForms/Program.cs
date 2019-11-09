@@ -11,7 +11,7 @@ namespace Demo.WinForms
         {
             UiForm.Start(args, "Blowdart.UI Demo", builder =>
             {
-	            builder.AddPage("/", HelloWorld.Index);
+	            builder.AddPage("/", FormLayout.Index, HelloWorld.Index);
 			});
 		}
     }
