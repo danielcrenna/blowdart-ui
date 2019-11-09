@@ -23,12 +23,17 @@ namespace Demo.Web
 				ui.EndMenu();
 			}
 
-			ui.Main(() =>
+			ui.BeginMain();
 			{
-				ui.TopRow(() => { ui.Link("https://github.com/blowdart-ui/blowdart-ui", "About"); });
+				ui.BeginTopRow();
+				ui.InlineIcon(OpenIconicIcons.Fork);
+				ui.Link("https://github.com/blowdart-ui/blowdart-ui", "About");
+				ui.EndTopRow();
 
 				ui.MainContent(ui.LayoutBody());
-			});
+
+				ui.EndMain();
+			}
 		}
 	}
 }

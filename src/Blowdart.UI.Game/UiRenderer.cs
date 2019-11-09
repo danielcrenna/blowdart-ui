@@ -5,23 +5,23 @@ using System;
 using System.Collections.Generic;
 using System.Net.Mime;
 using System.Runtime.InteropServices;
-using Blowdart.UI.Instructions;
 using ImGuiNET;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
-namespace Blowdart.UI.FNA
+namespace Blowdart.UI.Game
 {
-	public class GameRenderer
+	public class UiRenderer
 	{
-		private Game _game;
+		private Microsoft.Xna.Framework.Game _game;
 
 		// Graphics
 		private GraphicsDevice _graphicsDevice;
 
 		private BasicEffect _effect;
-		private RasterizerState _rasterizerState;
+		private readonly RasterizerState _rasterizerState;
 
 		private byte[] _vertexData;
 		private VertexBuffer _vertexBuffer;
@@ -32,28 +32,31 @@ namespace Blowdart.UI.FNA
 		private int _indexBufferSize;
 
 		// Textures
-		private Dictionary<IntPtr, Texture2D> _loadedTextures;
-
+		private readonly Dictionary<IntPtr, Texture2D> _loadedTextures;
 		private int _textureId;
 		private IntPtr? _fontTextureId;
 
 		// Input
 		private int _scrollWheelValue;
 
-		private List<int> _keys = new List<int>();
-		private Ui _ui;
+		private readonly List<int> _keys = new List<int>();
+		private readonly Ui _ui;
 
-		public GameRenderer(Game game)
+		public void Initialize()
+		{
+			_graphicsDevice = _game.GraphicsDevice;
+			RebuildFontAtlas();
+		}
+
+		public UiRenderer(Microsoft.Xna.Framework.Game game)
 		{
 			var context = ImGui.CreateContext();
 			ImGui.SetCurrentContext(context);
 
+			_ui = new Ui();
 			_game = game ?? throw new ArgumentNullException(nameof(game));
-			_graphicsDevice = game.GraphicsDevice;
-
 			_loadedTextures = new Dictionary<IntPtr, Texture2D>();
-
-			_rasterizerState = new RasterizerState()
+			_rasterizerState = new RasterizerState
 			{
 				CullMode = CullMode.None,
 				DepthBias = 0,
@@ -62,8 +65,6 @@ namespace Blowdart.UI.FNA
 				ScissorTestEnable = true,
 				SlopeScaleDepthBias = 0
 			};
-
-			this._ui = new Ui();
 
 			SetupInput();
 		}
@@ -131,6 +132,20 @@ namespace Blowdart.UI.FNA
 
 			ImGui.NewFrame();
 		}
+
+
+		public void Render(string template, GameTime gameTime)
+		{
+			BeforeLayout(gameTime);
+
+			var pageMap = _game.Services.GetRequiredService<PageMap>();
+			var handler = pageMap.GetHandler(template);
+			ImGuiRenderer.RenderUi(_ui, handler);
+
+			AfterLayout();
+		}
+
+		
 
 		/// <summary>
 		/// Asks ImGui for the generated geometry data and sends it to the graphics pipeline, should be called after the UI is drawn using ImGui.** calls
@@ -399,25 +414,5 @@ namespace Blowdart.UI.FNA
 		}
 
 #endregion Internals
-
-		public void RenderUi(Action<Ui> handler)
-		{
-			_ui.Begin();
-			handler(_ui);
-			foreach (var instruction in _ui.Instructions)
-			{
-				switch (instruction)
-				{
-					case TextInstruction text:
-						ImGui.TextUnformatted(text.Text);
-						break;
-					case ButtonInstruction button:
-						ImGui.PushID(button.Id.ToString());
-						ImGui.Button(button.Text);
-						ImGui.PopID();
-						break;
-				}
-			}
-		}
 	}
 }

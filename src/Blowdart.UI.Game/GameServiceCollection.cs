@@ -8,7 +8,7 @@ using System.Reflection;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Xna.Framework;
 
-namespace Blowdart.UI.FNA
+namespace Blowdart.UI.Game
 {
 	public class GameServiceCollection : IServiceCollection
 	{

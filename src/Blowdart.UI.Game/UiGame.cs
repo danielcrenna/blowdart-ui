@@ -1,12 +1,11 @@
 ﻿using System;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Xna.Framework;
 
-namespace Blowdart.UI.FNA
+namespace Blowdart.UI.Game
 {
 	public class UiGame
 	{
-		public static void Start(string[] args, Game game, Action<BlowdartBuilder> configureAction)
+		public static void Start(string[] args, Microsoft.Xna.Framework.Game game, Action<BlowdartBuilder> configureAction)
 		{
 			var pages = new PageMap();
 			var services = new GameServiceCollection(game.Services);

@@ -1,7 +1,7 @@
-﻿using Blowdart.UI.FNA;
+﻿using Blowdart.UI.Game;
 using Demo.Examples;
 
-namespace Demo.FNA
+namespace Demo.Game
 {
     class Program
     {
