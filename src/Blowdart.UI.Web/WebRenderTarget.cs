@@ -89,7 +89,7 @@ namespace Blowdart.UI.Web
             }
         }
 
-        public void Begin()
+        public override void Begin()
         {
             _fragments.Clear();
         }

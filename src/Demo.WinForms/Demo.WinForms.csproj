@@ -6,4 +6,9 @@
     <UseWindowsForms>true</UseWindowsForms>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Blowdart.UI.WinForms\Blowdart.UI.WinForms.csproj" />
+    <ProjectReference Include="..\Demo.Examples\Demo.Examples.csproj" />
+  </ItemGroup>
+
 </Project>

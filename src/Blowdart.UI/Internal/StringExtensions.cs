@@ -1,16 +1,31 @@
 ﻿// Copyright (c) Daniel Crenna & Contributors. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
+using System;
+using System.Linq;
 using TypeKitchen;
 
 namespace Blowdart.UI.Internal
 {
 	internal static class StringExtensions
 	{
+		private static readonly char[] TrimChars = Environment.NewLine.Concat(new[] {' '}).ToArray();
+
+		internal static string FormatCode(this string codeValue)
+		{
+			var formatted = codeValue
+				.Replace("<", "&lt;")
+				.Replace(">", "&gt;")
+				.Trim(TrimChars)
+				.TabsToSpaces(4);
+
+			return formatted;
+		}
+
 		// Source: https://stackoverflow.com/a/41963144/18440
 		public static string TabsToSpaces(this string value, int length)
 		{
-			if (string.IsNullOrEmpty(value))
+			if (String.IsNullOrEmpty(value))
 				return value;
 
 			return Pooling.StringBuilderPool.Scoped(sb =>

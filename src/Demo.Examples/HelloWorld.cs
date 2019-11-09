@@ -23,7 +23,6 @@ namespace Demo.Examples
 			SampleCode(ui, @"
 ui.Header(1, ""Hello, world!"");
 ui.Literal(""Welcome to your new app."");");
-
 			#endregion
 		}
 

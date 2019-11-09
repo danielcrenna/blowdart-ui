@@ -24,5 +24,7 @@ namespace Blowdart.UI
         }
 
         public abstract void Render<T>(T renderer);
+
+        public abstract void Begin();
     }
 }
