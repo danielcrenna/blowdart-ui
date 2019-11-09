@@ -83,6 +83,20 @@ namespace Blowdart.UI.Web.Extensions
             b.CloseElement();
         }
 
+		public static void InlineImage(this RenderTreeBuilder b, string source, int width, int height)
+		{
+			b.OpenElement(HtmlElements.Span);
+			b.AriaHidden();
+			{
+				b.OpenElement(HtmlElements.Image);
+				b.AddAttribute(HtmlAttributes.Src, source);
+				b.AddAttribute(HtmlAttributes.Width, width);
+				b.AddAttribute(HtmlAttributes.Height, height);
+				b.CloseElement();
+			}
+			b.CloseElement();
+		}
+
 		public static void BeginAnchor(this RenderTreeBuilder b, string @class, string href = "")
 		{
 			b.BeginElement(HtmlElements.Anchor, @class);
@@ -158,5 +172,6 @@ namespace Blowdart.UI.Web.Extensions
 		}
 
 		#endregion
-	}
+
+    }
 }

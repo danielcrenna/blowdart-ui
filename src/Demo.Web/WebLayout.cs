@@ -6,8 +6,13 @@ namespace Demo.Web
 	{
 		public static void Index(Ui ui)
 		{
-			ui.BeginMenu("Blowdart.UI Demo");
+			ui.BeginMenu();
 			{
+				ui.BeginMenuHeader();
+				ui.InlineImage("_content/Blowdart.UI.Web/svg/logo.svg", 36, 36);
+				ui.Text("Blowdart.UI Demo");
+				ui.EndMenuHeader();
+
 				ui.MenuItem(OpenIconicIcons.Home, "Home", "/");
 				ui.MenuItem(OpenIconicIcons.Plus, "Counter", "/counter");
 				ui.MenuItem(OpenIconicIcons.ListRich, "Fetch Data", "/fetchdata");

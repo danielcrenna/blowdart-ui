@@ -1,6 +1,7 @@
 // Copyright (c) Daniel Crenna & Contributors. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
+using System;
 using System.Collections.Generic;
 using Blowdart.UI.Instructions;
 
@@ -8,8 +9,10 @@ namespace Blowdart.UI
 {
     public partial class Ui
 	{
-		private readonly Stack<Value128> _ids = new Stack<Value128>();
+		#region ID
 
+		private readonly Stack<Value128> _ids = new Stack<Value128>();
+		
 		public Value128 PushId(Value128 id)
 		{
 			_ids.Push(id);
@@ -20,6 +23,25 @@ namespace Blowdart.UI
 		{
 			return _ids.Pop();
 		}
+
+		#endregion
+
+		#region Instructions
+
+		private readonly Stack<RenderInstruction> _instructions = new Stack<RenderInstruction>();
+
+		public T PushInstruction<T>(T instruction) where T : RenderInstruction
+		{
+			_instructions.Push(instruction);
+			return instruction;
+		}
+
+		public RenderInstruction PopInstruction()
+		{
+			return _instructions.Pop();
+		}
+
+		#endregion
 
 		#region Tables
 
@@ -47,7 +69,6 @@ namespace Blowdart.UI
 
 		private bool _inMenu;
 		private bool _hasMenuItems;
-		private string _menuTitle;
 
 		public void MenuItem(OpenIconicIcons icon, string title, string template)
 		{
@@ -56,7 +77,7 @@ namespace Blowdart.UI
 
 			if (!_hasMenuItems)
 			{
-				Instructions.Add(new BeginCollapsibleInstruction(_menuTitle));
+				Instructions.Add(new BeginCollapsibleInstruction());
 				_hasMenuItems = true;
 			}
 

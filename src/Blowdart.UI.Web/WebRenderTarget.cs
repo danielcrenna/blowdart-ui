@@ -22,6 +22,7 @@ namespace Blowdart.UI.Web
 
             var elementRenderer = new ElementRenderer();
             var tabContentRenderer = new TabContentRenderer();
+			var collapsibleHeaderRenderer = new CollapsibleHeaderRenderer(imGui);
 
             _renderers = new Dictionary<Type, IWebRenderer>
             {
@@ -42,10 +43,13 @@ namespace Blowdart.UI.Web
                 {typeof(BeginTabContentInstruction), tabContentRenderer},
                 {typeof(EndTabContentInstruction), tabContentRenderer},
 				{typeof(InlineIconInstruction), new InlineIconRenderer()},
-                {typeof(ObjectTableInstruction), new ObjectTableRenderer()},
+				{typeof(InlineImageInstruction), new InlineImageRenderer()},
+				{typeof(ObjectTableInstruction), new ObjectTableRenderer()},
                 {typeof(MenuItemInstruction), new MenuItemRenderer()},
-                {typeof(BeginCollapsibleInstruction), new BeginCollapsibleRenderer(imGui)},
-                {typeof(EndCollapsibleInstruction), new EndCollapsibleRenderer()},
+                {typeof(BeginCollapsibleInstruction), new BeginCollapsibleRenderer()},
+                {typeof(BeginCollapsibleHeaderInstruction), collapsibleHeaderRenderer},
+                {typeof(EndCollapsibleHeaderInstruction), collapsibleHeaderRenderer},
+				{typeof(EndCollapsibleInstruction), new EndCollapsibleRenderer()},
 			};
         }
 

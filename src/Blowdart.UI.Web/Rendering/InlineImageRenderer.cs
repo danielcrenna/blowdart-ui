@@ -7,16 +7,16 @@ using Microsoft.AspNetCore.Components.Rendering;
 
 namespace Blowdart.UI.Web.Rendering
 {
-	internal sealed class BeginCollapsibleRenderer : IWebRenderer<BeginCollapsibleInstruction>
+	internal sealed class InlineImageRenderer : IWebRenderer<InlineImageInstruction>
 	{
-		public void Render(RenderTreeBuilder b, BeginCollapsibleInstruction collapsible)
+		public void Render(RenderTreeBuilder b, InlineImageInstruction image)
 		{
-            b.BeginDiv("top-row pl-4 navbar navbar-dark");
+			b.InlineImage(image.Source, image.Width, image.Height);
 		}
 
 		public void Render(RenderTreeBuilder b, RenderInstruction instruction)
 		{
-			Render(b, instruction as BeginCollapsibleInstruction);
+			Render(b, instruction as InlineImageInstruction);
 		}
 	}
 }

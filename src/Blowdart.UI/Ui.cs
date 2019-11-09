@@ -23,7 +23,7 @@ namespace Blowdart.UI
 
         public Ui()
         {
-            Instructions = new List<RenderInstruction>();
+	        Instructions = new List<RenderInstruction>();
         }
 
 		#region Elements
@@ -344,11 +344,34 @@ namespace Blowdart.UI
 
 		#region Menu
 
-		public void BeginMenu(string title)
+		public void BeginMenu()
 		{
 			Instructions.Add(new BeginElementInstruction(ElementType.Menu));
 			_inMenu = true;
-			_menuTitle = title;
+		}
+
+		public void BeginMenuHeader()
+		{
+			if (!_inMenu)
+				throw new BlowdartException($"{nameof(BeginMenuHeader)} was called outside of a menu");
+
+			if (!_hasMenuItems)
+			{
+				Instructions.Add(new BeginCollapsibleInstruction());
+				_hasMenuItems = true;
+			}
+
+			Instructions.Add(new BeginCollapsibleHeaderInstruction());
+		}
+
+		public void EndMenuHeader()
+		{
+            if (!_inMenu)
+				throw new BlowdartException($"{nameof(EndMenuHeader)} was called outside of a menu");
+            if (!_hasMenuItems)
+	            throw new BlowdartException($"{nameof(EndMenuHeader)} was called before {nameof(BeginMenuHeader)}");
+
+			Instructions.Add(new EndCollapsibleHeaderInstruction());
 		}
 
 		public void EndMenu()
@@ -362,7 +385,6 @@ namespace Blowdart.UI
 
 			_inMenu = false;
 			_hasMenuItems = false;
-			_menuTitle = null;
 		}
 
 		#endregion
@@ -644,6 +666,11 @@ namespace Blowdart.UI
         {
 	        Instructions.Add(new InlineIconInstruction(icon));
         }
+
+		public void InlineImage(string source, int width, int height)
+		{
+			Instructions.Add(new InlineImageInstruction(source, width, height));
+		}
 
 		#endregion
 

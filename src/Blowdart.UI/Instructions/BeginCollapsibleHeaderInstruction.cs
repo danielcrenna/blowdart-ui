@@ -3,8 +3,8 @@
 
 namespace Blowdart.UI.Instructions
 {
-	public class BeginCollapsibleInstruction : RenderInstruction
+	public class BeginCollapsibleHeaderInstruction : RenderInstruction
 	{
-		public override string DebuggerDisplay => $"BeginCollapsible:";
+		public override string DebuggerDisplay => $"BeginCollapsibleHeader";
 	}
 }
