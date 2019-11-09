@@ -3,10 +3,11 @@
 
 namespace Blowdart.UI
 {
-	internal static class Events
+	internal static class DomEvents
 	{
 		public static readonly string OnClick = "onclick";
 		public static readonly string OnChange = "onchange";
+		public static readonly string OnInput = "oninput";
 
 		public static readonly string OnFocus = "onfocus";
 		public static readonly string OnFocusIn = "onfocusin";

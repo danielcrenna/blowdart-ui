@@ -48,7 +48,7 @@ namespace Blowdart.UI.Web.Rendering
             b.OpenElement(HtmlElements.Button);
             b.AddAttribute(HtmlAttributes.Id, button.Id);
             b.AddAttribute(HtmlAttributes.Class, css);
-            b.AddAttribute(Events.OnClick, onclick);
+            b.AddAttribute(DomEvents.OnClick, onclick);
             b.AddContent(button.Text);
             b.CloseElement();
         }

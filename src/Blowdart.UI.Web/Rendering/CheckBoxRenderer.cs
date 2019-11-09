@@ -73,7 +73,7 @@ namespace Blowdart.UI.Web.Rendering
 					b.AddAttribute(HtmlAttributes.Type, InputTypes.Checkbox);
 					b.AddAttribute(HtmlAttributes.Value, checkBox.Value);
 					b.AddAttribute(HtmlAttributes.Id, checkBox.Id);
-					b.AddAttribute(Events.OnClick, onclick);
+					b.AddAttribute(DomEvents.OnClick, onclick);
 
 					b.CloseElement();
 				}

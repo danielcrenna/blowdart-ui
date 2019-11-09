@@ -43,6 +43,49 @@ namespace Blowdart.UI
 
 		#endregion
 
+		#region Options
+
+		private readonly Stack<ElementAlignment> _alignments = new Stack<ElementAlignment>();
+		private readonly Stack<InputActivation> _activations = new Stack<InputActivation>();
+		
+		public InputActivation Push(InputActivation activation)
+		{
+			_activations.Push(activation);
+			return activation;
+		}
+
+		public ElementAlignment Push(ElementAlignment alignment)
+		{
+			_alignments.Push(alignment);
+			return alignment;
+		}
+
+		internal bool TryPop<T>(out T option)
+		{
+			if(typeof(T) == typeof(InputActivation))
+			{
+				if (_activations.Count > 0)
+				{
+					option = (T) (object) _activations.Pop();
+					return true;
+				}
+			}
+
+			if (typeof(T) == typeof(ElementAlignment))
+			{
+				if (_alignments.Count > 0)
+				{
+					option = (T) (object) _alignments.Pop();
+					return true;
+				}
+			}
+
+			option = default;
+			return false;
+		}
+		
+		#endregion
+
 		#region Tables
 
 		private bool _inTable;

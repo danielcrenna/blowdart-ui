@@ -101,7 +101,7 @@ namespace Blowdart.UI.Web.Components
 			if (boundValue != default)
 				b.AddAttribute(HtmlAttributes.Value, boundValue);
 
-			b.AddAttribute(Events.OnChange, OnChange);
+			b.AddAttribute(DomEvents.OnChange, OnChange);
 			b.AddMultipleAttributes(AdditionalAttributes);
 
 			b.CloseElement();

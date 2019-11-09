@@ -9,17 +9,19 @@ namespace Blowdart.UI.Instructions
 		public Value128 Id { get; }
 		public string Text { get; }
 		public ElementAlignment Alignment { get; }
+		public InputActivation Activation { get; }
 		public int Value { get; }
 
-		public SliderInstruction(Ui ui, Value128 id, string text, ElementAlignment alignment, int value)
+		public SliderInstruction(Ui ui, Value128 id, string text, ElementAlignment alignment, InputActivation activation, int value)
 		{
 			Ui = ui;
 			Id = id;
 			Text = text;
 			Alignment = alignment;
+			Activation = activation;
 			Value = value;
 		}
 
-		public override string DebuggerDisplay => $"CheckBox: {Text}";
+		public override string DebuggerDisplay => $"Slider: {Text}";
 	}
 }

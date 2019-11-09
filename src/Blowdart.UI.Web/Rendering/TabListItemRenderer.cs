@@ -53,7 +53,7 @@ namespace Blowdart.UI.Web.Rendering
 					b.AddAttribute(HtmlAttributes.Role, "tab");
 					b.AddAttribute(HtmlAttributes.Aria.Selected, tabListItem.Active);
 					b.AddAttribute(HtmlAttributes.Aria.Controls, tabId);
-                    b.AddAttribute(Events.OnClick, onclick);
+                    b.AddAttribute(DomEvents.OnClick, onclick);
 					b.AddContent(tabListItem.Text);
 
 					b.CloseElement();

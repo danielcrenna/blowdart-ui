@@ -71,12 +71,17 @@ namespace Blowdart.UI.Web.Components
         
         public void OnClick(MouseEventArgs args, Value128 id)
         {
-	        OnEvent(id, Events.OnClick, null);
+	        OnEvent(id, DomEvents.OnClick, null);
         }
 
         public void OnChange(ChangeEventArgs args, Value128 id)
         {
-	        OnEvent(id, Events.OnChange, args.Value);
+	        OnEvent(id, DomEvents.OnChange, args.Value);
+        }
+
+        public void OnInput(ChangeEventArgs args, Value128 id)
+        {
+	        OnEvent(id, DomEvents.OnInput, args.Value);
         }
 
 		private void OnEvent(Value128 id, string eventType, object data)
@@ -104,6 +109,14 @@ namespace Blowdart.UI.Web.Components
 	        return EventCallback.Factory.Create<ChangeEventArgs>(this, args =>
 	        {
 		        OnChange(args, id);
+	        });
+        }
+
+        public EventCallback<ChangeEventArgs> OnInputCallback(Value128 id)
+        {
+	        return EventCallback.Factory.Create<ChangeEventArgs>(this, args =>
+	        {
+		        OnInput(args, id);
 	        });
         }
 

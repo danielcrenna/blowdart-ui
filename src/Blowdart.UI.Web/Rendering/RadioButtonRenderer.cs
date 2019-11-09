@@ -73,7 +73,7 @@ namespace Blowdart.UI.Web.Rendering
 					b.AddAttribute(HtmlAttributes.Type, InputTypes.Radio);
 					b.AddAttribute(HtmlAttributes.Checked, radioButton.Value);
 					b.AddAttribute(HtmlAttributes.Id, radioButton.Id);
-					b.AddAttribute(Events.OnClick, onclick);
+					b.AddAttribute(DomEvents.OnClick, onclick);
 
 					b.CloseElement();
 				}

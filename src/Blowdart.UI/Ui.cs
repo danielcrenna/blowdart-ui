@@ -406,7 +406,7 @@ namespace Blowdart.UI
 
 			var id = PushId(NextId());
 			Instructions.Add(new TabListItemInstruction(this, id, text, active));
-			var clicked = OnEvent(Events.OnClick, id, out _);
+			var clicked = OnEvent(DomEvents.OnClick, id, out _);
 			if (clicked)
 				active = !active;
 			return clicked;
@@ -583,40 +583,61 @@ namespace Blowdart.UI
 
         public bool Button(string text, ButtonType type = ButtonType.Primary)
         {
-            NextId();
-            var id = NextIdHash;
-            Instructions.Add(new ButtonInstruction(this, id, type, text));
-            return OnEvent(Events.OnClick, id, out _);
+			var id = NextId();
+			Instructions.Add(new ButtonInstruction(this, id, type, text));
+            return OnEvent(DomEvents.OnClick, id, out _);
         }
 
-        public bool CheckBox(ref bool value, string text, ElementAlignment alignment = ElementAlignment.Left)
+        public bool CheckBox(ref bool value, string text)
         {
-	        NextId();
-	        var id = NextIdHash;
-	        Instructions.Add(new CheckBoxInstruction(this, id, text, alignment, value));
-	        var clicked = OnEvent(Events.OnClick, id, out _);
+			var id = NextId();
+
+			TryPop<ElementAlignment>(out var alignment);
+
+			Instructions.Add(new CheckBoxInstruction(this, id, text, alignment, value));
+	        var clicked = OnEvent(DomEvents.OnClick, id, out _);
 	        if (clicked)
 		        value = !value;
 	        return clicked;
         }
 
-        public bool Slider(ref int value, string text, ElementAlignment alignment = ElementAlignment.Left)
+        public bool Slider(ref int value, string text)
 		{
-	        NextId();
-	        var id = NextIdHash;
-	        Instructions.Add(new SliderInstruction(this, id, text, alignment, value));
-	        var changed = OnEvent(Events.OnChange, id, out var data);
-	        if (changed && data != default && data is string dataString)
-				int.TryParse(dataString, out value);
-			return changed;
+	        var id = NextId();
+
+	        TryPop<ElementAlignment>(out var alignment);
+			TryPop<InputActivation>(out var activation);
+
+			Instructions.Add(new SliderInstruction(this, id, text, alignment, activation, value));
+			switch (activation)
+			{
+				case InputActivation.OnDragEnd:
+				{
+					var changed = OnEvent(DomEvents.OnChange, id, out var data);
+					if (changed && data != default && data is string dataString)
+						int.TryParse(dataString, out value);
+					return changed;
+				}
+				case InputActivation.Continuous:
+				{
+					var changed = OnEvent(DomEvents.OnInput, id, out var data);
+					if (changed && data != default && data is string dataString)
+						int.TryParse(dataString, out value);
+					return changed;
+				}
+				default:
+					throw new ArgumentOutOfRangeException(nameof(activation), activation, null);
+			}
         }
 
-        public bool RadioButton(ref bool value, string text, ElementAlignment alignment = ElementAlignment.Left)
+        public bool RadioButton(ref bool value, string text)
         {
-	        NextId();
-	        var id = NextIdHash;
-	        Instructions.Add(new RadioButtonInstruction(this, id, text, alignment, value));
-	        var clicked = OnEvent(Events.OnClick, id, out _);
+			var id = NextId();
+
+			TryPop<ElementAlignment>(out var alignment);
+
+			Instructions.Add(new RadioButtonInstruction(this, id, text, alignment, value));
+	        var clicked = OnEvent(DomEvents.OnClick, id, out _);
 	        if (clicked)
 		        value = !value;
 	        return clicked;

@@ -146,11 +146,13 @@ else
 
 		public static void ElementsTab(Ui ui)
 		{
-			if (ui.CheckBox(ref _checked, "Check me", ElementAlignment.Right))
+			ui.Push(ElementAlignment.Right);
+			if (ui.CheckBox(ref _checked, "Check me"))
 			{
 				ui.Log($"checked the box: ({_checked})");
 			}
 
+			ui.Push(InputActivation.Continuous);
 			if (ui.Slider(ref _slider, "Slide me"))
 			{
 				ui.Log($"changed slider: ({_slider})");
@@ -164,11 +166,13 @@ else
 			#region Code
 
 			SampleCode(ui, @"
-if (ui.CheckBox(ref _checked, ""Remember me"", ElementAlignment.Right))
+ui.Push(ElementAlignment.Right);
+if (ui.CheckBox(ref _checked, ""Remember me""))
 {
     ui.Log($""checked the box: ({_checked})"");
 }
 
+ui.Push(InputActivation.Continuous);
 if (ui.Slider(ref _slider, ""Slide me""))
 {
     ui.Log($""changed slider: ({_slider})"");

@@ -71,7 +71,18 @@ namespace Blowdart.UI.Web.Rendering
 					b.AddAttribute(HtmlAttributes.Type, InputTypes.Range);
 					b.AddAttribute(HtmlAttributes.Value, slider.Value);
 					b.AddAttribute(HtmlAttributes.Id, slider.Id);
-					b.AddAttribute(Events.OnChange, _imGui.OnChangeCallback(slider.Id));
+
+					switch (slider.Activation)
+					{
+						case InputActivation.OnDragEnd:
+							b.AddAttribute(DomEvents.OnChange, _imGui.OnChangeCallback(slider.Id));
+							break;
+						case InputActivation.Continuous:
+							b.AddAttribute(DomEvents.OnInput, _imGui.OnInputCallback(slider.Id));
+							break;
+						default:
+							throw new ArgumentOutOfRangeException();
+					}
 
 					b.CloseElement();
 				}
