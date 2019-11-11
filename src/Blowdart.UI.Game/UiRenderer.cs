@@ -53,7 +53,7 @@ namespace Blowdart.UI.Game
 			var context = ImGui.CreateContext();
 			ImGui.SetCurrentContext(context);
 
-			_ui = new Ui();
+			_ui = new Ui(new GameRenderTarget());
 			_game = game ?? throw new ArgumentNullException(nameof(game));
 			_loadedTextures = new Dictionary<IntPtr, Texture2D>();
 			_rasterizerState = new RasterizerState

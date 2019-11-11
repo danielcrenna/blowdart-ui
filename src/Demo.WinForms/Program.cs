@@ -1,6 +1,5 @@
 using System;
 using Blowdart.UI.WinForms;
-using Demo.Examples;
 using Demo.Examples.Pages;
 
 namespace Demo.WinForms

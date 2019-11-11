@@ -19,6 +19,7 @@ namespace Demo.Web
 				ui.MenuItem(OpenIconicIcons.Code, "Elements", "/elements");
 				ui.MenuItem(OpenIconicIcons.Folder, "Editor", "/editor");
 				ui.MenuItem(OpenIconicIcons.Aperture, "Styles", "/styles");
+				ui.MenuItem(OpenIconicIcons.Paperclip, "Patterns", "/patterns");
 
 				ui.EndMenu();
 			}

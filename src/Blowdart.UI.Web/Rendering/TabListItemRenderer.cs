@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Components.Rendering;
 
 namespace Blowdart.UI.Web.Rendering
 {
-	internal sealed class TabListItemRenderer : IWebRenderer<TabListItemInstruction>
+	internal sealed class TabListItemRenderer : IRenderer<TabListItemInstruction, RenderTreeBuilder>
 	{
 		private readonly ImGui _imGui;
 
@@ -19,25 +19,7 @@ namespace Blowdart.UI.Web.Rendering
 
 		public void Render(RenderTreeBuilder b, TabListItemInstruction tabListItem)
 		{
-			RenderTab(b, tabListItem);
-		}
-        
-		public void Render(RenderTreeBuilder b, RenderInstruction instruction)
-		{
-			RenderTab(b, instruction as TabListItemInstruction);
-		}
-
-		private void RenderTab(RenderTreeBuilder b, TabListItemInstruction tabListItem)
-		{
 			var onclick = _imGui.OnClickCallback(tabListItem.Id);
-
-			/*
-				<ul class="nav nav-tabs" role="tablist">
-				  <li class="nav-item">
-				    <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Home</a>
-				  </li>
-				</ul>
-			 */
 
 			b.OpenElement(HtmlElements.ListItem);
 			{
@@ -53,7 +35,7 @@ namespace Blowdart.UI.Web.Rendering
 					b.AddAttribute(HtmlAttributes.Role, "tab");
 					b.AddAttribute(HtmlAttributes.Aria.Selected, tabListItem.Active);
 					b.AddAttribute(HtmlAttributes.Aria.Controls, tabId);
-                    b.AddAttribute(DomEvents.OnClick, onclick);
+					b.AddAttribute(DomEvents.OnClick, onclick);
 					b.AddContent(tabListItem.Text);
 
 					b.CloseElement();

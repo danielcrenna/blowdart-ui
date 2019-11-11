@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Components.Rendering;
 
 namespace Blowdart.UI.Web.Rendering
 {
-	internal sealed class MenuItemRenderer : IWebRenderer<MenuItemInstruction>
+	internal sealed class MenuItemRenderer : IRenderer<MenuItemInstruction, RenderTreeBuilder>
 	{
 		public void Render(RenderTreeBuilder b, MenuItemInstruction menu)
 		{
@@ -19,11 +19,6 @@ namespace Blowdart.UI.Web.Rendering
 					b.AddContent(menu.Title);
 				});
 			});
-		}
-
-		public void Render(RenderTreeBuilder b, RenderInstruction instruction)
-		{
-			Render(b, instruction as MenuItemInstruction);
 		}
 	}
 }

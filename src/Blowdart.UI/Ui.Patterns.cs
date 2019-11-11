@@ -1,14 +1,17 @@
-﻿using System.Collections.Generic;
-using Blowdart.UI.Instructions.Patterns;
-using Blowdart.UI.Patterns;
+﻿using System;
 
 namespace Blowdart.UI
 {
 	partial class Ui
 	{
-		public void AvatarList(IEnumerable<Avatar> avatars, int size = 32)
+		public void Pattern<TInstruction, TInstructionRenderer, TRenderer>(params object[] args) 
+			where TInstruction : RenderInstruction
+			where TInstructionRenderer : IRenderer<TInstruction, TRenderer>
 		{
-			Instructions.Add(new AvatarListInstruction(avatars, size));
+			_target.TryAddRenderer<TInstruction, TInstructionRenderer, TRenderer>();
+
+            var instruction = (RenderInstruction) Activator.CreateInstance(typeof(TInstruction), args);
+            Instructions.Add(instruction);
 		}
 	}
 }

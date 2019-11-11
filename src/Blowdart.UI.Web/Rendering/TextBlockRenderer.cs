@@ -7,18 +7,13 @@ using Blowdart.UI.Web.Extensions;
 
 namespace Blowdart.UI.Web.Rendering
 {
-    internal sealed class TextBlockRenderer : IWebRenderer<TextBlockInstruction>
+    internal sealed class TextBlockRenderer : IRenderer<TextBlockInstruction, RenderTreeBuilder>
     {
         public void Render(RenderTreeBuilder b, TextBlockInstruction textBlock)
         {
             b.OpenElement(HtmlElements.Paragraph);
             b.AddContent(textBlock.Value);
             b.CloseElement();
-        }
-
-        public void Render(RenderTreeBuilder b, RenderInstruction instruction)
-        {
-            Render(b, instruction as TextBlockInstruction);
         }
     }
 }

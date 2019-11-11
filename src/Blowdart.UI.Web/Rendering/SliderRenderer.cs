@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Components.Rendering;
 
 namespace Blowdart.UI.Web.Rendering
 {
-	internal sealed class SliderRenderer : IWebRenderer<SliderInstruction>
+	internal sealed class SliderRenderer : IRenderer<SliderInstruction, RenderTreeBuilder>
 	{
 		private readonly ImGui _imGui;
 
@@ -19,16 +19,6 @@ namespace Blowdart.UI.Web.Rendering
 		}
 
 		public void Render(RenderTreeBuilder b, SliderInstruction slider)
-		{
-			RenderButton(b, slider);
-		}
-
-		public void Render(RenderTreeBuilder b, RenderInstruction instruction)
-		{
-			RenderButton(b, instruction as SliderInstruction);
-		}
-
-		private void RenderButton(RenderTreeBuilder b, SliderInstruction slider)
 		{
 			void RenderLabel()
 			{

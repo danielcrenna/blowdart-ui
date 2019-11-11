@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Components.Rendering;
 
 namespace Blowdart.UI.Web.Rendering
 {
-    internal sealed class LinkRenderer : IWebRenderer<LinkInstruction>
+    internal sealed class LinkRenderer : IRenderer<LinkInstruction, RenderTreeBuilder>
     {
         public void Render(RenderTreeBuilder b, LinkInstruction link)
         {
@@ -16,11 +16,6 @@ namespace Blowdart.UI.Web.Rendering
             b.AddAttribute(HtmlAttributes.Target, "_blank");
             b.AddContent(link.Title);
             b.CloseElement();
-        }
-
-        public void Render(RenderTreeBuilder b, RenderInstruction instruction)
-        {
-            Render(b, instruction as LinkInstruction);
         }
     }
 }

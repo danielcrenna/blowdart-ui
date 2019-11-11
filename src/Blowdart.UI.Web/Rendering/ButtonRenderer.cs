@@ -9,8 +9,8 @@ using Blowdart.UI.Web.Extensions;
 
 namespace Blowdart.UI.Web.Rendering
 {
-	internal sealed class ButtonRenderer : IWebRenderer<ButtonInstruction>
-    {
+	internal sealed class ButtonRenderer : IRenderer<ButtonInstruction, RenderTreeBuilder>
+	{
         private readonly ImGui _imGui;
 
         public ButtonRenderer(ImGui imGui)
@@ -22,12 +22,7 @@ namespace Blowdart.UI.Web.Rendering
         {
             RenderButton(b, button);
         }
-
-        public void Render(RenderTreeBuilder b, RenderInstruction instruction)
-        {
-            RenderButton(b, instruction as ButtonInstruction);
-        }
-
+		
         private void RenderButton(RenderTreeBuilder b, ButtonInstruction button)
         {
             var css = button.Type switch

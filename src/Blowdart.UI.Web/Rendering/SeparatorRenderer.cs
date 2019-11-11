@@ -7,17 +7,12 @@ using Microsoft.AspNetCore.Components.Rendering;
 
 namespace Blowdart.UI.Web.Rendering
 {
-	internal sealed class SeparatorRenderer : IWebRenderer<SeparatorInstruction>
+	internal sealed class SeparatorRenderer : IRenderer<SeparatorInstruction, RenderTreeBuilder>
 	{
 		public void Render(RenderTreeBuilder b, SeparatorInstruction text)
 		{
 			b.OpenElement(HtmlElements.HorizontalRule);
 			b.CloseElement();
-		}
-
-		public void Render(RenderTreeBuilder b, RenderInstruction instruction)
-		{
-			Render(b, instruction as SeparatorInstruction);
 		}
 	}
 }

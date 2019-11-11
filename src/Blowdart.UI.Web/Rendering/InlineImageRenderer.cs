@@ -7,16 +7,11 @@ using Microsoft.AspNetCore.Components.Rendering;
 
 namespace Blowdart.UI.Web.Rendering
 {
-	internal sealed class InlineImageRenderer : IWebRenderer<InlineImageInstruction>
+	internal sealed class InlineImageRenderer : IRenderer<InlineImageInstruction, RenderTreeBuilder>
 	{
 		public void Render(RenderTreeBuilder b, InlineImageInstruction image)
 		{
 			b.InlineImage(image.Source, image.Width, image.Height);
-		}
-
-		public void Render(RenderTreeBuilder b, RenderInstruction instruction)
-		{
-			Render(b, instruction as InlineImageInstruction);
 		}
 	}
 }

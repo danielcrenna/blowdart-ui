@@ -5,6 +5,7 @@ using System;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 using Blowdart.UI.Instructions;
 using Blowdart.UI.Web.Configuration;
@@ -17,9 +18,9 @@ using Microsoft.JSInterop;
 namespace Blowdart.UI.Web.Components
 {
     [SuppressMessage("ReSharper", "UnusedAutoPropertyAccessor.Local")]
-    internal sealed class ImGui : ComponentBase, IDisposable
+    public sealed class ImGui : ComponentBase, IDisposable
 	{
-		private WebRenderTarget _target;
+		private readonly WebRenderTarget _target;
 
         public Ui Ui { get; }
 
@@ -29,13 +30,14 @@ namespace Blowdart.UI.Web.Components
 		[Inject] public IOptionsMonitor<BlowdartOptions> Options { get; set; }
 
 		public ImGui()
-        {
-	        Ui = new Ui();
-        }
+		{
+			_target = new WebRenderTarget();
+			_target.RegisterRenderers<RenderTreeBuilder>(this);
+			Ui = new Ui(_target);
+		}
 
 		protected override Task OnParametersSetAsync()
 		{
-			_target = new WebRenderTarget(this);
 			return base.OnParametersSetAsync();
 		}
 

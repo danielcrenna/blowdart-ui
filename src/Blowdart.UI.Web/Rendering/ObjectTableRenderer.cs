@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Components.Rendering;
 
 namespace Blowdart.UI.Web.Rendering
 {
-    internal sealed class ObjectTableRenderer : IWebRenderer<ObjectTableInstruction>
+    internal sealed class ObjectTableRenderer : IRenderer<ObjectTableInstruction, RenderTreeBuilder>
     {
         public void Render(RenderTreeBuilder b, ObjectTableInstruction table)
         {
@@ -43,11 +43,6 @@ namespace Blowdart.UI.Web.Rendering
             b.CloseElement();
 
             b.CloseElement();
-        }
-
-        public void Render(RenderTreeBuilder b, RenderInstruction instruction)
-        {
-            Render(b, instruction as ObjectTableInstruction);
         }
     }
 }

@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Components.Rendering;
 namespace Blowdart.UI.Web.Extensions
 {
 	[SuppressMessage("ReSharper", "ExplicitCallerInfoArgument")]
-	internal static class RenderTreeBuilderExtensions
+	public static class RenderTreeBuilderExtensions
 	{
 		public static void AddAttribute(this RenderTreeBuilder b, string name, EventCallback value, [CallerMemberName] string callerMemberName = null, [CallerLineNumber] int? callerLineNumber = null)
 		{

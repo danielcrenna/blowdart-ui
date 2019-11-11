@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Components.Rendering;
 
 namespace Blowdart.UI.Web.Rendering
 {
-	internal sealed class LogRenderer : IWebRenderer<LogInstruction>
+	internal sealed class LogRenderer : IRenderer<LogInstruction, RenderTreeBuilder>
 	{
 		private readonly ImGui _imGui;
 
@@ -19,11 +19,6 @@ namespace Blowdart.UI.Web.Rendering
 		public void Render(RenderTreeBuilder b, LogInstruction log)
 		{
 			_imGui.LogInstruction(log);
-		}
-
-		public void Render(RenderTreeBuilder b, RenderInstruction instruction)
-		{
-			Render(b, instruction as LogInstruction);
 		}
 	}
 }

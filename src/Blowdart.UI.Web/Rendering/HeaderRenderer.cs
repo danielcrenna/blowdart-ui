@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Components.Rendering;
 
 namespace Blowdart.UI.Web.Rendering
 {
-    internal sealed class HeaderRenderer : IWebRenderer<HeaderInstruction>
+    internal sealed class HeaderRenderer : IRenderer<HeaderInstruction, RenderTreeBuilder>
     {
         public void Render(RenderTreeBuilder b, HeaderInstruction header)
         {
@@ -17,11 +17,6 @@ namespace Blowdart.UI.Web.Rendering
 			b.OpenElement($"h{header.Level}");
             b.AddContent(header.Text);
             b.CloseElement();
-        }
-
-        public void Render(RenderTreeBuilder b, RenderInstruction instruction)
-        {
-            Render(b, instruction as HeaderInstruction);
         }
     }
 }

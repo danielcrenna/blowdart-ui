@@ -7,17 +7,12 @@ using Microsoft.AspNetCore.Components.Rendering;
 
 namespace Blowdart.UI.Web.Rendering
 {
-	internal sealed class NextLineRenderer : IWebRenderer<NextLineInstruction>
+	internal sealed class NextLineRenderer : IRenderer<NextLineInstruction, RenderTreeBuilder>
 	{
 		public void Render(RenderTreeBuilder b, NextLineInstruction nextLine)
 		{
 			b.OpenElement("br");
 			b.CloseElement();
-		}
-
-		public void Render(RenderTreeBuilder b, RenderInstruction instruction)
-		{
-			Render(b, instruction as NextLineInstruction);
 		}
 	}
 }

@@ -8,16 +8,16 @@ using Microsoft.AspNetCore.Components.Rendering;
 
 namespace Blowdart.UI.Web.Rendering
 {
-	internal sealed class CollapsibleHeaderRenderer : 
-		IWebRenderer<BeginMenuHeaderInstruction>,
-		IWebRenderer<EndMenuHeaderInstruction>
+	internal sealed class MenuHeaderRenderer :
+		IRenderer<BeginMenuHeaderInstruction, RenderTreeBuilder>,
+		IRenderer<EndMenuHeaderInstruction, RenderTreeBuilder>
 	{
 		private readonly ImGui _imGui;
 		private static bool _collapseNavMenu;
 
 		private static string NavMenuCssClass(bool collapseNavMenu) => collapseNavMenu ? "collapse" : string.Empty;
 
-		public CollapsibleHeaderRenderer(ImGui imGui)
+		public MenuHeaderRenderer(ImGui imGui)
 		{
 			_imGui = imGui;
 		}
@@ -37,19 +37,6 @@ namespace Blowdart.UI.Web.Rendering
 			b.CloseElement(); // BeginCollapsibleHeader
 			b.BeginDiv(NavMenuCssClass(_collapseNavMenu));
 			b.BeginUnorderedList("nav flex-column");
-		}
-
-		public void Render(RenderTreeBuilder b, RenderInstruction instruction)
-		{
-			switch (instruction)
-			{
-				case BeginMenuHeaderInstruction begin:
-					Render(b, begin);
-					break;
-				case EndMenuHeaderInstruction end:
-					Render(b, end);
-					break;
-			}
 		}
 	}
 }

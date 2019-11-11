@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Components.Rendering;
 
 namespace Blowdart.UI.Web.Rendering
 {
-	internal sealed class CodeRenderer : IWebRenderer<CodeInstruction>
+	internal sealed class CodeRenderer : IRenderer<CodeInstruction, RenderTreeBuilder>
 	{
 		public void Render(RenderTreeBuilder b, CodeInstruction code)
 		{
@@ -22,11 +22,6 @@ namespace Blowdart.UI.Web.Rendering
 			b.CloseElement();
 			if(code.Block)
 				b.CloseElement();
-		}
-		
-		public void Render(RenderTreeBuilder b, RenderInstruction instruction)
-		{
-			Render(b, instruction as CodeInstruction);
 		}
 	}
 }

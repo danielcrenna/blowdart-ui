@@ -1,10 +1,11 @@
-﻿using Blowdart.UI.Instructions.Patterns;
+﻿using Blowdart.UI;
+using Blowdart.UI.Web;
 using Blowdart.UI.Web.Extensions;
 using Microsoft.AspNetCore.Components.Rendering;
 
-namespace Blowdart.UI.Web.Rendering.Patterns
+namespace Demo.Web.Patterns
 {
-	public class AvatarListRenderer : IWebRenderer<AvatarListInstruction>
+	public class AvatarListRenderer : IRenderer<AvatarListInstruction, RenderTreeBuilder>
 	{
 		public void Render(RenderTreeBuilder b, AvatarListInstruction instruction)
 		{
@@ -41,11 +42,6 @@ namespace Blowdart.UI.Web.Rendering.Patterns
 				b.CloseElement();
 			}
 			b.CloseElement();
-		}
-
-		public void Render(RenderTreeBuilder b, RenderInstruction instruction)
-		{
-			Render(b, (AvatarListInstruction) instruction);
 		}
 	}
 }

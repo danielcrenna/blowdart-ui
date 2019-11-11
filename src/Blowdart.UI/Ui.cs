@@ -15,12 +15,14 @@ namespace Blowdart.UI
 {
     public partial class Ui : IDisposable, IServiceProvider
 	{
-        internal List<RenderInstruction> Instructions { get; }
+		private readonly RenderTarget _target;
+		internal List<RenderInstruction> Instructions { get; }
 
         internal IServiceProvider UiServices { get; set; }
 
-        public Ui()
+        public Ui(RenderTarget target)
         {
+	        _target = target;
 	        Instructions = new List<RenderInstruction>();
         }
 
@@ -33,8 +35,7 @@ namespace Blowdart.UI
 	        CalledLayout = default;
         }
 
-
-        public void RenderToTarget<T>(RenderTarget target, T renderer)
+		public void RenderToTarget<T>(RenderTarget target, T renderer)
         {
 	        target.AddInstructions(Instructions);
 	        target.Render(renderer);

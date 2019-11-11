@@ -3,11 +3,10 @@
 
 namespace Blowdart.UI
 {
-	public enum ContainerDirection
-    {
-        LeftToRight,
-        RightToLeft,
-        TopToBottom,
-        BottomToTop
-    }
+    public interface IRenderer { }
+    
+	public interface IRenderer<in T, in TRenderer> : IRenderer where T : RenderInstruction
+	{
+		void Render(TRenderer renderer, T instruction);
+	}
 }

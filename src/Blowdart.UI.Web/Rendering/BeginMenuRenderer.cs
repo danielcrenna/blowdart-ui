@@ -7,16 +7,11 @@ using Microsoft.AspNetCore.Components.Rendering;
 
 namespace Blowdart.UI.Web.Rendering
 {
-	internal sealed class BeginMenuRenderer : IWebRenderer<BeginMenuInstruction>
+	internal sealed class BeginMenuRenderer : IRenderer<BeginMenuInstruction, RenderTreeBuilder>
 	{
 		public void Render(RenderTreeBuilder b, BeginMenuInstruction menu)
 		{
             b.BeginDiv("top-row pl-4 navbar navbar-dark");
-		}
-
-		public void Render(RenderTreeBuilder b, RenderInstruction instruction)
-		{
-			Render(b, instruction as BeginMenuInstruction);
 		}
 	}
 }

@@ -7,16 +7,11 @@ using Microsoft.AspNetCore.Components.Rendering;
 
 namespace Blowdart.UI.Web.Rendering
 {
-	internal sealed class InlineIconRenderer : IWebRenderer<InlineIconInstruction>
+	internal sealed class InlineIconRenderer : IRenderer<InlineIconInstruction, RenderTreeBuilder>
 	{
 		public void Render(RenderTreeBuilder b, InlineIconInstruction icon)
 		{
 			b.InlineIcon(icon.Icon);
-		}
-
-		public void Render(RenderTreeBuilder b, RenderInstruction instruction)
-		{
-			Render(b, instruction as InlineIconInstruction);
 		}
 	}
 }

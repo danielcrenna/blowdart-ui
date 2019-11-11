@@ -10,9 +10,9 @@ using Microsoft.AspNetCore.Components.Rendering;
 namespace Blowdart.UI.Web.Rendering
 {
 	internal sealed class ModalRenderer : 
-		IWebRenderer<BeginModalInstruction>,
-		IWebRenderer<EndModalInstruction>,
-		IWebRenderer<ShowModalInstruction>
+		IRenderer<BeginModalInstruction, RenderTreeBuilder>,
+		IRenderer<EndModalInstruction, RenderTreeBuilder>,
+		IRenderer<ShowModalInstruction, RenderTreeBuilder>
 	{
 		private readonly ImGui _imGui;
 
@@ -100,22 +100,6 @@ namespace Blowdart.UI.Web.Rendering
 		public void Render(RenderTreeBuilder b, ShowModalInstruction instruction)
 		{
 			_imGui.ShowModal(instruction.Id);
-		}
-
-		public void Render(RenderTreeBuilder b, RenderInstruction instruction)
-		{
-			switch (instruction)
-			{
-				case BeginModalInstruction begin:
-					Render(b, begin);
-					break;
-				case EndModalInstruction end:
-					Render(b, end);
-					break;
-				case ShowModalInstruction show:
-					Render(b, show);
-					break;
-			}
 		}
 	}
 }

@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Components.Rendering;
 
 namespace Blowdart.UI.Web.Rendering
 {
-    internal sealed class EditorRenderer : IWebRenderer<EditorInstruction>
+    internal sealed class EditorRenderer : IRenderer<EditorInstruction, RenderTreeBuilder>
     {
         public void Render(RenderTreeBuilder b, EditorInstruction editor)
         {
@@ -16,11 +16,6 @@ namespace Blowdart.UI.Web.Rendering
             b.OpenComponent(type);
             b.AddAttribute(nameof(DynamicEditor<object>.Model), editor.Object);
             b.CloseComponent();
-        }
-
-        public void Render(RenderTreeBuilder b, RenderInstruction instruction)
-        {
-            Render(b, instruction as EditorInstruction);
         }
     }
 }

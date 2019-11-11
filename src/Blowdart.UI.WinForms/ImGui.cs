@@ -33,7 +33,7 @@ namespace Blowdart.UI.WinForms
 		    Controls.Add(_panel);
 
 			_pages = serviceProvider.GetRequiredService<PageMap>();
-		    _ui = new Ui {UiServices = serviceProvider};
+		    _ui = new Ui(_target) {UiServices = serviceProvider};
 		    InitializeComponent(title);
 	    }
 

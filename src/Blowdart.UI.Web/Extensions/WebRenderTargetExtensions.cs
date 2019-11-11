@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Components.Rendering;
 
 namespace Blowdart.UI.Web.Extensions
 {
-    internal static class WebRenderTargetExtensions
+	public static class WebRenderTargetExtensions
     {
         #region div
 

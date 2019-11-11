@@ -6,17 +6,12 @@ using Microsoft.AspNetCore.Components.Rendering;
 
 namespace Blowdart.UI.Web.Rendering
 {
-	internal sealed class EndMenuRenderer : IWebRenderer<EndMenuInstruction>
+	internal sealed class EndMenuRenderer : IRenderer<EndMenuInstruction, RenderTreeBuilder>
 	{
 		public void Render(RenderTreeBuilder b, EndMenuInstruction menu)
 		{
 			b.CloseElement(); // BeginUnorderedList
 			b.CloseElement(); // BeginDiv
-		}
-
-		public void Render(RenderTreeBuilder b, RenderInstruction instruction)
-		{
-			Render(b, instruction as EndMenuInstruction);
 		}
 	}
 }

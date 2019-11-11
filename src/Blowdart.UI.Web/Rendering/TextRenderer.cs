@@ -7,16 +7,11 @@ using Microsoft.AspNetCore.Components.Rendering;
 
 namespace Blowdart.UI.Web.Rendering
 {
-    internal sealed class TextRenderer : IWebRenderer<TextInstruction>
+    internal sealed class TextRenderer : IRenderer<TextInstruction, RenderTreeBuilder>
     {
         public void Render(RenderTreeBuilder b, TextInstruction text)
         {
             b.AddContent(text.Text);
-        }
-
-        public void Render(RenderTreeBuilder b, RenderInstruction instruction)
-        {
-            Render(b, instruction as TextInstruction);
         }
     }
 }

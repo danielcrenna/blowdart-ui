@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Components.Rendering;
 
 namespace Blowdart.UI.Web.Rendering
 {
-	internal sealed class RadioButtonRenderer : IWebRenderer<RadioButtonInstruction>
+	internal sealed class RadioButtonRenderer : IRenderer<RadioButtonInstruction, RenderTreeBuilder>
 	{
 		private readonly ImGui _imGui;
 
@@ -19,16 +19,6 @@ namespace Blowdart.UI.Web.Rendering
 		}
 
 		public void Render(RenderTreeBuilder b, RadioButtonInstruction radioButton)
-		{
-			RenderButton(b, radioButton);
-		}
-
-		public void Render(RenderTreeBuilder b, RenderInstruction instruction)
-		{
-			RenderButton(b, instruction as RadioButtonInstruction);
-		}
-
-		private void RenderButton(RenderTreeBuilder b, RadioButtonInstruction radioButton)
 		{
 			var onclick = _imGui.OnClickCallback(radioButton.Id);
 

@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Components.Rendering;
 
 namespace Blowdart.UI.Web.Rendering
 {
-	internal sealed class CheckBoxRenderer : IWebRenderer<CheckBoxInstruction>
+	internal sealed class CheckBoxRenderer : IRenderer<CheckBoxInstruction, RenderTreeBuilder>
 	{
 		private readonly ImGui _imGui;
 
@@ -21,11 +21,6 @@ namespace Blowdart.UI.Web.Rendering
 		public void Render(RenderTreeBuilder b, CheckBoxInstruction checkBox)
 		{
 			RenderButton(b, checkBox);
-		}
-
-		public void Render(RenderTreeBuilder b, RenderInstruction instruction)
-		{
-			RenderButton(b, instruction as CheckBoxInstruction);
 		}
 
 		private void RenderButton(RenderTreeBuilder b, CheckBoxInstruction checkBox)
