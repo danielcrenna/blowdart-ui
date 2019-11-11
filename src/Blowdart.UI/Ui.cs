@@ -426,7 +426,7 @@ namespace Blowdart.UI
 				throw new BlowdartException("Attempted to create a tab outside of a tab block.");
 
 			var id = PushId(NextId());
-			Instructions.Add(new TabListItemInstruction(this, id, text, active));
+			Instructions.Add(new TabListItemInstruction(this, id, _(text), active));
 			var clicked = OnEvent(DomEvents.OnClick, id, out var _);
 			if (clicked)
 				active = !active;
@@ -451,7 +451,7 @@ namespace Blowdart.UI
 		{
 			if (!_inTabContent)
 				throw new BlowdartException("Attempted to create tab content outside of a tab content block.");
-			Instructions.Add(new BeginTabContentInstruction(this, PopId(), text, active));
+			Instructions.Add(new BeginTabContentInstruction(this, PopId(), _(text), active));
 			Component(handler);
 			Instructions.Add(new EndTabContentInstruction());
 		}
@@ -460,7 +460,7 @@ namespace Blowdart.UI
 		{
 			if (!_inTabContent)
 				throw new BlowdartException("Attempted to create tab content outside of a tab content block.");
-			Instructions.Add(new BeginTabContentInstruction(this, PopId(), text, active));
+			Instructions.Add(new BeginTabContentInstruction(this, PopId(), _(text), active));
 			Component(handler);
 			Instructions.Add(new EndTabContentInstruction());
 		}
@@ -579,7 +579,7 @@ namespace Blowdart.UI
 
 		public void TextBlock(string value)
 		{
-			Instructions.Add(new TextBlockInstruction(value));
+			Instructions.Add(new TextBlockInstruction(_(value)));
 		}
 
 		public void CodeBlock(string value)
@@ -610,14 +610,14 @@ namespace Blowdart.UI
 			TryPop<ElementDecorator>(out var decorator);
 			TryPop<ElementAlignment>(out var alignment);
 
-			Instructions.Add(new ButtonInstruction(this, id, context, decorator, alignment, text));
+			Instructions.Add(new ButtonInstruction(this, id, context, decorator, alignment, _(text)));
             return OnEvent(DomEvents.OnClick, id, out var _);
         }
 
         public void BeginModal(string title)
         {
 	        var id = HashId($"modal:{title}");
-	        Instructions.Add(new BeginModalInstruction(title, id));
+	        Instructions.Add(new BeginModalInstruction(_(title), id));
         }
 
 		public void EndModal()
@@ -631,7 +631,7 @@ namespace Blowdart.UI
 
 			TryPop<ElementAlignment>(out var alignment);
 
-			Instructions.Add(new CheckBoxInstruction(this, id, text, alignment, value, false));
+			Instructions.Add(new CheckBoxInstruction(this, id, _(text), alignment, value, false));
 	        var clicked = OnEvent(DomEvents.OnClick, id, out var _);
 	        if (clicked)
 		        value = !value;
@@ -642,7 +642,7 @@ namespace Blowdart.UI
 		{
 			var id = NextId();
 			TryPop<ElementAlignment>(out var alignment);
-			Instructions.Add(new CheckBoxInstruction(this, id, text, alignment, value, true));
+			Instructions.Add(new CheckBoxInstruction(this, id, _(text), alignment, value, true));
 		}
 
 		public bool Slider(ref int value, string text)
@@ -652,7 +652,7 @@ namespace Blowdart.UI
 	        TryPop<ElementAlignment>(out var alignment);
 			TryPop<InputActivation>(out var activation);
 
-			Instructions.Add(new SliderInstruction(this, id, text, alignment, activation, value));
+			Instructions.Add(new SliderInstruction(this, id, _(text), alignment, activation, value));
 			switch (activation)
 			{
 				case InputActivation.OnDragEnd:
@@ -680,7 +680,7 @@ namespace Blowdart.UI
 
 			TryPop<ElementAlignment>(out var alignment);
 
-			Instructions.Add(new RadioButtonInstruction(this, id, text, alignment, value));
+			Instructions.Add(new RadioButtonInstruction(this, id, _(text), alignment, value));
 	        var clicked = OnEvent(DomEvents.OnClick, id, out var _);
 	        if (clicked)
 		        value = !value;
@@ -699,7 +699,7 @@ namespace Blowdart.UI
 
 		public void Link(string href, string title)
         {
-            Instructions.Add(new LinkInstruction(href, title));
+            Instructions.Add(new LinkInstruction(href, _(title)));
         }
         
         public void Editor<T>(T instance)
@@ -747,7 +747,7 @@ namespace Blowdart.UI
 		{
 			TryPop<ElementContext>(out var context);
 			Instructions.Add(new BeginAlertInstruction(context));
-			Instructions.Add(new TextInstruction(text));
+			Instructions.Add(new TextInstruction(_(text)));
 			Instructions.Add(new EndAlertInstruction());
 		}
 
@@ -925,6 +925,9 @@ namespace Blowdart.UI
 
 		internal string _(string key)
 		{
+			if (string.IsNullOrWhiteSpace(key))
+				return key;
+
 			var provider = UiServices.GetService<ILocalizationProvider>();
 			if (provider == null)
 				return key;
