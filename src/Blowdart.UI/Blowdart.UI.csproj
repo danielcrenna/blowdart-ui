@@ -17,8 +17,4 @@
     <ProjectReference Include="..\..\..\TypeKitchen\src\TypeKitchen\TypeKitchen.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Instructions\Support\" />
-  </ItemGroup>
-
 </Project>

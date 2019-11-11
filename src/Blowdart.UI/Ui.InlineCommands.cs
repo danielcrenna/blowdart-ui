@@ -19,26 +19,21 @@ namespace Blowdart.UI
 			return id;
 		}
 
+		public bool TryPopId(out Value128 id)
+		{
+			if (_ids.Count > 0)
+			{
+				id = _ids.Pop();
+				return true;
+			}
+
+			id = default;
+			return false;
+		}
+        
 		public Value128 PopId()
 		{
 			return _ids.Pop();
-		}
-
-		#endregion
-
-		#region Instructions
-
-		private readonly Stack<RenderInstruction> _instructions = new Stack<RenderInstruction>();
-
-		public T PushInstruction<T>(T instruction) where T : RenderInstruction
-		{
-			_instructions.Push(instruction);
-			return instruction;
-		}
-
-		public RenderInstruction PopInstruction()
-		{
-			return _instructions.Pop();
 		}
 
 		#endregion
@@ -160,5 +155,11 @@ namespace Blowdart.UI
 		}
 
 		#endregion
+
+		public void ShowModal(string title)
+		{
+			var id = HashId($"modal:{title}");
+			Instructions.Add(new ShowModalInstruction(id));
+		}
 	}
 }

@@ -2,7 +2,6 @@
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
 using Blowdart.UI.Web;
-using Demo.Examples;
 using Demo.Examples.Models;
 using Demo.Examples.Pages;
 using Microsoft.Extensions.DependencyInjection;

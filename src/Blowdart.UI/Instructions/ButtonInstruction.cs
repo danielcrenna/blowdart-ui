@@ -5,7 +5,7 @@ using System;
 
 namespace Blowdart.UI.Instructions
 {
-    public class ButtonInstruction : RenderInstruction
+	public class ButtonInstruction : RenderInstruction
     {
         public Ui Ui { get; }
         public Value128 Id { get; }

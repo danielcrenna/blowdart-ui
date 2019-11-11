@@ -4,8 +4,10 @@
 using System;
 using System.Collections.Generic;
 using Blowdart.UI.Instructions;
+using Blowdart.UI.Instructions.Patterns;
 using Blowdart.UI.Web.Components;
 using Blowdart.UI.Web.Rendering;
+using Blowdart.UI.Web.Rendering.Patterns;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Rendering;
 
@@ -24,7 +26,9 @@ namespace Blowdart.UI.Web
             var tabContentRenderer = new TabContentRenderer();
 			var collapsibleHeaderRenderer = new CollapsibleHeaderRenderer(imGui);
 
-            _renderers = new Dictionary<Type, IWebRenderer>
+			var modalRenderer = new ModalRenderer(imGui);
+
+			_renderers = new Dictionary<Type, IWebRenderer>
             {
                 {typeof(BeginElementInstruction), elementRenderer},
                 {typeof(EndElementInstruction), elementRenderer},
@@ -46,13 +50,18 @@ namespace Blowdart.UI.Web
 				{typeof(InlineImageInstruction), new InlineImageRenderer()},
 				{typeof(ObjectTableInstruction), new ObjectTableRenderer()},
                 {typeof(MenuItemInstruction), new MenuItemRenderer()},
-                {typeof(BeginMenuInstruction), new BeginMenuRenderer()},
+                {typeof(BeginModalInstruction), modalRenderer},
+                {typeof(ShowModalInstruction), modalRenderer},
+				{typeof(EndModalInstruction), modalRenderer},
+				{typeof(BeginMenuInstruction), new BeginMenuRenderer()},
                 {typeof(BeginMenuHeaderInstruction), collapsibleHeaderRenderer},
                 {typeof(EndMenuHeaderInstruction), collapsibleHeaderRenderer},
 				{typeof(EndMenuInstruction), new EndMenuRenderer()},
 				{typeof(BeginAlertInstruction), new BeginAlertRenderer()},
 				{typeof(EndAlertInstruction), new EndAlertRenderer()},
 				{typeof(NextLineInstruction), new NextLineRenderer()},
+
+				{typeof(AvatarListInstruction), new AvatarListRenderer()},
 			};
         }
 
@@ -83,7 +92,7 @@ namespace Blowdart.UI.Web
                 throw new ArgumentException($"No renderer found for {key.Name}");
             renderer.Render(b, instruction);
         }
-
+		 
         protected override void Dispose(bool disposing)
         {
             if (disposing)

@@ -603,14 +603,27 @@ namespace Blowdart.UI
         public bool Button(string text = "")
         {
 			var id = NextId();
+
 			TryPop<ElementContext>(out var context);
 			TryPop<ElementDecorator>(out var decorator);
 			TryPop<ElementAlignment>(out var alignment);
+
 			Instructions.Add(new ButtonInstruction(this, id, context, decorator, alignment, text));
             return OnEvent(DomEvents.OnClick, id, out _);
         }
 
-        public bool CheckBox(ref bool value, string text)
+        public void BeginModal(string title)
+        {
+	        var id = HashId($"modal:{title}");
+	        Instructions.Add(new BeginModalInstruction(title, id));
+        }
+
+		public void EndModal()
+		{
+			Instructions.Add(new EndModalInstruction());
+		}
+
+		public bool CheckBox(ref bool value, string text)
         {
 			var id = NextId();
 
@@ -736,7 +749,13 @@ namespace Blowdart.UI
 		internal Value128 NextIdHash;
         private int _count;
 
-        public Value128 NextId(string id = null, [CallerMemberName] string callerMemberName = null)
+        internal Value128 HashId(string id = null, [CallerMemberName] string callerMemberName = null)
+        {
+	        NextIdHash = Hashing.MurmurHash3(id ?? $"{callerMemberName}{_count++}");
+	        return NextIdHash;
+        }
+
+		public Value128 NextId(string id = null, [CallerMemberName] string callerMemberName = null)
         {
             NextIdHash = Hashing.MurmurHash3(id ?? $"{callerMemberName}{_count++}", NextIdHash) ^ NextIdHash;
             return NextIdHash;

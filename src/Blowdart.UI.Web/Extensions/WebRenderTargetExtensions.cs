@@ -40,7 +40,7 @@ namespace Blowdart.UI.Web.Extensions
             return imgui.Ui.OnEvent(DomEvents.OnClick, id, out _);
         }
 
-        public static void BeginSpan(this RenderTreeBuilder b, string @class) => b.BeginElement(HtmlElements.Span, @class);
+        public static void BeginSpan(this RenderTreeBuilder b, string @class= "") => b.BeginElement(HtmlElements.Span, @class);
         public static void Span(this RenderTreeBuilder b, string @class) => Element(b, HtmlElements.Span, @class);
         public static void Span(this RenderTreeBuilder b, string @class, RenderFragment fragment) => Element(b, HtmlElements.Span, @class, fragment);
         public static void Span(this RenderTreeBuilder b, string @class, Action fragment) => Element(b, HtmlElements.Span, @class, fragment);
@@ -50,7 +50,7 @@ namespace Blowdart.UI.Web.Extensions
         public static void UnorderedList(this RenderTreeBuilder b, string @class, RenderFragment fragment) => Element(b, HtmlElements.UnorderedList, @class, fragment);
         public static void UnorderedList(this RenderTreeBuilder b, string @class, Action fragment) => Element(b, HtmlElements.UnorderedList, @class, fragment);
 
-        public static void BeginListItem(this RenderTreeBuilder b, string @class) => b.BeginElement(HtmlElements.ListItem, @class);
+        public static void BeginListItem(this RenderTreeBuilder b, string @class = "") => b.BeginElement(HtmlElements.ListItem, @class);
         public static void ListItem(this RenderTreeBuilder b, string @class) => Element(b, HtmlElements.ListItem, @class);
         public static void ListItem(this RenderTreeBuilder b, string @class, RenderFragment fragment) => Element(b, HtmlElements.ListItem, @class, fragment);
         public static void ListItem(this RenderTreeBuilder b, string @class, Action fragment) => Element(b, HtmlElements.ListItem, @class, fragment);
@@ -97,7 +97,7 @@ namespace Blowdart.UI.Web.Extensions
 			b.CloseElement();
 		}
 
-		public static void BeginAnchor(this RenderTreeBuilder b, string @class, string href = "")
+		public static void BeginAnchor(this RenderTreeBuilder b, string @class = "", string href = "")
 		{
 			b.BeginElement(HtmlElements.Anchor, @class);
 			b.Href(href);
@@ -168,10 +168,15 @@ namespace Blowdart.UI.Web.Extensions
 
 		public static void AriaHidden(this RenderTreeBuilder b)
         {
-	        b.AddAttribute("aria-hidden", "true");
+	        b.AddAttribute(HtmlAttributes.Aria.Hidden, true);
+		}
+
+		public static void AriaLabelledBy(this RenderTreeBuilder b, string id)
+		{
+			b.AddAttribute(HtmlAttributes.Aria.LabelledBy, id);
 		}
 
 		#endregion
 
-    }
+	}
 }

@@ -1,7 +1,9 @@
 // Copyright (c) Daniel Crenna & Contributors. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
+using System.Collections.Generic;
 using Blowdart.UI;
+using Blowdart.UI.Patterns;
 
 namespace Demo.Examples.Pages
 {
@@ -11,6 +13,7 @@ namespace Demo.Examples.Pages
 
 		private static bool _alertsTabOpen = true;
 		private static bool _inputControlsTabOpen;
+		private static bool _patternsTabOpen;
 
 		public static void Index(Ui ui)
 		{
@@ -19,11 +22,19 @@ namespace Demo.Examples.Pages
 			if (ui.Tab("Alerts", ref _alertsTabOpen))
 			{
 				_inputControlsTabOpen = false;
+				_patternsTabOpen = false;
 			}
 
 			if (ui.Tab("Input Controls", ref _inputControlsTabOpen))
 			{
 				_alertsTabOpen = false;
+				_patternsTabOpen = false;
+			}
+
+			if (ui.Tab("Patterns", ref _patternsTabOpen))
+			{
+				_alertsTabOpen = false;
+				_inputControlsTabOpen = false;
 			}
 
 			ui.EndTabList();
@@ -31,13 +42,14 @@ namespace Demo.Examples.Pages
 			ui.BeginTabContent();
 			ui.TabContent("Alerts", _alertsTabOpen, AlertsTab);
 			ui.TabContent("Input Controls", _inputControlsTabOpen, InputControlsTab);
+			ui.TabContent("Patterns", _patternsTabOpen, PatternsTab);
 			ui.EndTabContent();
 		}
 
 		private static bool _checked;
 		private static int _slider;
 		private static bool _radioButton;
-
+		
 		public static void InputControlsTab(Ui ui)
 		{
 			ui.NextLine();
@@ -71,6 +83,7 @@ namespace Demo.Examples.Pages
 			ui.Push(ElementDecorator.SpinnerBorder);
 			if (ui.Button())
 			{
+				ui.ShowModal("Example");
 				ui.Log($"clicked the first button");
 			}
 
@@ -79,13 +92,20 @@ namespace Demo.Examples.Pages
 			ui.Push(ElementAlignment.Right);
 			if (ui.Button("Click me "))
 			{
+				ui.ShowModal("Example");
 				ui.Log($"clicked the second button");
 			}
+
+			ui.BeginModal("Example");
+			ui.Text("Hello from a modal!");
+			ui.EndModal();
 
 			#region Code
 
 			ui.SampleCode(@"
 ui.NextLine();
+ui.Header(3, ""Input Controls"");
+ui.Separator();
 
 ui.Push(ElementAlignment.Right);
 if (ui.CheckBox(ref _checked, ""Check me""))
@@ -114,6 +134,7 @@ ui.Push(ElementContext.Dark);
 ui.Push(ElementDecorator.SpinnerBorder);
 if (ui.Button())
 {
+	ui.ShowModal(""Example"");
 	ui.Log($""clicked the first button"");
 }
 
@@ -122,8 +143,13 @@ ui.Push(ElementDecorator.SpinnerBorder);
 ui.Push(ElementAlignment.Right);
 if (ui.Button(""Click me ""))
 {
+	ui.ShowModal(""Example"");
 	ui.Log($""clicked the second button"");
 }
+
+ui.BeginModal(""Example"");
+ui.Text(""Hello from a modal!"");
+ui.EndModal();
 ");
 			#endregion
 		}
@@ -188,6 +214,31 @@ ui.Alert(""This is a dark alert—check it out!"");
 ui.Push(ElementContext.Light);
 ui.Alert(""This is a light alert—check it out!"");");
 			#endregion
+		}
+
+		public static void PatternsTab(Ui ui)
+		{
+			ui.NextLine();
+			ui.Header(3, "Patterns");
+			ui.Separator();
+
+			var avatars = new List<Avatar>
+			{
+				new Avatar
+				{
+					FirstName = "Chuck",
+					LastName = "Norris",
+					ImageUrl = "https://i.pravatar.cc/64?u=chuck@norris.com"
+				},
+				new Avatar
+				{
+					FirstName = "Bob",
+					LastName = "Loblaw",
+					ImageUrl = "https://i.pravatar.cc/64?u=bob@loblaw.com"
+				}
+			};
+
+			ui.AvatarList(avatars);
 		}
 
 		#endregion

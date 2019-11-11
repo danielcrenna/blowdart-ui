@@ -92,8 +92,10 @@ namespace Blowdart.UI.Web.Components
 	        Begin();
 	        Handler(Ui);
 
-			if (Ui.Instructions.Count != instructionCount)
-				LogToTargets();
+	        if (Ui.Instructions.Count != instructionCount)
+	        {
+		        OnInstructionsAdded();
+	        }
 		}
 
         public EventCallback<MouseEventArgs> OnClickCallback(Value128 id)
@@ -132,13 +134,22 @@ namespace Blowdart.UI.Web.Components
 
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
+	        await Js.InvokeVoidAsync(Interop.OnReady);
+
+
 	        foreach (var _ in Ui.Instructions.OfType<CodeInstruction>())
 	        {
 		        await Js.InvokeVoidAsync(Interop.SyntaxHighlight);
 		        break;
 	        }
 
-			LogToTargets();
+	        foreach (var _ in Ui.Instructions.OfType<ShowModalInstruction>())
+	        {
+		        await Js.InvokeVoidAsync(Interop.ShowModal, _.Id);
+		        break;
+	        }
+
+	        LogToTargets();
 
 			if (await Ui.DispatchDataLoaders())
             {
@@ -148,6 +159,17 @@ namespace Blowdart.UI.Web.Components
                     StateHasChanged();
             }
         }
+
+        private void OnInstructionsAdded()
+        {
+	        LogToTargets();
+
+	        foreach (var _ in Ui.Instructions.OfType<ShowModalInstruction>())
+	        {
+		        Js.InvokeVoidAsync(Interop.ShowModal, _.Id.ToString());
+		        break;
+	        }
+		}
 
         private void LogToTargets()
         {
@@ -178,5 +200,10 @@ namespace Blowdart.UI.Web.Components
 				}
 			}
         }
+
+        public void ShowModal(Value128 id)
+        {
+			Js.InvokeVoidAsync(Interop.ShowModal, id);
+		}
 	}
 }
