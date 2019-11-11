@@ -5,8 +5,10 @@ using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using Blowdart.UI.Instructions;
+using Blowdart.UI.Localization;
 using Microsoft.Collections.Extensions;
 using Microsoft.Extensions.DependencyInjection;
 using TypeKitchen;
@@ -17,7 +19,6 @@ namespace Blowdart.UI
 	{
 		private readonly RenderTarget _target;
 		internal List<RenderInstruction> Instructions { get; }
-
         internal IServiceProvider UiServices { get; set; }
 
         public Ui(RenderTarget target)
@@ -426,7 +427,7 @@ namespace Blowdart.UI
 
 			var id = PushId(NextId());
 			Instructions.Add(new TabListItemInstruction(this, id, text, active));
-			var clicked = OnEvent(DomEvents.OnClick, id, out _);
+			var clicked = OnEvent(DomEvents.OnClick, id, out var _);
 			if (clicked)
 				active = !active;
 			return clicked;
@@ -593,12 +594,12 @@ namespace Blowdart.UI
 
 		public void Text(string text)
         {
-            Instructions.Add(new TextInstruction(text));
+            Instructions.Add(new TextInstruction(_(text)));
         }
 
         public void Header(int level, string innerText)
         {
-            Instructions.Add(new HeaderInstruction(level, innerText));
+            Instructions.Add(new HeaderInstruction(level, _(innerText)));
         }
 
         public bool Button(string text = "")
@@ -610,7 +611,7 @@ namespace Blowdart.UI
 			TryPop<ElementAlignment>(out var alignment);
 
 			Instructions.Add(new ButtonInstruction(this, id, context, decorator, alignment, text));
-            return OnEvent(DomEvents.OnClick, id, out _);
+            return OnEvent(DomEvents.OnClick, id, out var _);
         }
 
         public void BeginModal(string title)
@@ -631,7 +632,7 @@ namespace Blowdart.UI
 			TryPop<ElementAlignment>(out var alignment);
 
 			Instructions.Add(new CheckBoxInstruction(this, id, text, alignment, value));
-	        var clicked = OnEvent(DomEvents.OnClick, id, out _);
+	        var clicked = OnEvent(DomEvents.OnClick, id, out var _);
 	        if (clicked)
 		        value = !value;
 	        return clicked;
@@ -673,7 +674,7 @@ namespace Blowdart.UI
 			TryPop<ElementAlignment>(out var alignment);
 
 			Instructions.Add(new RadioButtonInstruction(this, id, text, alignment, value));
-	        var clicked = OnEvent(DomEvents.OnClick, id, out _);
+	        var clicked = OnEvent(DomEvents.OnClick, id, out var _);
 	        if (clicked)
 		        value = !value;
 	        return clicked;
@@ -909,6 +910,18 @@ namespace Blowdart.UI
 		public void SetLayoutBody(Action<Ui> body)
 		{
 			_body = body;
+		}
+
+		#endregion
+
+		#region Localization
+
+		internal string _(string key)
+		{
+			var provider = UiServices.GetService<ILocalizationProvider>();
+			if (provider == null)
+				return key;
+			return provider.GetText(key);
 		}
 
 		#endregion

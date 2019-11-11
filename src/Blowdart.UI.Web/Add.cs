@@ -3,6 +3,7 @@
 
 using System;
 using System.Diagnostics;
+using Blowdart.UI.Localization;
 //using Blowdart.SplitTesting.AspNetCore;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -17,7 +18,10 @@ namespace Blowdart.UI.Web
 			var pages = new PageMap();
 
 			services.AddSingleton(pages);
-            services.AddSingleton<IThemeProvider, WebThemeProvider>();
+			services.AddSingleton<ILocaleResolver, WebLocaleResolver>();
+			services.AddSingleton<ILocalizationProvider, LocalizationProvider>();
+			services.AddSingleton<ILocalizationStore, MemoryLocalizationStore>();
+			services.AddSingleton<IThemeProvider, WebThemeProvider>();
             services.AddSingleton<IInputTransformer, InputTransformer>();
             
 			services.AddRazorPages(o =>
