@@ -10,14 +10,16 @@ namespace Blowdart.UI.Instructions
 		public string Text { get; }
 		public ElementAlignment Alignment { get; }
 		public bool Value { get; }
+		public bool Disabled { get; }
 
-		public CheckBoxInstruction(Ui ui, Value128 id, string text, ElementAlignment alignment, bool value)
+		public CheckBoxInstruction(Ui ui, Value128 id, string text, ElementAlignment alignment, bool value, bool disabled)
 		{
 			Ui = ui;
 			Id = id;
 			Text = text;
 			Alignment = alignment;
 			Value = value;
+			Disabled = disabled;
 		}
 
 		public override string DebuggerDisplay => $"CheckBox: {Text}";

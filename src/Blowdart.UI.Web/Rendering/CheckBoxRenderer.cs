@@ -25,17 +25,18 @@ namespace Blowdart.UI.Web.Rendering
 
 		private void RenderButton(RenderTreeBuilder b, CheckBoxInstruction checkBox)
 		{
-			var onclick = _imGui.OnClickCallback(checkBox.Id);
-
 			void RenderLabel()
 			{
-				b.OpenElement(HtmlElements.Label);
+				if(!string.IsNullOrWhiteSpace(checkBox.Text))
 				{
-					b.AddAttribute(HtmlAttributes.Class, "form-check-label");
-					b.AddAttribute(HtmlAttributes.For, checkBox.Id);
-					b.AddContent(checkBox.Text);
+					b.OpenElement(HtmlElements.Label);
+					{
+						b.AddAttribute(HtmlAttributes.Class, "form-check-label");
+						b.AddAttribute(HtmlAttributes.For, checkBox.Id);
+						b.AddContent(checkBox.Text);
 
-					b.CloseElement();
+						b.CloseElement();
+					}
 				}
 			}
 
@@ -68,7 +69,12 @@ namespace Blowdart.UI.Web.Rendering
 					b.AddAttribute(HtmlAttributes.Type, HtmlInputTypes.Checkbox);
 					b.AddAttribute(HtmlAttributes.Value, checkBox.Value);
 					b.AddAttribute(HtmlAttributes.Id, checkBox.Id);
-					b.AddAttribute(DomEvents.OnClick, onclick);
+					b.AddAttribute(HtmlAttributes.Checked, checkBox.Value);
+
+					if (checkBox.Disabled)
+						b.AddAttribute(HtmlAttributes.Disabled, true);
+					else
+						b.AddAttribute(DomEvents.OnClick, _imGui.OnClickCallback(checkBox.Id));
 
 					b.CloseElement();
 				}

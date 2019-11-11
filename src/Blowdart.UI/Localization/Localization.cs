@@ -7,5 +7,7 @@ namespace Blowdart.UI.Localization
 	{
 		public string Tag { get; set; }
 		public string Value { get; set; }
+
+		public bool IsMissing { get; set; }
 	}
 }

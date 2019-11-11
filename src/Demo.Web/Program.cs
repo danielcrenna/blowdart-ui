@@ -20,7 +20,8 @@ namespace Demo.Web
             builder.AddPage("/elements", WebLayout.Index, ElementsPage.Index);
 			builder.AddPage("/editor", WebLayout.Index, EditorPage.Index);
             builder.AddPage("/styles", WebLayout.Index, StylesPage.Index);
-            builder.AddPage("/patterns", WebLayout.Index, PatternsPage.Index);
+            builder.AddPage("/i18n", WebLayout.Index, LocalizationPage.Index);
+			builder.AddPage("/patterns", WebLayout.Index, PatternsPage.Index);
 		});
     }
 }

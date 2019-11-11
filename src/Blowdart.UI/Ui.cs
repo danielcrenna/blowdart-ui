@@ -491,7 +491,7 @@ namespace Blowdart.UI
 				_inTable = true;
 				template(this, item);
 				_inTable = false;
-				Instructions.Add(new BeginElementInstruction(ElementType.TableColumn));
+				Instructions.Add(new EndElementInstruction(ElementType.TableColumn));
 				Instructions.Add(new EndElementInstruction(ElementType.TableRow));
 			}
 			Instructions.Add(new EndElementInstruction(ElementType.Table));
@@ -625,20 +625,27 @@ namespace Blowdart.UI
 			Instructions.Add(new EndModalInstruction());
 		}
 
-		public bool CheckBox(ref bool value, string text)
+		public bool CheckBox(ref bool value, string text = "")
         {
 			var id = NextId();
 
 			TryPop<ElementAlignment>(out var alignment);
 
-			Instructions.Add(new CheckBoxInstruction(this, id, text, alignment, value));
+			Instructions.Add(new CheckBoxInstruction(this, id, text, alignment, value, false));
 	        var clicked = OnEvent(DomEvents.OnClick, id, out var _);
 	        if (clicked)
 		        value = !value;
 	        return clicked;
         }
 
-        public bool Slider(ref int value, string text)
+		public void CheckBox(bool value, string text = "")
+		{
+			var id = NextId();
+			TryPop<ElementAlignment>(out var alignment);
+			Instructions.Add(new CheckBoxInstruction(this, id, text, alignment, value, true));
+		}
+
+		public bool Slider(ref int value, string text)
 		{
 	        var id = NextId();
 
