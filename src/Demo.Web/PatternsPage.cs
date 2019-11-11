@@ -1,8 +1,6 @@
 ﻿using System.Collections.Generic;
 using Blowdart.UI;
 using Blowdart.UI.Patterns;
-using Demo.Web.Patterns;
-using Microsoft.AspNetCore.Components.Rendering;
 
 namespace Demo.Web
 {
@@ -29,7 +27,7 @@ namespace Demo.Web
 				}
 			};
 
-            ui.Pattern<AvatarListInstruction, AvatarListRenderer, RenderTreeBuilder>(avatars, 16);
+			ui.Pattern("AvatarList", avatars, 32);
 		}
 	}
 }
