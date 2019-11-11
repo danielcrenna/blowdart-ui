@@ -35,7 +35,7 @@ namespace Blowdart.UI
 	        CalledLayout = default;
         }
 
-		public void RenderToTarget<T>(RenderTarget target, T renderer)
+		public void RenderToTarget<TRenderer>(RenderTarget target, TRenderer renderer)
         {
 	        target.AddInstructions(Instructions);
 	        target.Render(renderer);

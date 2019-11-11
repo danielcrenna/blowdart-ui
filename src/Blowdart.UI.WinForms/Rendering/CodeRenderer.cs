@@ -8,9 +8,9 @@ using Blowdart.UI.Internal;
 
 namespace Blowdart.UI.WinForms.Rendering
 {
-	internal sealed class CodeRenderer : IFormRenderer
+	internal sealed class CodeRenderer : IRenderer<CodeInstruction, Panel>
 	{
-		public void Render(RenderInstruction instruction, Panel panel)
+		public void Render(Panel renderer, CodeInstruction instruction)
 		{
 			var code = (CodeInstruction) instruction;
 
@@ -21,17 +21,17 @@ namespace Blowdart.UI.WinForms.Rendering
 				Text = text,
 				AutoSize = false,
 				Multiline = code.Block,
-                ReadOnly = true,
-                Enabled = false
+				ReadOnly = true,
+				Enabled = false
 			};
 
-            var size = System.Windows.Forms.TextRenderer.MeasureText(text, textBox.Font, Size.Empty, 
-	            TextFormatFlags.Default);
+			var size = System.Windows.Forms.TextRenderer.MeasureText(text, textBox.Font, Size.Empty,
+				TextFormatFlags.Default);
 
-            textBox.Width = size.Width + 20;
-            textBox.Height = size.Height + 10;
-			
-			panel.Controls.Add(textBox);
+			textBox.Width = size.Width + 20;
+			textBox.Height = size.Height + 10;
+
+			renderer.Controls.Add(textBox);
 		}
 	}
 }

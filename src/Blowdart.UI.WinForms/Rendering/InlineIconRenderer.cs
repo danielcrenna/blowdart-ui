@@ -6,19 +6,19 @@ using Blowdart.UI.Instructions;
 
 namespace Blowdart.UI.WinForms.Rendering
 {
-	internal sealed class InlineIconRenderer : IFormRenderer
+	internal sealed class InlineIconRenderer : IRenderer<InlineIconInstruction, Panel>
 	{
-		public void Render(RenderInstruction instruction, Panel panel)
+		public void Render(Panel renderer, InlineIconInstruction instruction)
 		{
 			var icon = (InlineIconInstruction) instruction;
 
-			foreach (var control in panel.Controls)
+			foreach (var control in renderer.Controls)
 			{
 				if (control is ContextMenuStrip strip)
 				{
 					foreach (var item in strip.Items)
 					{
-						
+
 					}
 				}
 			}

@@ -1,22 +1,21 @@
 ﻿// Copyright (c) Daniel Crenna & Contributors. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
-using System;
 using System.Drawing;
 using System.Windows.Forms;
 using Blowdart.UI.Instructions;
 
 namespace Blowdart.UI.WinForms.Rendering
 {
-	internal sealed class HeaderRenderer : IFormRenderer
+	internal sealed class HeaderRenderer : IRenderer<HeaderInstruction, Panel>
 	{
-		public void Render(RenderInstruction instruction, Panel panel)
+		public void Render(Panel renderer, HeaderInstruction instruction)
 		{
 			var header = (HeaderInstruction) instruction;
 
 			var label = new Label
 			{
-				Text = header.Text, 
+				Text = header.Text,
 				AutoSize = true
 			};
 
@@ -32,7 +31,7 @@ namespace Blowdart.UI.WinForms.Rendering
 			};
 
 			label.Font = new Font(label.Font.Name, emSize);
-			panel.Controls.Add(label);
+			renderer.Controls.Add(label);
 		}
 	}
 }

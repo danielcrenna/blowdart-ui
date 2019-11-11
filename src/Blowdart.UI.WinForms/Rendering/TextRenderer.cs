@@ -3,12 +3,12 @@ using Blowdart.UI.Instructions;
 
 namespace Blowdart.UI.WinForms.Rendering
 {
-	internal sealed class TextRenderer : IFormRenderer
+	internal sealed class TextRenderer : IRenderer<TextInstruction, Panel>
 	{
-		public void Render(RenderInstruction instruction, Panel panel)
+		public void Render(Panel renderer, TextInstruction instruction)
 		{
 			var text = (TextInstruction) instruction;
-			panel.Controls.Add(new Label { Text = text.Text, AutoSize = true });
+			renderer.Controls.Add(new Label { Text = text.Text, AutoSize = true });
 		}
 	}
 }

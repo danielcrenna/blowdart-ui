@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using Blowdart.UI;
 using Blowdart.UI.Patterns;
 using Demo.Web.Patterns;
@@ -13,7 +10,6 @@ namespace Demo.Web
 	{
 		public static void Index(Ui ui)
 		{
-			ui.NextLine();
 			ui.Header(3, "Patterns");
 			ui.Separator();
 

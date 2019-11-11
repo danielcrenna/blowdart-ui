@@ -2,19 +2,20 @@
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
 using System.Windows.Forms;
+using Blowdart.UI.Instructions;
 
 namespace Blowdart.UI.WinForms.Rendering
 {
-	internal sealed class SeparatorRenderer : IFormRenderer
+	internal sealed class SeparatorRenderer : IRenderer<SeparatorInstruction, Panel>
 	{
-		public void Render(RenderInstruction instruction, Panel panel)
+		public void Render(Panel renderer, SeparatorInstruction instruction)
 		{
-			panel.Controls.Add(new Label
+			renderer.Controls.Add(new Label
 			{
-				Text = "", 
-				BorderStyle = BorderStyle.Fixed3D, 
-				AutoSize = false, 
-				Width = panel.Width,
+				Text = "",
+				BorderStyle = BorderStyle.Fixed3D,
+				AutoSize = false,
+				Width = renderer.Width,
 				Height = 2
 			});
 		}

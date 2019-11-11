@@ -32,7 +32,7 @@ namespace Blowdart.UI.Web.Components
 		public ImGui()
 		{
 			_target = new WebRenderTarget();
-			_target.RegisterRenderers<RenderTreeBuilder>(this);
+			_target.RegisterRenderers(this);
 			Ui = new Ui(_target);
 		}
 

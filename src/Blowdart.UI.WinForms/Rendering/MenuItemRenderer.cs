@@ -6,15 +6,15 @@ using Blowdart.UI.Instructions;
 
 namespace Blowdart.UI.WinForms.Rendering
 {
-	internal sealed class MenuItemRenderer : IFormRenderer
+	internal sealed class MenuItemRenderer : IRenderer<MenuItemInstruction, Panel>
 	{
-		public void Render(RenderInstruction instruction, Panel panel)
+		public void Render(Panel renderer, MenuItemInstruction instruction)
 		{
 			var item = (MenuItemInstruction) instruction;
 			// var form = (Form) panel.Parent;
-            
+
 			var menuItem = new ToolStripMenuItem(item.Title);
-			foreach (var control in panel.Controls)
+			foreach (var control in renderer.Controls)
 			{
 				if (control is ToolStrip strip)
 				{
@@ -22,7 +22,7 @@ namespace Blowdart.UI.WinForms.Rendering
 				}
 			}
 
-            //form.Menu.MenuItems.Add(menuItem);
+			//form.Menu.MenuItems.Add(menuItem);
 		}
 	}
 }

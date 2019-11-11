@@ -10,32 +10,51 @@ using TypeKitchen;
 
 namespace Blowdart.UI
 {
-    public abstract class RenderTarget : IDisposable
-    {
+	public abstract class RenderTarget
+	{
+		internal abstract void AddInstructions(List<RenderInstruction> instructions);
+		internal abstract void Render(object renderer);
+	}
+
+    public abstract class RenderTarget<TRenderer> : RenderTarget, IDisposable
+	{
+	    private readonly List<RenderFragment<TRenderer>> _fragments;
+
 		protected RenderTarget()
 		{
 			Renderers = new Dictionary<Type, IRenderer>();
+			_fragments = new List<RenderFragment<TRenderer>>();
 			_rendererInstances = new Dictionary<Type, IRenderer>();
 		}
 
-        internal abstract void AddInstructions(List<RenderInstruction> instructions);
-
-        protected virtual void Dispose(bool disposing)
+        public void Begin()
         {
-            if (disposing)
-            {
-            }
+	        _fragments.Clear();
         }
 
-        public void Dispose()
+        internal override void AddInstructions(List<RenderInstruction> instructions)
         {
-            Dispose(true);
-            GC.SuppressFinalize(this);
+	        _fragments.Add(b =>
+	        {
+		        foreach (var instruction in instructions)
+		        {
+			        RenderInstruction(b, instruction);
+		        }
+	        });
         }
 
-        public abstract void Render<T>(T renderer);
+        internal override void Render(object renderer)
+        {
+	        Render((TRenderer) renderer);
+        }
 
-        public void RegisterRenderers<TRenderer>(params object[] dependencies)
+		public void Render<T>(T renderer) where T : TRenderer
+		{
+			foreach (var fragment in _fragments)
+				fragment(renderer);
+		}
+
+		public void RegisterRenderers(params object[] dependencies)
         {
 	        var method = GetType().GetMethod(nameof(TryAddRenderer));
 	        if (method == null)
@@ -63,13 +82,13 @@ namespace Blowdart.UI
 				        continue;
 
 			        var instructionType = @interface.GetGenericArguments()[0];
-			        var genericMethod = method.MakeGenericMethod(instructionType, type, typeof(TRenderer));
+			        var genericMethod = method.MakeGenericMethod(instructionType, type);
 			        genericMethod.Invoke(this, parameters);
 		        }
 	        }
         }
 
-		public void RenderInstruction<TRenderer>(TRenderer renderer, RenderInstruction instruction)
+		public void RenderInstruction(TRenderer renderer, RenderInstruction instruction)
         {
 	        var key = instruction.GetType();
 	        if (key.IsGenericType)
@@ -82,12 +101,10 @@ namespace Blowdart.UI
 	        method.Invoke(instance, new object[] { renderer, instruction });
         }
 
-		public abstract void Begin();
-
-        protected readonly Dictionary<Type, IRenderer> Renderers;
+		protected readonly Dictionary<Type, IRenderer> Renderers;
         private readonly Dictionary<Type, IRenderer> _rendererInstances;
 
-		public bool TryAddRenderer<TInstruction, TInstructionRenderer, TRenderer>(params object[] dependencies) 
+		public bool TryAddRenderer<TInstruction, TInstructionRenderer>(params object[] dependencies) 
 	        where TInstruction : RenderInstruction
 	        where TInstructionRenderer : IRenderer<TInstruction, TRenderer>
 		{
@@ -119,6 +136,20 @@ namespace Blowdart.UI
 		        Renderers.Add(instructionType, renderer);
 		        return true;
 	        }
+		}
+
+		protected virtual void Dispose(bool disposing)
+		{
+			if (disposing)
+			{
+				Begin();
+			}
+		}
+
+		public void Dispose()
+		{
+			Dispose(true);
+			GC.SuppressFinalize(this);
 		}
 	}
 }

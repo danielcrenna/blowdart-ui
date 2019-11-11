@@ -9,8 +9,8 @@ namespace Blowdart.UI.WinForms
     public class ImGui : Form
     {
 	    private IContainer _components;
+	    
 	    private readonly Panel _panel;
-
 		private readonly PageMap _pages;
 	    private readonly Ui _ui;
 	    private readonly FormRenderTarget _target;
@@ -19,7 +19,8 @@ namespace Blowdart.UI.WinForms
 	    {
 		    Icon = Resources.icon;
 
-			_target = new FormRenderTarget(this);
+			_target = new FormRenderTarget();
+			_target.RegisterRenderers(this);
 
 		    _panel = new FlowLayoutPanel
 		    {
@@ -78,7 +79,12 @@ namespace Blowdart.UI.WinForms
 		protected override void Dispose(bool disposing)
 		{
 			if (disposing)
+			{
 				_components?.Dispose();
+				_ui?.Dispose();
+				_panel?.Dispose();
+				_target?.Dispose();
+			}
 			base.Dispose(disposing);
 		}
 	}
