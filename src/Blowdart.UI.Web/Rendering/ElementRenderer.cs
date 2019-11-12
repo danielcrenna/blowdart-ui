@@ -25,9 +25,12 @@ namespace Blowdart.UI.Web.Rendering
         {
 			_pendingElements.Push(element.Type);
 
-			var css = element.Style != null ? $" {element.Style}" : string.Empty;
+			var css = element.Class != null ? $" {element.Class}" : string.Empty;
 			switch (element.Type)
 			{
+				case ElementType.MainContainer:
+					b.BeginDiv($"main-container fullscreen{css}");
+					break;
 				case ElementType.Container:
 					b.BeginDiv($"container{css}");
 					break;
@@ -83,6 +86,13 @@ namespace Blowdart.UI.Web.Rendering
 				case ElementType.TabContent:
 					b.BeginDiv($"tab-content{css}");
 					break;
+				case ElementType.Form:
+					b.BeginForm($"{css}");
+					b.AddAttribute(HtmlAttributes.Method, HttpMethods.Post);
+					break;
+				case ElementType.Region:
+					b.BeginDiv($"{css}");
+					break;
 				default:
 					throw new ArgumentOutOfRangeException();
 			}
@@ -90,8 +100,9 @@ namespace Blowdart.UI.Web.Rendering
 
         public void Render(RenderTreeBuilder b, EndElementInstruction element)
         {
-			if (_pendingElements.Peek() != element.Type)
-				throw new ArgumentException("Attempted to end a mismatched element");
+	        var elementType = _pendingElements.Peek();
+	        if (elementType != element.Type)
+				throw new ArgumentException($"Attempted to end a mismatched element: expected '{element.Type}' but got '{elementType}'");
 			b.CloseElement();
 			_pendingElements.Pop();
 		}

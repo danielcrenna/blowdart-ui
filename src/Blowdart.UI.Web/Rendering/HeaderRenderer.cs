@@ -15,6 +15,8 @@ namespace Blowdart.UI.Web.Rendering
 		        throw new BlowdartException("Headers can only have six levels of rank");
 
 			b.OpenElement($"h{header.Level}");
+			if(!string.IsNullOrWhiteSpace(header.Class))
+				b.Class(header.Class);
             b.AddContent(header.Text);
             b.CloseElement();
         }

@@ -28,8 +28,20 @@ namespace Demo.Web
 			ui.BeginMain();
 			{
 				ui.BeginTopRow();
+
+				if (ui.User.Identity.IsAuthenticated)
+				{
+					ui.Text("Hello, " + ui.User.Identity.Name);
+				}
+				else
+				{
+					ui.Link("/signin", "Sign in");
+				}
+				
 				ui.InlineIcon(OpenIconicIcons.Fork);
 				ui.Link("https://github.com/blowdart-ui/blowdart-ui", "About");
+
+
 				ui.EndTopRow();
 
 				ui.MainContent(ui.LayoutBody());

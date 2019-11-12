@@ -11,7 +11,16 @@ namespace Blowdart.UI.Web.Rendering
 	{
 		public void Render(RenderTreeBuilder b, InlineImageInstruction image)
 		{
-			b.InlineImage(image.Source, image.Width, image.Height);
+			b.OpenElement(HtmlElements.Span);
+			b.AriaHidden();
+			{
+				b.OpenElement(HtmlElements.Image);
+				b.AddAttribute(HtmlAttributes.Src, image.Source);
+				b.AddAttribute(HtmlAttributes.Width, image.Width);
+				b.AddAttribute(HtmlAttributes.Height, image.Height);
+				b.CloseElement();
+			}
+			b.CloseElement();
 		}
 	}
 }

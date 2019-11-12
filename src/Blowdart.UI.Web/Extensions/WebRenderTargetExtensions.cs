@@ -12,8 +12,8 @@ namespace Blowdart.UI.Web.Extensions
     {
         #region div
 
-        public static void BeginDiv(this RenderTreeBuilder b, string @class) => b.BeginElement(HtmlElements.Div, @class);
-        public static void Div(this RenderTreeBuilder b, string @class) => Element(b, HtmlElements.Div, @class);
+        public static void BeginDiv(this RenderTreeBuilder b, string @class = "") => b.BeginElement(HtmlElements.Div, @class);
+        public static void Div(this RenderTreeBuilder b, string @class = "") => Element(b, HtmlElements.Div, @class);
         public static void Div(this RenderTreeBuilder b, string @class, RenderFragment fragment) => Element(b, HtmlElements.Div, @class, fragment);
         public static void Div(this RenderTreeBuilder b, string @class, Action fragment) => Element(b, HtmlElements.Div, @class, fragment);
 
@@ -21,10 +21,46 @@ namespace Blowdart.UI.Web.Extensions
 
 		#region section
 
-		public static void BeginSection(this RenderTreeBuilder b, string @class) => b.BeginElement(HtmlElements.Section, @class);
-		public static void Section(this RenderTreeBuilder b, string @class) => Element(b, HtmlElements.Section, @class);
+		public static void BeginSection(this RenderTreeBuilder b, string @class = "") => b.BeginElement(HtmlElements.Section, @class);
+		public static void Section(this RenderTreeBuilder b, string @class = "") => Element(b, HtmlElements.Section, @class);
 		public static void Section(this RenderTreeBuilder b, string @class, RenderFragment fragment) => Element(b, HtmlElements.Section, @class, fragment);
 		public static void Section(this RenderTreeBuilder b, string @class, Action fragment) => Element(b, HtmlElements.Section, @class, fragment);
+
+		#endregion
+
+		#region form
+
+		public static void BeginForm(this RenderTreeBuilder b, string @class = "") => b.BeginElement(HtmlElements.Form, @class);
+		public static void Form(this RenderTreeBuilder b, string @class = "") => Element(b, HtmlElements.Form, @class);
+		public static void Form(this RenderTreeBuilder b, string @class, RenderFragment fragment) => Element(b, HtmlElements.Form, @class, fragment);
+		public static void Form(this RenderTreeBuilder b, string @class, Action fragment) => Element(b, HtmlElements.Form, @class, fragment);
+
+		#endregion
+
+		#region input
+
+		public static void BeginInput(this RenderTreeBuilder b, string @class = "") => b.BeginElement(HtmlElements.Input, @class);
+		public static void Input(this RenderTreeBuilder b, string @class = "") => Element(b, HtmlElements.Input, @class);
+		public static void Input(this RenderTreeBuilder b, string @class, RenderFragment fragment) => Element(b, HtmlElements.Input, @class, fragment);
+		public static void Input(this RenderTreeBuilder b, string @class, Action fragment) => Element(b, HtmlElements.Input, @class, fragment);
+
+		#endregion
+
+		#region button
+
+		public static void BeginButton(this RenderTreeBuilder b, string @class = "") => b.BeginElement(HtmlElements.Button, @class);
+		public static void Button(this RenderTreeBuilder b, string @class = "") => Element(b, HtmlElements.Button, @class);
+		public static void Button(this RenderTreeBuilder b, string @class, RenderFragment fragment) => Element(b, HtmlElements.Button, @class, fragment);
+		public static void Button(this RenderTreeBuilder b, string @class, Action fragment) => Element(b, HtmlElements.Button, @class, fragment);
+
+		#endregion
+
+		#region label
+
+		public static void BeginLabel(this RenderTreeBuilder b, string @class = "") => b.BeginElement(HtmlElements.Label, @class);
+		public static void Label(this RenderTreeBuilder b, string @class = "") => Element(b, HtmlElements.Label, @class);
+		public static void Label(this RenderTreeBuilder b, string @class, RenderFragment fragment) => Element(b, HtmlElements.Label, @class, fragment);
+		public static void Label(this RenderTreeBuilder b, string @class, Action fragment) => Element(b, HtmlElements.Label, @class, fragment);
 
 		#endregion
 
@@ -82,20 +118,6 @@ namespace Blowdart.UI.Web.Extensions
 			b.AriaHidden();
             b.CloseElement();
         }
-
-		public static void InlineImage(this RenderTreeBuilder b, string source, int width, int height)
-		{
-			b.OpenElement(HtmlElements.Span);
-			b.AriaHidden();
-			{
-				b.OpenElement(HtmlElements.Image);
-				b.AddAttribute(HtmlAttributes.Src, source);
-				b.AddAttribute(HtmlAttributes.Width, width);
-				b.AddAttribute(HtmlAttributes.Height, height);
-				b.CloseElement();
-			}
-			b.CloseElement();
-		}
 
 		public static void BeginAnchor(this RenderTreeBuilder b, string @class = "", string href = "")
 		{
@@ -175,7 +197,7 @@ namespace Blowdart.UI.Web.Extensions
 		{
 			b.AddAttribute(HtmlAttributes.Aria.LabelledBy, id);
 		}
-
+		
 		#endregion
 
 	}

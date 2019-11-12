@@ -44,6 +44,8 @@ namespace Blowdart.UI
 		private readonly Stack<InputActivation> _activations = new Stack<InputActivation>();
 		private readonly Stack<ElementContext> _contexts = new Stack<ElementContext>();
 		private readonly Stack<ElementDecorator> _decorators = new Stack<ElementDecorator>();
+		private readonly Stack<FieldType> _fieldTypes = new Stack<FieldType>();
+		private readonly Stack<ElementSize> _sizes = new Stack<ElementSize>();
 
 		public ElementContext Push(ElementContext context)
 		{
@@ -63,10 +65,22 @@ namespace Blowdart.UI
 			return alignment;
 		}
 
+		public ElementSize Push(ElementSize size)
+		{
+			_sizes.Push(size);
+			return size;
+		}
+
 		public ElementDecorator Push(ElementDecorator decorator)
 		{
 			_decorators.Push(decorator);
 			return decorator;
+		}
+		
+		public FieldType Push(FieldType type)
+		{
+			_fieldTypes.Push(type);
+			return type;
 		}
 
 		internal bool TryPop<T>(out T option)
@@ -89,6 +103,15 @@ namespace Blowdart.UI
 				}
 			}
 
+			if (typeof(T) == typeof(ElementSize))
+			{
+				if (_sizes.Count > 0)
+				{
+					option = (T) (object) _sizes.Pop();
+					return true;
+				}
+			}
+
 			if (typeof(T) == typeof(InputActivation))
 			{
 				if (_activations.Count > 0)
@@ -103,6 +126,15 @@ namespace Blowdart.UI
 				if (_decorators.Count > 0)
 				{
 					option = (T) (object) _decorators.Pop();
+					return true;
+				}
+			}
+
+			if (typeof(T) == typeof(FieldType))
+			{
+				if (_fieldTypes.Count > 0)
+				{
+					option = (T) (object) _fieldTypes.Pop();
 					return true;
 				}
 			}

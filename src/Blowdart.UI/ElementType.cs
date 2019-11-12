@@ -4,13 +4,14 @@
 namespace Blowdart.UI
 {
     public enum ElementType
-    {
-        Container,
-        Row,
+    {   
+	    MainContainer,
+	    Main,
+	    MainContent,
+		Container,
+		Row,
         Column,
-        Main,
         TopRow,
-        MainContent,
         Section,
 		List,
 		ListItem,
@@ -19,6 +20,8 @@ namespace Blowdart.UI
 		TableColumn,
 		Menu,
 		TabList,
-		TabContent
+		TabContent,
+		Form,
+		Region
     }
 }

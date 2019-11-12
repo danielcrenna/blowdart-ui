@@ -4,8 +4,8 @@
 using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
+using System.Security.Principal;
 using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
 using Blowdart.UI.Instructions;
 using Blowdart.UI.Localization;
@@ -15,11 +15,12 @@ using TypeKitchen;
 
 namespace Blowdart.UI
 {
-    public partial class Ui : IDisposable, IServiceProvider
+	public partial class Ui : IDisposable, IServiceProvider
 	{
 		private readonly RenderTarget _target;
 		internal List<RenderInstruction> Instructions { get; }
         internal IServiceProvider UiServices { get; set; }
+        public IPrincipal User => UiServices.GetRequiredService<IUserResolver>().GetCurrentUser();
 
         public Ui(RenderTarget target)
         {
@@ -48,6 +49,38 @@ namespace Blowdart.UI
         }
 
 		#region Elements
+
+		#region Main Container
+
+		#region Main
+
+		public void BeginMainContainer()
+		{
+			Instructions.Add(new BeginElementInstruction(ElementType.MainContainer));
+		}
+
+		public void MainContainer(Action<Ui> handler)
+		{
+			BeginMainContainer();
+			Component(handler);
+			EndMainContainer();
+		}
+
+		public void MainContainer(Action handler)
+		{
+			BeginMainContainer();
+			Component(handler);
+			EndMainContainer();
+		}
+
+		public void EndMainContainer()
+		{
+			Instructions.Add(new EndElementInstruction(ElementType.MainContainer));
+		}
+
+		#endregion
+
+		#endregion
 
 		#region Container
 
@@ -162,9 +195,8 @@ namespace Blowdart.UI
 
 		#region Row
 
-		public void BeginRow(ColumnDirection? direction = null)
+		public void BeginRow(string style = "", ColumnDirection? direction = null)
 		{
-			string css = null;
 			if (direction.HasValue)
 			{
 				switch (direction)
@@ -172,25 +204,25 @@ namespace Blowdart.UI
 					case ColumnDirection.LeftToRight:
 						break;
 					case ColumnDirection.RightToLeft:
-						css = "flex-row-reverse";
+						style += " flex-row-reverse";
 						break;
 					case ColumnDirection.TopToBottom:
-						css = "flex-column";
+						style += " flex-column";
 						break;
 					case ColumnDirection.BottomToTop:
-						css = "flex-column-reverse";
+						style += " flex-column-reverse";
 						break;
 					default:
 						throw new ArgumentOutOfRangeException(nameof(direction), direction, null);
 				}
 			}
 
-			Instructions.Add(new BeginElementInstruction(ElementType.Row, css));
+			Instructions.Add(new BeginElementInstruction(ElementType.Row, style));
 		}
 
 		public void Row(ColumnDirection direction, Action<Ui> handler)
 		{
-			BeginRow(direction);
+			BeginRow("", direction);
 			Component(handler);
 			EndRow();
 		}
@@ -204,7 +236,7 @@ namespace Blowdart.UI
 
 		public void Row(ColumnDirection direction, Action handler)
 		{
-			BeginRow(direction);
+			BeginRow("", direction);
 			Component(handler);
 			EndRow();
 		}
@@ -337,9 +369,9 @@ namespace Blowdart.UI
 
 		#region Section
 
-		public void BeginSection()
+		public void BeginSection(string @class = "")
 		{
-			Instructions.Add(new BeginElementInstruction(ElementType.Section));
+			Instructions.Add(new BeginElementInstruction(ElementType.Section, @class));
 		}
 
 		public void Section(Action<Ui> handler)
@@ -359,6 +391,34 @@ namespace Blowdart.UI
 		public void EndSection()
 		{
 			Instructions.Add(new EndElementInstruction(ElementType.Section));
+		}
+
+		#endregion
+
+		#region Region
+
+		public void BeginRegion(string @class = "")
+		{
+			Instructions.Add(new BeginElementInstruction(ElementType.Region, @class));
+		}
+
+		public void Region(Action<Ui> handler)
+		{
+			BeginRegion();
+			Component(handler);
+			EndRegion();
+		}
+
+		public void Region(Action handler)
+		{
+			BeginRegion();
+			Component(handler);
+			EndRegion();
+		}
+
+		public void EndRegion()
+		{
+			Instructions.Add(new EndElementInstruction(ElementType.Region));
 		}
 
 		#endregion
@@ -572,14 +632,47 @@ namespace Blowdart.UI
 		}
 
 		#endregion
-		
+
+		#region Form
+
+		private bool _inForm;
+
+		public void BeginForm(string @class = "")
+		{
+			_inForm = true;
+			Instructions.Add(new BeginElementInstruction(ElementType.Form, @class));
+		}
+
+		public void Form(Action<Ui> handler)
+		{
+			BeginForm();
+			Component(handler);
+			EndForm();
+		}
+
+		public void Form(Action handler)
+		{
+			BeginForm();
+			Component(handler);
+			EndForm();
+		}
+
+		public void EndForm()
+		{
+			Instructions.Add(new EndElementInstruction(ElementType.Form));
+			_inForm = false;
+		}
+
+		#endregion
+
 		#endregion
 
 		#region Commands 
 
-		public void TextBlock(string value)
+		public void TextBlock(string value, string style = "")
 		{
-			Instructions.Add(new TextBlockInstruction(_(value)));
+			TryPop(out ElementSize size);
+			Instructions.Add(new TextBlockInstruction(_(value), style, size));
 		}
 
 		public void CodeBlock(string value)
@@ -597,9 +690,9 @@ namespace Blowdart.UI
             Instructions.Add(new TextInstruction(_(text)));
         }
 
-        public void Header(int level, string innerText)
+        public void Header(int level, string innerText, string @class = "")
         {
-            Instructions.Add(new HeaderInstruction(level, _(innerText)));
+            Instructions.Add(new HeaderInstruction(level, _(innerText), @class));
         }
 
         public bool Button(string text = "")
@@ -607,14 +700,26 @@ namespace Blowdart.UI
 			var id = NextId();
 
 			TryPop<ElementContext>(out var context);
+			TryPop<ElementSize>(out var size);
 			TryPop<ElementDecorator>(out var decorator);
 			TryPop<ElementAlignment>(out var alignment);
 
-			Instructions.Add(new ButtonInstruction(this, id, context, decorator, alignment, _(text)));
+			Instructions.Add(new ButtonInstruction(this, id, context, size, decorator, alignment, _(text)));
             return OnEvent(DomEvents.OnClick, id, out var _);
         }
 
-        public void BeginModal(string title)
+        public bool TextBox(string value = "", string label = "", string placeholder = "", string name = "")
+        {
+	        var id = NextId();
+
+	        TryPop<FieldType>(out var fieldType);
+	        TryPop<ElementAlignment>(out var alignment);
+
+	        Instructions.Add(new TextBoxInstruction(this, id, fieldType, alignment, name, value, _(placeholder), _(label), _inForm));
+	        return OnEvent(DomEvents.OnClick, id, out var _);
+        }
+
+		public void BeginModal(string title)
         {
 	        var id = HashId($"modal:{title}");
 	        Instructions.Add(new BeginModalInstruction(_(title), id));
@@ -625,34 +730,34 @@ namespace Blowdart.UI
 			Instructions.Add(new EndModalInstruction());
 		}
 
-		public bool CheckBox(ref bool value, string text = "")
+		public bool CheckBox(ref bool value, string label = "")
         {
 			var id = NextId();
 
 			TryPop<ElementAlignment>(out var alignment);
 
-			Instructions.Add(new CheckBoxInstruction(this, id, _(text), alignment, value, false));
+			Instructions.Add(new CheckBoxInstruction(this, id, _(label), alignment, value, false));
 	        var clicked = OnEvent(DomEvents.OnClick, id, out var _);
 	        if (clicked)
 		        value = !value;
 	        return clicked;
         }
 
-		public void CheckBox(bool value, string text = "")
+		public void CheckBox(bool value, string label = "")
 		{
 			var id = NextId();
 			TryPop<ElementAlignment>(out var alignment);
-			Instructions.Add(new CheckBoxInstruction(this, id, _(text), alignment, value, true));
+			Instructions.Add(new CheckBoxInstruction(this, id, _(label), alignment, value, true));
 		}
 
-		public bool Slider(ref int value, string text)
+		public bool Slider(ref int value, string label)
 		{
 	        var id = NextId();
 
 	        TryPop<ElementAlignment>(out var alignment);
 			TryPop<InputActivation>(out var activation);
 
-			Instructions.Add(new SliderInstruction(this, id, _(text), alignment, activation, value));
+			Instructions.Add(new SliderInstruction(this, id, _(label), alignment, activation, value));
 			switch (activation)
 			{
 				case InputActivation.OnDragEnd:

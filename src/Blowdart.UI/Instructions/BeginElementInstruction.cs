@@ -5,12 +5,12 @@ namespace Blowdart.UI.Instructions
 {
     public class BeginElementInstruction : RenderInstruction
     {
-        public string Style { get; }
+        public string Class { get; }
         public ElementType Type { get; }
 
-		public BeginElementInstruction(ElementType type, string style = "", int? ordinal = null)
+		public BeginElementInstruction(ElementType type, string @class = "", int? ordinal = null)
         {
-            Style = style;
+            Class = @class;
             Ordinal = ordinal;
             Type = type;
         }

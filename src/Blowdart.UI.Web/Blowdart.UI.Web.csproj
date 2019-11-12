@@ -13,6 +13,16 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Include="..\..\..\WebStrings\src\WebStrings\DomEvents.cs" Link="WebStrings\DomEvents.cs" />
+    <Compile Include="..\..\..\WebStrings\src\WebStrings\HtmlAttributes.cs" Link="WebStrings\HtmlAttributes.cs" />
+    <Compile Include="..\..\..\WebStrings\src\WebStrings\HtmlElements.cs" Link="WebStrings\HtmlElements.cs" />
+    <Compile Include="..\..\..\WebStrings\src\WebStrings\HtmlInputTypes.cs" Link="WebStrings\HtmlInputTypes.cs" />
+    <Compile Include="..\..\..\WebStrings\src\WebStrings\HttpHeaders.cs" Link="WebStrings\HttpHeaders.cs" />
+    <Compile Include="..\..\..\WebStrings\src\WebStrings\HttpMethods.cs" Link="WebStrings\HttpMethods.cs" />
+    <Compile Include="..\..\..\WebStrings\src\WebStrings\MediaTypeNames.cs" Link="WebStrings\MediaTypeNames.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <FrameworkReference Include="Microsoft.AspNetCore.App" />
   </ItemGroup>
 
@@ -24,8 +34,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\WebStrings\src\WebStrings\WebStrings.csproj" />
     <ProjectReference Include="..\Blowdart.UI\Blowdart.UI.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="WebStrings\" />
   </ItemGroup>
 
 </Project>

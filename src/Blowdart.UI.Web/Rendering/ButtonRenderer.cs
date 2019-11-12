@@ -38,12 +38,33 @@ namespace Blowdart.UI.Web.Rendering
                 _ => throw new ArgumentOutOfRangeException()
             };
 
+			switch (button.Size)
+			{
+				case ElementSize.Unspecified:
+					break;
+				case ElementSize.ExtraSmall:
+					css += " btn-xs";
+					break;
+				case ElementSize.Small:
+					css += " btn-sm";
+					break;
+				case ElementSize.Large:
+					css += " btn-lg";
+					break;
+				case ElementSize.Block:
+					css += " btn-block";
+					break;
+				default:
+					throw new ArgumentOutOfRangeException();
+			}
+
             var onclick = _imGui.OnClickCallback(button.Id);
 			
-			b.OpenElement(HtmlElements.Button);
+			b.BeginButton();
             {
 	            b.AddAttribute(HtmlAttributes.Type, HtmlInputTypes.Button);
-	            b.AddAttribute(HtmlAttributes.Id, button.Id);
+	            b.AddAttribute(HtmlAttributes.Role, HtmlInputTypes.Button);
+				b.AddAttribute(HtmlAttributes.Id, button.Id);
 	            b.AddAttribute(HtmlAttributes.Class, css);
 	            b.AddAttribute(DomEvents.OnClick, onclick);
 

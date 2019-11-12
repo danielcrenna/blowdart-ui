@@ -18,6 +18,7 @@ namespace Blowdart.UI.Web
 			var pages = new PageMap();
 
 			services.AddSingleton(pages);
+			services.AddSingleton<IUserResolver, WebUserResolver>();
 			services.AddSingleton<ILocaleResolver, WebLocaleResolver>();
 			services.AddSingleton<ILocalizationProvider, LocalizationProvider>();
 			services.AddSingleton<ILocalizationStore, MemoryLocalizationStore>();

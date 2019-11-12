@@ -6,10 +6,14 @@ namespace Blowdart.UI.Instructions
     public class TextBlockInstruction : RenderInstruction
     {
         public string Value { get; }
+        public string Class { get; }
+        public ElementSize Size { get; }
 
-        public TextBlockInstruction(string value)
+        public TextBlockInstruction(string value, string @class, ElementSize size)
         {
-            Value = value;
+	        Value = value;
+	        Class = @class;
+	        Size = size;
         }
 
         public override string DebuggerDisplay => $"p: {Value}";
