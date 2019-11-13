@@ -48,7 +48,7 @@ namespace Blowdart.UI.Demo
 - [ ] Local / Remote Data API
 - [ ] Forms
 - [ ] Localization
-- [ ] Accessibility
+- [X] Accessibility
 - [ ] Styles
 - [ ] Test Harness
 - [ ] Split Tests
@@ -60,10 +60,10 @@ namespace Blowdart.UI.Demo
 
 - [x] HTML/CSS
 - [ ] WebAssembly
-- [ ] FNA
+- [X] FNA
 - [ ] iOS
 - [ ] tvOS
 - [ ] macOS
 - [ ] Android
-- [ ] WinForms / Modern.Forms
+- [X] WinForms
 - [ ] CLI

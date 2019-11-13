@@ -6,7 +6,7 @@ using TypeKitchen;
 
 namespace Demo.Examples.Models
 {
-    [MetadataType("Default", typeof(WeatherForecastFormMetadata))]
+	[MetadataType("Default", typeof(WeatherForecastFormMetadata))]
     public class WeatherForecast
     {
         public DateTime? Date { get; set; }

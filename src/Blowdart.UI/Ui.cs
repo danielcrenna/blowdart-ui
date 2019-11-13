@@ -669,6 +669,11 @@ namespace Blowdart.UI
 
 		#region Commands 
 
+		public void Link(string href, string title)
+		{
+			Instructions.Add(new LinkInstruction(href, _(title)));
+		}
+
 		public void TextBlock(string value, string style = "")
 		{
 			TryPop(out ElementSize size);
@@ -733,13 +738,16 @@ namespace Blowdart.UI
 		public bool CheckBox(ref bool value, string label = "")
         {
 			var id = NextId();
-
 			TryPop<ElementAlignment>(out var alignment);
 
 			Instructions.Add(new CheckBoxInstruction(this, id, _(label), alignment, value, false));
 	        var clicked = OnEvent(DomEvents.OnClick, id, out var _);
 	        if (clicked)
 		        value = !value;
+
+			if(_isBound)
+				CompletePendingBindings();
+
 	        return clicked;
         }
 
@@ -765,6 +773,8 @@ namespace Blowdart.UI
 					var changed = OnEvent(DomEvents.OnChange, id, out var data);
 					if (changed && data != default && data is string dataString)
 						int.TryParse(dataString, out value);
+					if (_isBound)
+						CompletePendingBindings();
 					return changed;
 				}
 				case InputActivation.Continuous:
@@ -772,6 +782,8 @@ namespace Blowdart.UI
 					var changed = OnEvent(DomEvents.OnInput, id, out var data);
 					if (changed && data != default && data is string dataString)
 						int.TryParse(dataString, out value);
+					if (_isBound)
+						CompletePendingBindings();
 					return changed;
 				}
 				default:
@@ -789,7 +801,9 @@ namespace Blowdart.UI
 	        var clicked = OnEvent(DomEvents.OnClick, id, out var _);
 	        if (clicked)
 		        value = !value;
-	        return clicked;
+	        if (_isBound)
+		        CompletePendingBindings();
+			return clicked;
         }
 
 		public void Component(Action<Ui> handler)
@@ -802,12 +816,7 @@ namespace Blowdart.UI
             handler();
         }
 
-		public void Link(string href, string title)
-        {
-            Instructions.Add(new LinkInstruction(href, _(title)));
-        }
-        
-        public void Editor<T>(T instance)
+		public void Editor<T>(T instance)
         {
             Instructions.Add(new EditorInstruction<T>(instance));
         }

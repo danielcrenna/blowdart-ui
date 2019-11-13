@@ -3,6 +3,7 @@
 
 using System;
 using Blowdart.UI;
+using Demo.Examples.Models;
 
 namespace Demo.Examples.Pages
 {
@@ -10,7 +11,7 @@ namespace Demo.Examples.Pages
 	{
 		public static void SignIn(Ui ui)
 		{
-			bool rememberMe = false;
+			var model = ui.Capture(new SignInModel());
 
 			ui.BeginForm("form-signin");
 			{
@@ -26,7 +27,9 @@ namespace Demo.Examples.Pages
 					ui.TextBox(placeholder: "Enter your password", name: "password");
 
 					ui.BeginRegion("checkbox mb3");
-					ui.CheckBox(ref rememberMe, "Remember me");
+					if(ui.CheckBox(ref ui.Bind(model, x => x.RememberMe), "Remember me"))
+                        Console.WriteLine($"rememberMe = {model.RememberMe}");
+
 					ui.EndRegion();
 
 					ui.Push(ElementSize.Large);
