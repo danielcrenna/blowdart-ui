@@ -11,10 +11,7 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Experimental.Collections" Version="1.0.6-e190117-3" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\TypeKitchen\src\TypeKitchen\TypeKitchen.csproj" />
+    <PackageReference Include="TypeKitchen" Version="1.0.27.4" />
   </ItemGroup>
 
 </Project>

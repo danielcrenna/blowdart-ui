@@ -11,7 +11,7 @@
     <RepositoryUrl>https://github.com/blowdart-ui/blowdart-ui</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageTags>imgui csharp ui-framework multi-platform</PackageTags>
-    <Version>0.0.3-pre</Version>
+    <Version>0.0.4-pre</Version>
     <PackageReleaseNotes></PackageReleaseNotes>
   </PropertyGroup>
 
