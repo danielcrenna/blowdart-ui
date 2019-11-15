@@ -39,7 +39,7 @@ ui.DataLoader<WeatherForecastService, WeatherForecast[]>(
 
 ui.Header(1, ""Weather forecast"");
 
-ui.Text(""This component demonstrates fetching data from the server."");
+ui.TextBlock(""This component demonstrates fetching data from the server."");
 
 if (_forecasts == null)
 {

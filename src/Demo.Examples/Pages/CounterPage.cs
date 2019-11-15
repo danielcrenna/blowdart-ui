@@ -23,7 +23,7 @@ namespace Demo.Examples.Pages
 
 			ui.SampleCode(@"
 ui.Header(1, ""Counter"");
-ui.Text($""Current count: {_currentCount}"");
+ui.TextBlock($""Current count: {_currentCount}"");
 
 if (ui.Button(""Click me""))
 	_currentCount++;");
