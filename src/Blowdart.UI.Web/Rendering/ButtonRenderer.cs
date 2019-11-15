@@ -23,9 +23,9 @@ namespace Blowdart.UI.Web.Rendering
             RenderButton(b, button);
         }
 		
-        private void RenderButton(RenderTreeBuilder b, ButtonInstruction button)
+        private void RenderButton(RenderTreeBuilder b, ButtonInstruction instruction)
         {
-            var css = button.Type switch
+            var css = instruction.Type switch
             {
                 ElementContext.Primary => "btn btn-primary",
                 ElementContext.Secondary => "btn btn-secondary",
@@ -38,7 +38,7 @@ namespace Blowdart.UI.Web.Rendering
                 _ => throw new ArgumentOutOfRangeException()
             };
 
-			switch (button.Size)
+			switch (instruction.Size)
 			{
 				case ElementSize.Unspecified:
 					break;
@@ -58,25 +58,23 @@ namespace Blowdart.UI.Web.Rendering
 					throw new ArgumentOutOfRangeException();
 			}
 
-            var onclick = _imGui.OnClickCallback(button.Id);
-			
-			b.BeginButton();
+            b.BeginButton();
             {
 	            b.AddAttribute(HtmlAttributes.Type, HtmlInputTypes.Button);
 	            b.AddAttribute(HtmlAttributes.Role, HtmlInputTypes.Button);
-				b.AddAttribute(HtmlAttributes.Id, button.Id);
+				b.AddAttribute(HtmlAttributes.Id, instruction.Id);
 	            b.AddAttribute(HtmlAttributes.Class, css);
-	            b.AddAttribute(DomEvents.OnClick, onclick);
+	            b.AddAttribute(DomEvents.OnClick, _imGui.OnClickCallback(instruction.Id));
 
-				switch (button.Alignment)
+				switch (instruction.Alignment)
 				{
 					case ElementAlignment.Left:
-						RenderDecorator(b, button);
-						RenderButtonText(b, button);
+						RenderDecorator(b, instruction);
+						RenderButtonText(b, instruction);
 						break;
 					case ElementAlignment.Right:
-						RenderButtonText(b, button);
-						RenderDecorator(b, button);
+						RenderButtonText(b, instruction);
+						RenderDecorator(b, instruction);
 						break;
 					default:
 						throw new ArgumentOutOfRangeException();

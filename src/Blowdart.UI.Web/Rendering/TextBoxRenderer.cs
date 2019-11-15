@@ -33,9 +33,9 @@ namespace Blowdart.UI.Web.Rendering
 			}
 
 			b.BeginInput(instruction.InForm ? "form-control" : "");
+			b.AddAttribute(DomEvents.OnChange, _imGui.OnChangeCallback(instruction.Id));
 			b.AddAttribute(HtmlAttributes.Id, instruction.Id.ToString());
 			{
-
 				switch (instruction.Type)
 				{
 					case FieldType.Text:

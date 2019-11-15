@@ -9,7 +9,6 @@ namespace Demo.Examples.Pages
     {
 		public static void Index(Ui ui)
 		{
-			
 			ui.Header(1, "Hello, world!");
 			ui.Text("Welcome to your new app.");
 

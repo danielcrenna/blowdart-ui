@@ -65,8 +65,8 @@ namespace Blowdart.UI.Web.Extensions
 		#endregion
 
 		public static bool Button(this RenderTreeBuilder b, ImGui imgui, string @class, Action fragment = null)
-        {
-            imgui.Ui.NextId();
+		{
+			imgui.Ui.ResolveId();
             var id = imgui.Ui.NextIdHash;
             b.BeginElement(HtmlElements.Button, @class);
             b.AddAttribute(HtmlAttributes.Id, id);

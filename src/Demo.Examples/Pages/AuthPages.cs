@@ -4,6 +4,7 @@
 using System;
 using Blowdart.UI;
 using Demo.Examples.Models;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Demo.Examples.Pages
 {
@@ -21,23 +22,29 @@ namespace Demo.Examples.Pages
 					ui.Header(1, "Sign in", "h3 mb-3 font-weight-normal");
 
 					ui.Push(FieldType.Email);
-					ui.TextBox(placeholder: "Enter your email address", name: "email");
+					if (ui.TextBox(ref ui.Bind(model, x => x.Email), placeholder: "Enter your email address", name: "email"))
+						Console.WriteLine($"Email changed to {model.Email}");
 
 					ui.Push(FieldType.Password);
-					ui.TextBox(placeholder: "Enter your password", name: "password");
+					if(ui.TextBox(ref ui.Bind(model, x => x.Password), placeholder: "Enter your password", name: "password"))
+						Console.WriteLine($"Password changed to {model.Password}");
 
 					ui.BeginRegion("checkbox mb3");
-					if(ui.CheckBox(ref ui.Bind(model, x => x.RememberMe), "Remember me"))
-                        Console.WriteLine($"rememberMe = {model.RememberMe}");
+					{
+						if (ui.CheckBox(ref ui.Bind(model, x => x.RememberMe), "Remember me"))
+							Console.WriteLine($"rememberMe = {model.RememberMe}");
 
-					ui.EndRegion();
-
-					ui.Push(ElementSize.Large);
+						ui.EndRegion();
+					}
+					
+                    ui.Push(ElementSize.Large);
 					ui.Push(ElementContext.Primary);
-					ui.Button("Sign in");
+					if (ui.Button("Sign in"))
+					{
+						Console.WriteLine("Signing in...");
+					}
 
 					ui.TextBlock($"© {DateTimeOffset.UtcNow.Year}");
-
 					ui.EndRegion();
 				}
 

@@ -35,13 +35,14 @@ namespace Blowdart.UI
 	        _count = default;
 	        _body = default;
 	        CalledLayout = default;
+	        ClearBindings();
         }
 
 		public void RenderToTarget<TRenderer>(RenderTarget target, TRenderer renderer)
         {
 	        target.AddInstructions(Instructions);
 	        target.Render(renderer);
-        }
+		}
 
         public void Dispose()
         {
@@ -485,7 +486,7 @@ namespace Blowdart.UI
 			if (!_inTabList)
 				throw new BlowdartException("Attempted to create a tab outside of a tab block.");
 
-			var id = PushId(NextId());
+			var id = PushId(ResolveId());
 			Instructions.Add(new TabListItemInstruction(this, id, _(text), active));
 			var clicked = OnEvent(DomEvents.OnClick, id, out var _);
 			if (clicked)
@@ -674,10 +675,10 @@ namespace Blowdart.UI
 			Instructions.Add(new LinkInstruction(href, _(title)));
 		}
 
-		public void TextBlock(string value, string style = "")
+		public void TextBlock(string value, string @class = "")
 		{
 			TryPop(out ElementSize size);
-			Instructions.Add(new TextBlockInstruction(_(value), style, size));
+			Instructions.Add(new TextBlockInstruction(_(value), @class, size));
 		}
 
 		public void CodeBlock(string value)
@@ -702,7 +703,7 @@ namespace Blowdart.UI
 
         public bool Button(string text = "")
         {
-			var id = NextId();
+	        var id = ResolveId();
 
 			TryPop<ElementContext>(out var context);
 			TryPop<ElementSize>(out var size);
@@ -713,18 +714,7 @@ namespace Blowdart.UI
             return OnEvent(DomEvents.OnClick, id, out var _);
         }
 
-        public bool TextBox(string value = "", string label = "", string placeholder = "", string name = "")
-        {
-	        var id = NextId();
-
-	        TryPop<FieldType>(out var fieldType);
-	        TryPop<ElementAlignment>(out var alignment);
-
-	        Instructions.Add(new TextBoxInstruction(this, id, fieldType, alignment, name, value, _(placeholder), _(label), _inForm));
-	        return OnEvent(DomEvents.OnClick, id, out var _);
-        }
-
-		public void BeginModal(string title)
+        public void BeginModal(string title)
         {
 	        var id = HashId($"modal:{title}");
 	        Instructions.Add(new BeginModalInstruction(_(title), id));
@@ -734,77 +724,6 @@ namespace Blowdart.UI
 		{
 			Instructions.Add(new EndModalInstruction());
 		}
-
-		public bool CheckBox(ref bool value, string label = "")
-        {
-			var id = NextId();
-			TryPop<ElementAlignment>(out var alignment);
-
-			Instructions.Add(new CheckBoxInstruction(this, id, _(label), alignment, value, false));
-	        var clicked = OnEvent(DomEvents.OnClick, id, out var _);
-	        if (clicked)
-		        value = !value;
-
-			if(_isBound)
-				CompletePendingBindings();
-
-	        return clicked;
-        }
-
-		public void CheckBox(bool value, string label = "")
-		{
-			var id = NextId();
-			TryPop<ElementAlignment>(out var alignment);
-			Instructions.Add(new CheckBoxInstruction(this, id, _(label), alignment, value, true));
-		}
-
-		public bool Slider(ref int value, string label)
-		{
-	        var id = NextId();
-
-	        TryPop<ElementAlignment>(out var alignment);
-			TryPop<InputActivation>(out var activation);
-
-			Instructions.Add(new SliderInstruction(this, id, _(label), alignment, activation, value));
-			switch (activation)
-			{
-				case InputActivation.OnDragEnd:
-				{
-					var changed = OnEvent(DomEvents.OnChange, id, out var data);
-					if (changed && data != default && data is string dataString)
-						int.TryParse(dataString, out value);
-					if (_isBound)
-						CompletePendingBindings();
-					return changed;
-				}
-				case InputActivation.Continuous:
-				{
-					var changed = OnEvent(DomEvents.OnInput, id, out var data);
-					if (changed && data != default && data is string dataString)
-						int.TryParse(dataString, out value);
-					if (_isBound)
-						CompletePendingBindings();
-					return changed;
-				}
-				default:
-					throw new ArgumentOutOfRangeException(nameof(activation), activation, null);
-			}
-        }
-
-        public bool RadioButton(ref bool value, string text)
-        {
-			var id = NextId();
-
-			TryPop<ElementAlignment>(out var alignment);
-
-			Instructions.Add(new RadioButtonInstruction(this, id, _(text), alignment, value));
-	        var clicked = OnEvent(DomEvents.OnClick, id, out var _);
-	        if (clicked)
-		        value = !value;
-	        if (_isBound)
-		        CompletePendingBindings();
-			return clicked;
-        }
 
 		public void Component(Action<Ui> handler)
         {
@@ -1022,10 +941,10 @@ namespace Blowdart.UI
 
 		internal bool CalledLayout { get; private set; }
 
-		public Action<Ui> LayoutBody()
+		public void LayoutBody()
 		{
-			CalledLayout = true;
-			return _body ?? throw new BlowdartException("Missing layout body");
+			CalledLayout = true;  
+			Component(_body ?? throw new BlowdartException("Missing layout body"));
 		}
 
 		public void SetLayoutBody(Action<Ui> body)

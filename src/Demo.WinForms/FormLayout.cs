@@ -21,10 +21,18 @@ namespace Demo.WinForms
 			ui.BeginMain();
 			{
 				ui.BeginTopRow();
-				ui.InlineIcon(OpenIconicIcons.Fork);
-				ui.Link("https://github.com/blowdart-ui/blowdart-ui", "About");
-				ui.EndTopRow();
-				ui.MainContent(ui.LayoutBody());
+				{
+					ui.InlineIcon(OpenIconicIcons.Fork);
+					ui.Link("https://github.com/blowdart-ui/blowdart-ui", "About");
+					ui.EndTopRow();
+				}
+				
+				ui.BeginMainContent();
+				{
+					ui.LayoutBody();
+					ui.EndMainContent();
+				}
+
 				ui.EndMain();
 			}
 		}
