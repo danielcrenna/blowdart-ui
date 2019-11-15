@@ -486,7 +486,7 @@ namespace Blowdart.UI
 			if (!_inTabList)
 				throw new BlowdartException("Attempted to create a tab outside of a tab block.");
 
-			var id = PushId(ResolveId());
+			var id = PushId(NextId());
 			Instructions.Add(new TabListItemInstruction(this, id, _(text), active));
 			var clicked = OnEvent(DomEvents.OnClick, id, out var _);
 			if (clicked)
