@@ -27,6 +27,7 @@ namespace Blowdart.UI.Web.Components
 		[Parameter] public Action<Ui> Handler { get; set; }
         
 		[Inject] public IOptionsMonitor<BlowdartOptions> Options { get; set; }
+		[Inject] public NavigationManager NavigationManager { get; set; }
 
 		public ImGui()
 		{
@@ -34,12 +35,7 @@ namespace Blowdart.UI.Web.Components
 			_target.RegisterRenderers(this);
 			Ui = new Ui(_target);
 		}
-
-		protected override Task OnParametersSetAsync()
-		{
-			return base.OnParametersSetAsync();
-		}
-
+		
 		protected override void BuildRenderTree(RenderTreeBuilder builder)
         {
             Begin();
@@ -135,10 +131,15 @@ namespace Blowdart.UI.Web.Components
 
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
-	        await Js.InvokeVoidAsync(Interop.OnReady);
+	        foreach (var _ in Ui.Instructions.OfType<ChangePageInstruction>())
+	        {
+		        ChangePage(_.Template);
+		        break;
+	        }
 
+			await Js.InvokeVoidAsync(Interop.OnReady);
 
-	        foreach (var _ in Ui.Instructions.OfType<CodeInstruction>())
+			foreach (var _ in Ui.Instructions.OfType<CodeInstruction>())
 	        {
 		        await Js.InvokeVoidAsync(Interop.SyntaxHighlight);
 		        break;
@@ -161,11 +162,22 @@ namespace Blowdart.UI.Web.Components
             }
         }
 
+        public void ChangePage(string template)
+        {
+	        NavigationManager.NavigateTo(template, true);
+        }
+
         private void OnInstructionsAdded()
         {
 	        LogToTargets();
 
-	        foreach (var _ in Ui.Instructions.OfType<ShowModalInstruction>())
+	        foreach (var _ in Ui.Instructions.OfType<ChangePageInstruction>())
+	        {
+		        ChangePage(_.Template);
+		        break;
+	        }
+
+			foreach (var _ in Ui.Instructions.OfType<ShowModalInstruction>())
 	        {
 		        Js.InvokeVoidAsync(Interop.ShowModal, _.Id.ToString());
 		        break;

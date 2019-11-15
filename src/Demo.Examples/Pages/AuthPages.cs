@@ -10,7 +10,7 @@ namespace Demo.Examples.Pages
 {
 	public class AuthPages
 	{
-		public static void SignIn(Ui ui)
+		public static async void SignIn(Ui ui)
 		{
 			var model = ui.Capture(new SignInModel());
 
@@ -42,6 +42,10 @@ namespace Demo.Examples.Pages
 					if (ui.Button("Sign in"))
 					{
 						Console.WriteLine("Signing in...");
+						var signInService = ui.GetRequiredService<ISignInService>();
+						await signInService.SignInAsync(model);
+						ui.Release(model);
+						ui.ChangePage("/");
 					}
 
 					ui.TextBlock($"© {DateTimeOffset.UtcNow.Year}");

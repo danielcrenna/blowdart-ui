@@ -4,6 +4,8 @@
 using Blowdart.UI.Web;
 using Demo.Examples.Models;
 using Demo.Examples.Pages;
+using Demo.Web.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Demo.Web
@@ -13,6 +15,9 @@ namespace Demo.Web
         public static void Main(string[] args) => UiServer.Start(args, builder =>
         {
             builder.AddSingleton<WeatherForecastService>();
+            builder.AddScoped<ISignInService, WebSignInService>();
+            builder.AddAuthentication(IdentityConstants.ApplicationScheme)
+	            .AddCookie(IdentityConstants.ApplicationScheme);
 
             builder.AddPage("/", WebLayout.Index, IndexPage.Index);
             builder.AddPage("/counter", WebLayout.Index, CounterPage.Index);

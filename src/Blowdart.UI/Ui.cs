@@ -968,5 +968,10 @@ namespace Blowdart.UI
 		}
 
 		#endregion
+
+		public void ChangePage(string template)
+		{
+			Instructions.Add(new ChangePageInstruction(template));
+		}
 	}
 }
