@@ -7,7 +7,9 @@ namespace Blowdart.UI.Web
 	{
 		public static readonly string Log = "blowdart.log";
 		public static readonly string SyntaxHighlight = "blowdart.highlight";
-		public static readonly string ShowModal = "blowdart.showModal";
 		public static readonly string OnReady = "blowdart.onReady";
+
+		public static readonly string ShowModal = "blowdart.showModal";
+		public static readonly string ShowCollapsible = "blowdart.showCollapsible";
 	}
 }

@@ -1,9 +1,7 @@
 // Copyright (c) Daniel Crenna & Contributors. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
-using System;
 using Blowdart.UI.Instructions;
-using Blowdart.UI.Web.Components;
 using Blowdart.UI.Web.Extensions;
 using Microsoft.AspNetCore.Components.Rendering;
 
@@ -21,13 +19,13 @@ namespace Blowdart.UI.Web.Rendering
 			_imGui = imGui;
 		}
 
-		public void Render(RenderTreeBuilder b, BeginModalInstruction beginModal)
+		public void Render(RenderTreeBuilder b, BeginModalInstruction instruction)
 		{
 			b.BeginDiv("modal fade");
 			b.AddAttribute(HtmlAttributes.TabIndex, -1);
 			b.AddAttribute(HtmlAttributes.Role, "dialog");
-			b.AddAttribute(HtmlAttributes.Id, beginModal.Id);
-			b.AriaLabelledBy($"modal-title-{beginModal.Id}");
+			b.AddAttribute(HtmlAttributes.Id, instruction.Id);
+			b.AriaLabelledBy($"modal-title-{instruction.Id}");
 			b.AriaHidden();
 			{
 				b.BeginDiv("modal-dialog");
@@ -35,7 +33,7 @@ namespace Blowdart.UI.Web.Rendering
 				{
 					b.BeginDiv("modal-content");
 					{
-						RenderHeader(b, beginModal);
+						RenderHeader(b, instruction);
                         b.BeginDiv("modal-body");
 					}
 				}
@@ -51,13 +49,13 @@ namespace Blowdart.UI.Web.Rendering
 			b.CloseElement(); // modal
 		}
 
-		private static void RenderHeader(RenderTreeBuilder b, BeginModalInstruction beginModal)
+		private static void RenderHeader(RenderTreeBuilder b, BeginModalInstruction instruction)
 		{
 			b.BeginDiv("modal-header");
 			{
 				b.BeginElement("h5", "modal-title");
-                b.AddAttribute(HtmlAttributes.Id, $"modal-title-{beginModal.Id}");
-				b.AddContent(beginModal.Title);
+                b.AddAttribute(HtmlAttributes.Id, $"modal-title-{instruction.Id}");
+				b.AddContent(instruction.Title);
 				b.CloseElement();
 
 				b.BeginElement("button", "close");

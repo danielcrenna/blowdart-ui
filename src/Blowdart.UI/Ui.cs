@@ -703,14 +703,16 @@ namespace Blowdart.UI
 
         public bool Button(string text = "")
         {
-	        var id = ResolveId();
+	        var id = NextId();
 
 			TryPop<ElementContext>(out var context);
 			TryPop<ElementSize>(out var size);
 			TryPop<ElementDecorator>(out var decorator);
 			TryPop<ElementAlignment>(out var alignment);
+			TryPop<ElementStyle>(out var style);
+			TryPop<OpenIconicIcons>(out var icon);
 
-			Instructions.Add(new ButtonInstruction(this, id, context, size, decorator, alignment, _(text)));
+			Instructions.Add(new ButtonInstruction(this, id, context, size, decorator, alignment, style, icon, _(text)));
             return OnEvent(DomEvents.OnClick, id, out var _);
         }
 
@@ -723,6 +725,17 @@ namespace Blowdart.UI
 		public void EndModal()
 		{
 			Instructions.Add(new EndModalInstruction());
+		}
+
+		public void BeginCollapsible(string title)
+		{
+			var id = HashId($"collapse:{title}");
+			Instructions.Add(new BeginCollapsibleInstruction(_(title), id));
+		}
+
+		public void EndCollapsible()
+		{
+			Instructions.Add(new EndCollapsibleInstruction());
 		}
 
 		public void Component(Action<Ui> handler)

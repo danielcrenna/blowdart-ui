@@ -15,23 +15,27 @@ namespace Demo.Examples.Pages
 		public static void Index(Ui ui)
 		{
 			ui.BeginTabList();
-
-			if (ui.Tab("Alerts", ref _alertsTabOpen))
 			{
-				_inputControlsTabOpen = false;
+				if (ui.Tab("Alerts", ref _alertsTabOpen))
+				{
+					_inputControlsTabOpen = false;
+				}
+
+				if (ui.Tab("Input Controls", ref _inputControlsTabOpen))
+				{
+					_alertsTabOpen = false;
+				}
+
+				ui.EndTabList();
 			}
-
-			if (ui.Tab("Input Controls", ref _inputControlsTabOpen))
-			{
-				_alertsTabOpen = false;
-			}
-
-			ui.EndTabList();
-
+			
 			ui.BeginTabContent();
-			ui.TabContent("Alerts", _alertsTabOpen, AlertsTab);
-			ui.TabContent("Input Controls", _inputControlsTabOpen, InputControlsTab);
-			ui.EndTabContent();
+			{
+				ui.TabContent("Alerts", _alertsTabOpen, AlertsTab);
+				ui.TabContent("Input Controls", _inputControlsTabOpen, InputControlsTab);
+
+				ui.EndTabContent();
+			}
 		}
 
 		private static bool _checked;

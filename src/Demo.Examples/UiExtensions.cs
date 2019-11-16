@@ -10,8 +10,19 @@ namespace Demo.Examples
 		public static void SampleCode(this Ui ui, string code)
 		{
 			ui.Separator();
-			ui.Header(3, "Code");
-			ui.CodeBlock(code);
+			ui.NextLine();
+            
+			ui.Push(ElementContext.Info);
+			ui.Push(OpenIconicIcons.Code);
+			if (ui.Button("Code"))
+				ui.ShowCollapsible("code");
+
+			ui.BeginCollapsible("code");
+			{
+				ui.Header(3, "Code");
+				ui.CodeBlock(code);
+				ui.EndCollapsible();
+			}
 		}
 	}
 }

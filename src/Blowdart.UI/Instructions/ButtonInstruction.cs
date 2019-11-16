@@ -13,10 +13,12 @@ namespace Blowdart.UI.Instructions
         public ElementSize Size { get; }
         public ElementDecorator Decorator { get; }
         public ElementAlignment Alignment { get; }
+        public ElementStyle Style { get; }
+        public OpenIconicIcons Icon { get; }
         public string Text { get; }
 
         public ButtonInstruction(Ui ui, Value128 id, ElementContext type, ElementSize size, ElementDecorator decorator,
-	        ElementAlignment alignment, string text)
+	        ElementAlignment alignment, ElementStyle style, OpenIconicIcons icon, string text)
         {
             Ui = ui;
             Id = id;
@@ -24,6 +26,8 @@ namespace Blowdart.UI.Instructions
             Size = size;
             Decorator = decorator;
             Alignment = alignment;
+            Style = style;
+            Icon = icon;
             Text = text;
         }
 

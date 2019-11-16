@@ -3,7 +3,6 @@
 
 using System;
 using Blowdart.UI.Instructions;
-using Blowdart.UI.Web.Components;
 using Microsoft.AspNetCore.Components.Rendering;
 using Blowdart.UI.Web.Extensions;
 
@@ -25,16 +24,24 @@ namespace Blowdart.UI.Web.Rendering
 		
         private void RenderButton(RenderTreeBuilder b, ButtonInstruction instruction)
         {
-            var css = instruction.Type switch
+	        var modifier = instruction.Icon != 0 ? "btn-labelled " : "";
+
+			var style = instruction.Style switch
+	        {
+		        ElementStyle.Outline => "btn-outline",
+		        _ => "btn"
+	        };
+
+	        var css = instruction.Type switch
             {
-                ElementContext.Primary => "btn btn-primary",
-                ElementContext.Secondary => "btn btn-secondary",
-                ElementContext.Success => "btn btn-success",
-                ElementContext.Danger => "btn btn-danger",
-                ElementContext.Warning => "btn btn-warning",
-                ElementContext.Info => "btn btn-info",
-                ElementContext.Light => "btn btn-light",
-                ElementContext.Dark => "btn btn-dark",
+                ElementContext.Primary => $"btn {modifier}{style}-primary",
+                ElementContext.Secondary => $"btn {modifier}{style}-secondary",
+                ElementContext.Success => $"btn {modifier}{style}-success",
+                ElementContext.Danger => $"btn {modifier}{style}-danger",
+                ElementContext.Warning => $"btn {modifier}{style}-warning",
+                ElementContext.Info => $"btn {modifier}{style}-info",
+                ElementContext.Light => $"btn {modifier}{style}-light",
+                ElementContext.Dark => $"btn {modifier}{style}-dark",
                 _ => throw new ArgumentOutOfRangeException()
             };
 
@@ -58,7 +65,7 @@ namespace Blowdart.UI.Web.Rendering
 					throw new ArgumentOutOfRangeException();
 			}
 
-            b.BeginButton();
+			b.BeginButton();
             {
 	            b.AddAttribute(HtmlAttributes.Type, HtmlInputTypes.Button);
 	            b.AddAttribute(HtmlAttributes.Role, HtmlInputTypes.Button);
@@ -66,7 +73,7 @@ namespace Blowdart.UI.Web.Rendering
 	            b.AddAttribute(HtmlAttributes.Class, css);
 	            b.AddAttribute(DomEvents.OnClick, _imGui.OnClickCallback(instruction.Id));
 
-				switch (instruction.Alignment)
+	            switch (instruction.Alignment)
 				{
 					case ElementAlignment.Left:
 						RenderDecorator(b, instruction);
@@ -90,18 +97,25 @@ namespace Blowdart.UI.Web.Rendering
 		        b.AddContent(button.Text);
         }
 
-        private static void RenderDecorator(RenderTreeBuilder b, ButtonInstruction button)
+        private static void RenderDecorator(RenderTreeBuilder b, ButtonInstruction instruction)
         {
 	        void MaybeAddLoadingHint()
 	        {
-		        if (!string.IsNullOrWhiteSpace(button.Text))
+		        if (!string.IsNullOrWhiteSpace(instruction.Text))
 			        return;
 		        b.BeginSpan(HtmlAttributes.ScreenReader.Only);
 		        b.AddContent("Loading...");
 		        b.CloseElement();
 	        }
 
-	        switch (button.Decorator)
+	        if (instruction.Icon != 0)
+	        {
+				b.BeginSpan("btn-label");
+		        b.InlineIcon(instruction.Icon, "btn-label");
+				b.CloseElement();
+	        }
+
+			switch (instruction.Decorator)
 	        {
 		        case ElementDecorator.None:
 			        break;

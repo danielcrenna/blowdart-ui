@@ -111,9 +111,9 @@ namespace Blowdart.UI.Web.Extensions
         public static void TableHeader(this RenderTreeBuilder b, string @class, RenderFragment fragment) => Element(b, HtmlElements.TableHeader, @class, fragment);
         public static void TableHeader(this RenderTreeBuilder b, string @class, Action fragment) => Element(b, HtmlElements.TableHeader, @class, fragment);
 
-		public static void InlineIcon(this RenderTreeBuilder b, OpenIconicIcons icon)
-        {
-            b.OpenElement(HtmlElements.Span);
+		public static void InlineIcon(this RenderTreeBuilder b, OpenIconicIcons icon, string @class = "")
+		{
+			b.BeginElement("i", @class);
 			b.Class($"oi oi-{icon.ToCssCase()}");
 			b.AriaHidden();
             b.CloseElement();

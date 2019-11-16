@@ -45,11 +45,14 @@ namespace Blowdart.UI
 		#region Options
 
 		private readonly Stack<ElementAlignment> _alignments = new Stack<ElementAlignment>();
-		private readonly Stack<InputActivation> _activations = new Stack<InputActivation>();
 		private readonly Stack<ElementContext> _contexts = new Stack<ElementContext>();
 		private readonly Stack<ElementDecorator> _decorators = new Stack<ElementDecorator>();
-		private readonly Stack<FieldType> _fieldTypes = new Stack<FieldType>();
 		private readonly Stack<ElementSize> _sizes = new Stack<ElementSize>();
+		private readonly Stack<ElementStyle> _styles = new Stack<ElementStyle>();
+
+		private readonly Stack<InputActivation> _activations = new Stack<InputActivation>();
+		private readonly Stack<FieldType> _fieldTypes = new Stack<FieldType>();
+		private readonly Stack<OpenIconicIcons> _icons = new Stack<OpenIconicIcons>();
 
 		public ElementContext Push(ElementContext context)
 		{
@@ -67,6 +70,18 @@ namespace Blowdart.UI
 		{
 			_alignments.Push(alignment);
 			return alignment;
+		}
+
+		public ElementStyle Push(ElementStyle style)
+		{
+			_styles.Push(style);
+			return style;
+		}
+
+		public OpenIconicIcons Push(OpenIconicIcons icon)
+		{
+			_icons.Push(icon);
+			return icon;
 		}
 
 		public ElementSize Push(ElementSize size)
@@ -134,6 +149,24 @@ namespace Blowdart.UI
 				}
 			}
 
+			if (typeof(T) == typeof(ElementStyle))
+			{
+				if (_styles.Count > 0)
+				{
+					option = (T) (object) _styles.Pop();
+					return true;
+				}
+			}
+
+			if (typeof(T) == typeof(OpenIconicIcons))
+			{
+				if (_icons.Count > 0)
+				{
+					option = (T) (object) _icons.Pop();
+					return true;
+				}
+			}
+
 			if (typeof(T) == typeof(FieldType))
 			{
 				if (_fieldTypes.Count > 0)
@@ -196,6 +229,12 @@ namespace Blowdart.UI
 		{
 			var id = HashId($"modal:{title}");
 			Instructions.Add(new ShowModalInstruction(id));
+		}
+
+		public void ShowCollapsible(string title)
+		{
+			var id = HashId($"collapse:{title}");
+			Instructions.Add(new ShowCollapsibleInstruction(id));
 		}
 	}
 }

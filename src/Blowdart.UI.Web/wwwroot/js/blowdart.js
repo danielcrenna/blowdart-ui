@@ -19,3 +19,7 @@ window.blowdart.log = function (message) {
 window.blowdart.showModal = function(id) {
     $(`#${id}`).modal("toggle");
 };
+
+window.blowdart.showCollapsible = function(id) {
+    $(`#${id}`).collapse("toggle");
+};

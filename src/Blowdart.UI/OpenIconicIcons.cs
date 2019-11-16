@@ -5,6 +5,7 @@ namespace Blowdart.UI
 {
 	public enum OpenIconicIcons
 	{
+		None,
 		AccountLogin,
 		AccountLogout,
 		ActionRedo,
