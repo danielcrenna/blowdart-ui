@@ -727,10 +727,10 @@ namespace Blowdart.UI
 			Instructions.Add(new EndModalInstruction());
 		}
 
-		public void BeginCollapsible(string title)
+		public void BeginCollapsible(string name)
 		{
-			var id = HashId($"collapse:{title}");
-			Instructions.Add(new BeginCollapsibleInstruction(_(title), id));
+			var id = HashId($"collapse:{name}");
+			Instructions.Add(new BeginCollapsibleInstruction(_(name), id));
 		}
 
 		public void EndCollapsible()
