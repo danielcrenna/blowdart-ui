@@ -7,7 +7,9 @@ using Microsoft.AspNetCore.Components.Rendering;
 
 namespace Blowdart.UI.Web.Rendering
 {
-	internal sealed class BeginAlertRenderer : IRenderer<BeginAlertInstruction, RenderTreeBuilder>
+	internal sealed class AlertRenderer : 
+		IRenderer<BeginAlertInstruction, RenderTreeBuilder>,
+		IRenderer<EndAlertInstruction, RenderTreeBuilder>
 	{
 		public void Render(RenderTreeBuilder b, BeginAlertInstruction alert)
 		{
@@ -29,6 +31,11 @@ namespace Blowdart.UI.Web.Rendering
 				}
 	            b.CloseElement();
 			}
+		}
+
+		public void Render(RenderTreeBuilder b, EndAlertInstruction alert)
+		{
+			b.CloseElement();
 		}
 	}
 }

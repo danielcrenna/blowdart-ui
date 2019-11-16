@@ -8,14 +8,14 @@ namespace Blowdart.UI.WinForms.Rendering
 {
 	internal sealed class SeparatorRenderer : IRenderer<SeparatorInstruction, Panel>
 	{
-		public void Render(Panel renderer, SeparatorInstruction instruction)
+		public void Render(Panel p, SeparatorInstruction instruction)
 		{
-			renderer.Controls.Add(new Label
+			p.Controls.Add(new Label
 			{
 				Text = "",
 				BorderStyle = BorderStyle.Fixed3D,
 				AutoSize = false,
-				Width = renderer.Width,
+				Width = p.Width,
 				Height = 2
 			});
 		}

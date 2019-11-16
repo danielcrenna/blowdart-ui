@@ -26,7 +26,7 @@ namespace Blowdart.UI.Web.Rendering
             {
 	            if (!string.IsNullOrWhiteSpace(instruction.Class))
 		            b.Class(instruction.Class);
-	            b.AddContent(instruction.Value);
+	            b.AddContent(instruction.Text);
 			}
 
             b.CloseElement();

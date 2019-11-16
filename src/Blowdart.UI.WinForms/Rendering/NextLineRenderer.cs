@@ -6,11 +6,11 @@ using Blowdart.UI.Instructions;
 
 namespace Blowdart.UI.WinForms.Rendering
 {
-	internal sealed class ElementRenderer : IRenderer<BeginElementInstruction, Panel>
+	internal sealed class NextLineRenderer : IRenderer<NextLineInstruction, Panel>
 	{
-		public void Render(Panel p, BeginElementInstruction instruction)
+		public void Render(Panel p, NextLineInstruction instruction)
 		{
-			var element = (BeginElementInstruction) instruction;
+			
 		}
 	}
 }

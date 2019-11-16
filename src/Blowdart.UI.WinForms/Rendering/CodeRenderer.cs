@@ -10,9 +10,9 @@ namespace Blowdart.UI.WinForms.Rendering
 {
 	internal sealed class CodeRenderer : IRenderer<CodeInstruction, Panel>
 	{
-		public void Render(Panel renderer, CodeInstruction instruction)
+		public void Render(Panel p, CodeInstruction instruction)
 		{
-			var code = (CodeInstruction) instruction;
+			var code = instruction;
 
 			var text = code.Value.FormatCode();
 
@@ -31,7 +31,7 @@ namespace Blowdart.UI.WinForms.Rendering
 			textBox.Width = size.Width + 20;
 			textBox.Height = size.Height + 10;
 
-			renderer.Controls.Add(textBox);
+			p.Controls.Add(textBox);
 		}
 	}
 }

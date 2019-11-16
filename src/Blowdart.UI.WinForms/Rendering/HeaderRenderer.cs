@@ -7,9 +7,17 @@ using Blowdart.UI.Instructions;
 
 namespace Blowdart.UI.WinForms.Rendering
 {
+	internal sealed class TabListItemRenderer : IRenderer<TabListItemInstruction, Panel>
+	{
+		public void Render(Panel p, TabListItemInstruction instruction)
+		{
+			
+		}
+	}
+
 	internal sealed class HeaderRenderer : IRenderer<HeaderInstruction, Panel>
 	{
-		public void Render(Panel renderer, HeaderInstruction instruction)
+		public void Render(Panel p, HeaderInstruction instruction)
 		{
 			var header = (HeaderInstruction) instruction;
 
@@ -31,7 +39,7 @@ namespace Blowdart.UI.WinForms.Rendering
 			};
 
 			label.Font = new Font(label.Font.Name, emSize);
-			renderer.Controls.Add(label);
+			p.Controls.Add(label);
 		}
 	}
 }

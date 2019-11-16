@@ -6,11 +6,13 @@ using Blowdart.UI.Instructions;
 
 namespace Blowdart.UI.WinForms.Rendering
 {
-	internal sealed class ElementRenderer : IRenderer<BeginElementInstruction, Panel>
+	internal sealed class SliderRenderer : IRenderer<SliderInstruction, Panel>
 	{
-		public void Render(Panel p, BeginElementInstruction instruction)
+		public void Render(Panel p, SliderInstruction instruction)
 		{
-			var element = (BeginElementInstruction) instruction;
+			var slider = new TrackBar();
+			slider.Text = instruction.Text;
+			p.Controls.Add(slider);
 		}
 	}
 }

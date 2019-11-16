@@ -8,21 +8,26 @@ namespace Blowdart.UI.WinForms.Rendering
 {
 	internal sealed class MenuItemRenderer : IRenderer<MenuItemInstruction, Panel>
 	{
-		public void Render(Panel renderer, MenuItemInstruction instruction)
-		{
-			var item = (MenuItemInstruction) instruction;
-			// var form = (Form) panel.Parent;
+		private readonly ImGui _imGui;
 
+		public MenuItemRenderer(ImGui imGui)
+		{
+			_imGui = imGui;
+		}
+
+		public void Render(Panel p, MenuItemInstruction instruction)
+		{
+			var item = instruction;
+			
 			var menuItem = new ToolStripMenuItem(item.Title);
-			foreach (var control in renderer.Controls)
+			menuItem.Click += (sender, args) => { _imGui.ChangePage(instruction.Template); };
+			foreach (var control in p.Controls)
 			{
 				if (control is ToolStrip strip)
 				{
 					strip.Items.Add(menuItem);
 				}
 			}
-
-			//form.Menu.MenuItems.Add(menuItem);
 		}
 	}
 }

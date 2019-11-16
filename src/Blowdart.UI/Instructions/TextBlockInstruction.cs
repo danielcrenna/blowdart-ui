@@ -5,17 +5,17 @@ namespace Blowdart.UI.Instructions
 {
     public class TextBlockInstruction : RenderInstruction
     {
-        public string Value { get; }
+        public string Text { get; }
         public string Class { get; }
         public ElementSize Size { get; }
 
         public TextBlockInstruction(string value, string @class, ElementSize size)
         {
-	        Value = value;
+	        Text = value;
 	        Class = @class;
 	        Size = size;
         }
 
-        public override string DebuggerDisplay => $"p: {Value}";
+        public override string DebuggerDisplay => $"p: {Text}";
     }
 }

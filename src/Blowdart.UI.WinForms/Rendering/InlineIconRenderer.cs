@@ -8,11 +8,11 @@ namespace Blowdart.UI.WinForms.Rendering
 {
 	internal sealed class InlineIconRenderer : IRenderer<InlineIconInstruction, Panel>
 	{
-		public void Render(Panel renderer, InlineIconInstruction instruction)
+		public void Render(Panel p, InlineIconInstruction instruction)
 		{
 			var icon = (InlineIconInstruction) instruction;
 
-			foreach (var control in renderer.Controls)
+			foreach (var control in p.Controls)
 			{
 				if (control is ContextMenuStrip strip)
 				{

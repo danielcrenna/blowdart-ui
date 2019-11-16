@@ -8,14 +8,14 @@ namespace Blowdart.UI.WinForms.Rendering
 {
 	internal sealed class LinkRenderer : IRenderer<LinkInstruction, Panel>
 	{
-		public void Render(Panel renderer, LinkInstruction instruction)
+		public void Render(Panel p, LinkInstruction instruction)
 		{
 			var link = (LinkInstruction) instruction;
 			var label = new LinkLabel { Text = link.Title, AutoSize = true };
 			label.LinkArea = new LinkArea(0, link.Title.Length);
 			label.LinkBehavior = LinkBehavior.AlwaysUnderline;
 			label.Links.Add(new LinkLabel.Link());
-			renderer.Controls.Add(label);
+			p.Controls.Add(label);
 		}
 	}
 }
