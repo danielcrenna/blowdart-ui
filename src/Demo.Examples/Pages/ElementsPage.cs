@@ -49,7 +49,7 @@ namespace Demo.Examples.Pages
 			}
 		}
 
-		private static void ToastsTab(Ui ui)
+		public static void ToastsTab(Ui ui)
 		{
 			ui.NextLine();
 			ui.Header(3, "Toasts");

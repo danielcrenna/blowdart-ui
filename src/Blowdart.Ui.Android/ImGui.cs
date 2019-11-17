@@ -1,4 +1,5 @@
-﻿using Android.App;
+﻿using System;
+using Android.App;
 using Android.Content.PM;
 using Android.OS;
 using Android.Runtime;
@@ -30,7 +31,7 @@ namespace Blowdart.Ui
 			services.AddSingleton(pageMap);
 
 			var builder = new BlowdartBuilder(pageMap, services);
-            builder.AddPage("/", IndexPage.Index);
+            builder.AddPage("/", ElementsPage.ToastsTab);
             
 			_ui.UiServices = services.BuildServiceProvider();
 		}
@@ -40,16 +41,20 @@ namespace Blowdart.Ui
             base.OnCreate(savedInstanceState);
             Platform.Init(this, savedInstanceState);
 
-            var layout = new LinearLayout(this) { Orientation = Orientation.Vertical };
-            var pageMap = _ui.GetRequiredService<PageMap>();
-			var handler = pageMap.GetHandler("/");
-
-			Begin();
-			handler(_ui);
-			_ui.RenderToTarget(layout);
-
+            var layout = RenderPage();
             SetContentView(layout);
 		}
+
+        private LinearLayout RenderPage()
+        {
+	        var layout = new LinearLayout(this) {Orientation = Orientation.Vertical};
+	        var pageMap = _ui.GetRequiredService<PageMap>();
+	        var handler = pageMap.GetHandler("/");
+	        Begin();
+	        handler(_ui);
+	        _ui.RenderToTarget(layout);
+	        return layout;
+        }
 
         private void Begin()
         {
@@ -67,6 +72,23 @@ namespace Blowdart.Ui
             Platform.OnRequestPermissionsResult(requestCode, permissions, grantResults);
             base.OnRequestPermissionsResult(requestCode, permissions, grantResults);
         }
-    }
+
+        private void OnEvent(Value128 id, string eventType, object data)
+        {
+	        _ui.AddEvent(eventType, id, data);
+	        var layout = RenderPage();
+			SetContentView(layout);
+		}
+
+        public void OnClick(Value128 id)
+        {
+	        OnEvent(id, DomEvents.OnClick, null);
+        }
+
+        public EventHandler OnClickCallback(Value128 id)
+        {
+	        return (sender, args) => OnClick(id);
+        }
+	}
 }
 

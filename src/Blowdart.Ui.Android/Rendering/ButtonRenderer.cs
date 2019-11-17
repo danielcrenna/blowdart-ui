@@ -11,9 +11,17 @@ namespace Blowdart.Ui.Rendering
 {
 	internal sealed class ButtonRenderer : IRenderer<ButtonInstruction, ViewGroup>
 	{
+		private readonly ImGui _imGui;
+
+		public ButtonRenderer(ImGui imGui)
+		{
+			_imGui = imGui;
+		}
+
 		public void Render(ViewGroup v, ButtonInstruction instruction)
 		{
 			var button = new Button(v.Context);
+			button.Click += _imGui.OnClickCallback(instruction.Id);
 			button.Text = instruction.Text;
 			v.AddView(button);
 		}
