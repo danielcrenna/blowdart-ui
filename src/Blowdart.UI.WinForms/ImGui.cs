@@ -44,7 +44,7 @@ namespace Blowdart.UI.WinForms
 		private void OnControlAdded(object sender, ControlEventArgs e)
 		{
 			if (string.IsNullOrWhiteSpace(e.Control.Name))
-				e.Control.Name = _ui.NextId().ToString();
+				e.Control.Name = _ui.ResolveId().ToString();
 		}
 
 		private void InitializeComponent(string title)

@@ -9,6 +9,6 @@ namespace Blowdart.UI
     public abstract class RenderInstruction
     {
 	    public int? Ordinal { get; protected set; }
-		public abstract string DebuggerDisplay { get; }
+	    public virtual string DebuggerDisplay => GetType().Name.Replace("Instruction", string.Empty);
     }
 }

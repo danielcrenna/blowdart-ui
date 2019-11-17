@@ -11,5 +11,6 @@ namespace Blowdart.UI.Web
 
 		public static readonly string ShowModal = "blowdart.showModal";
 		public static readonly string ShowCollapsible = "blowdart.showCollapsible";
+		public static readonly string Toast = "blowdart.toast";
 	}
 }

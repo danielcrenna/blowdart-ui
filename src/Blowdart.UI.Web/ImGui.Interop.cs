@@ -36,8 +36,14 @@ namespace Blowdart.UI.Web
 				ShowCollapsible(_.Id);
 				break;
 			}
-		}
 
+			foreach (var _ in Ui.Instructions.OfType<BeginToastInstruction>())
+			{
+				Js.InvokeVoidAsync(Interop.Toast, _.HeaderText, _.Timestamp.ToString(), _.Body);
+				break;
+			}
+		}
+		
 		private void SyntaxHighlight()
 		{
 			Js.InvokeVoidAsync(Interop.SyntaxHighlight);

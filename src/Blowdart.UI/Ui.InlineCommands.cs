@@ -37,7 +37,8 @@ namespace Blowdart.UI
 
 		internal Value128 ResolveId()
 		{
-			return TryPopId(out var id) ? id : NextId();
+			return NextId();
+			// return TryPopId(out var id) ? id : NextId();
 		}
 
 		#endregion

@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Components.Rendering;
 
 namespace Blowdart.UI.Web.Rendering
 {
-    internal sealed class ElementRenderer : 
+	internal sealed class ElementRenderer : 
 	    IRenderer<BeginElementInstruction, RenderTreeBuilder>, 
 	    IRenderer<EndElementInstruction, RenderTreeBuilder>
     {

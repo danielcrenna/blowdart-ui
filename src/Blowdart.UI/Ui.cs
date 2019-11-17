@@ -489,7 +489,7 @@ namespace Blowdart.UI
 			if (!_inTabList)
 				throw new BlowdartException("Attempted to create a tab outside of a tab block.");
 
-			var id = PushId(NextId());
+			var id = PushId(ResolveId());
 			Instructions.Add(new TabListItemInstruction(this, id, _(text), active));
 			var clicked = OnEvent(DomEvents.OnClick, id, out var _);
 			if (clicked)
@@ -706,7 +706,7 @@ namespace Blowdart.UI
 
         public bool Button(string text = "")
         {
-	        var id = NextId();
+	        var id = ResolveId();
 
 			TryPop<ElementContext>(out var context);
 			TryPop<ElementSize>(out var size);
@@ -719,27 +719,67 @@ namespace Blowdart.UI
             return OnEvent(DomEvents.OnClick, id, out var _);
         }
 
+        #region Modals
+
         public void BeginModal(string title)
         {
 	        var id = HashId($"modal:{title}");
 	        Instructions.Add(new BeginModalInstruction(_(title), id));
         }
 
-		public void EndModal()
+        public void EndModal()
+        {
+	        Instructions.Add(new EndModalInstruction());
+        }
+
+        #endregion
+
+        #region Collapsibles
+
+        public void BeginCollapsible(string name)
+        {
+	        var id = HashId($"collapse:{name}");
+	        Instructions.Add(new BeginCollapsibleInstruction(_(name), id));
+        }
+
+        public void EndCollapsible()
+        {
+	        Instructions.Add(new EndCollapsibleInstruction());
+        }
+
+		#endregion
+
+		#region Toasts
+
+		public void Toast(string body, string headerText = "", DateTimeOffset? timestamp = null)
 		{
-			Instructions.Add(new EndModalInstruction());
+			Instructions.Add(new BeginToastInstruction(body, headerText, timestamp));
 		}
 
-		public void BeginCollapsible(string name)
+		#endregion
+
+		#region Alerts
+
+		public void BeginAlert()
 		{
-			var id = HashId($"collapse:{name}");
-			Instructions.Add(new BeginCollapsibleInstruction(_(name), id));
+			TryPop<ElementContext>(out var context);
+			Instructions.Add(new BeginAlertInstruction(context));
 		}
 
-		public void EndCollapsible()
+		public void EndAlert()
 		{
-			Instructions.Add(new EndCollapsibleInstruction());
+			Instructions.Add(new EndAlertInstruction());
 		}
+
+		public void Alert(string text)
+		{
+			TryPop<ElementContext>(out var context);
+			Instructions.Add(new BeginAlertInstruction(context));
+			Instructions.Add(new TextInstruction(_(text)));
+			Instructions.Add(new EndAlertInstruction());
+		}
+
+		#endregion
 
 		public void Component(Action<Ui> handler)
         {
@@ -779,25 +819,6 @@ namespace Blowdart.UI
 		public void NextLine()
 		{
 			Instructions.Add(new NextLineInstruction());
-		}
-
-		public void BeginAlert()
-		{
-			TryPop<ElementContext>(out var context);
-			Instructions.Add(new BeginAlertInstruction(context));
-		}
-
-		public void EndAlert()
-		{
-			Instructions.Add(new EndAlertInstruction());
-		}
-        
-        public void Alert(string text)
-		{
-			TryPop<ElementContext>(out var context);
-			Instructions.Add(new BeginAlertInstruction(context));
-			Instructions.Add(new TextInstruction(_(text)));
-			Instructions.Add(new EndAlertInstruction());
 		}
 
 		#endregion

@@ -1,6 +1,7 @@
 // Copyright (c) Daniel Crenna & Contributors. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
+using System;
 using Blowdart.UI;
 
 namespace Demo.Examples.Pages
@@ -11,6 +12,7 @@ namespace Demo.Examples.Pages
 
 		private static bool _alertsTabOpen = true;
 		private static bool _inputControlsTabOpen;
+		private static bool _toastsTabOpen;
 
 		public static void Index(Ui ui)
 		{
@@ -19,10 +21,18 @@ namespace Demo.Examples.Pages
 				if (ui.Tab("Alerts", ref _alertsTabOpen))
 				{
 					_inputControlsTabOpen = false;
+					_toastsTabOpen = false;
 				}
 
 				if (ui.Tab("Input Controls", ref _inputControlsTabOpen))
 				{
+					_alertsTabOpen = false;
+					_toastsTabOpen = false;
+				}
+
+				if (ui.Tab("Toasts", ref _toastsTabOpen))
+				{
+					_inputControlsTabOpen = false;
 					_alertsTabOpen = false;
 				}
 
@@ -33,9 +43,20 @@ namespace Demo.Examples.Pages
 			{
 				ui.TabContent("Alerts", _alertsTabOpen, AlertsTab);
 				ui.TabContent("Input Controls", _inputControlsTabOpen, InputControlsTab);
+				ui.TabContent("Toasts", _toastsTabOpen, ToastsTab);
 
 				ui.EndTabContent();
 			}
+		}
+
+		private static void ToastsTab(Ui ui)
+		{
+			ui.NextLine();
+			ui.Header(3, "Toasts");
+			ui.Separator();
+
+			if (ui.Button("Add toast"))
+				ui.Toast("That happened.", "Blowdart says...", DateTimeOffset.UtcNow);
 		}
 
 		private static bool _checked;
@@ -213,3 +234,4 @@ ui.Alert(""This is a light alert—check it out!"");");
 		#endregion
 	}
 }
+ 
