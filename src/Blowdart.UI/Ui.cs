@@ -36,17 +36,20 @@ namespace Blowdart.UI
 	        _body = default;
 	        CalledLayout = default;
 	        ClearBindings();
+
+	        _target.Begin();
         }
 
-		public void RenderToTarget<TRenderer>(RenderTarget target, TRenderer renderer)
+		public void RenderToTarget<TRenderer>(TRenderer renderer)
         {
-	        target.AddInstructions(Instructions);
-	        target.Render(renderer);
+	        _target.AddInstructions(Instructions);
+	        _target.Render(renderer);
 		}
 
         public void Dispose()
         {
 	        Instructions.Clear();
+	        _target?.Dispose();
         }
 
 		#region Elements

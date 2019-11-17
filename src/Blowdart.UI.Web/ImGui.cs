@@ -15,9 +15,7 @@ namespace Blowdart.UI.Web
     [SuppressMessage("ReSharper", "UnusedAutoPropertyAccessor.Local")]
     public sealed partial class ImGui : ComponentBase, IDisposable
 	{
-		private readonly WebRenderTarget _target;
-
-        public Ui Ui { get; }
+		public Ui Ui { get; }
 
         [Parameter] public Action<Ui> Layout { get; set; }
 		[Parameter] public Action<Ui> Handler { get; set; }
@@ -27,9 +25,9 @@ namespace Blowdart.UI.Web
 
 		public ImGui()
 		{
-			_target = new WebRenderTarget();
-			_target.RegisterRenderers(this);
-			Ui = new Ui(_target);
+			var target = new WebRenderTarget();
+			target.RegisterRenderers(this);
+			Ui = new Ui(target);
 		}
 		
 		protected override void BuildRenderTree(RenderTreeBuilder builder)
@@ -46,19 +44,17 @@ namespace Blowdart.UI.Web
             {
 	            Handler(Ui);
             }
-            Ui.RenderToTarget(_target, builder);
+            Ui.RenderToTarget(builder);
         }
         
         private void Begin()
         {
             Sequence.Begin(0, this);
             Ui.Begin();
-            _target.Begin();
         }
 
         public void Dispose()
         {
-            _target.Dispose();
             Ui.Dispose();
         }
 

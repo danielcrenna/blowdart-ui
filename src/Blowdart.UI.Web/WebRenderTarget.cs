@@ -5,5 +5,5 @@ using Microsoft.AspNetCore.Components.Rendering;
 
 namespace Blowdart.UI.Web
 {
-    internal class WebRenderTarget : RenderTarget<RenderTreeBuilder> { }
+    internal sealed class WebRenderTarget : RenderTarget<RenderTreeBuilder> { }
 }

@@ -6,6 +6,7 @@ using System.Runtime.CompilerServices;
 [assembly: InternalsVisibleTo("Blowdart.UI.Web")]
 [assembly: InternalsVisibleTo("Blowdart.UI.Game")]
 [assembly: InternalsVisibleTo("Blowdart.UI.WinForms")]
+[assembly: InternalsVisibleTo("Blowdart.UI.Android")]
 
 namespace Blowdart.UI.Internal
 {

@@ -10,13 +10,25 @@ using TypeKitchen;
 
 namespace Blowdart.UI
 {
-	public abstract class RenderTarget
+	public abstract class RenderTarget : IDisposable
 	{
 		internal abstract void AddInstructions(List<RenderInstruction> instructions);
 		internal abstract void Render(object renderer);
+		internal abstract void Begin();
+
+		protected virtual void Dispose(bool disposing) 
+		{
+			if (disposing) { }
+		}
+
+		public void Dispose()
+		{
+			Dispose(true);
+			GC.SuppressFinalize(this);
+		}
 	}
 
-    public abstract class RenderTarget<TRenderer> : RenderTarget, IDisposable
+    public abstract class RenderTarget<TRenderer> : RenderTarget
 	{
 	    private readonly List<RenderFragment<TRenderer>> _fragments;
 
@@ -27,7 +39,7 @@ namespace Blowdart.UI
 			_rendererInstances = new Dictionary<Type, IRenderer>();
 		}
 
-        public void Begin()
+		internal override void Begin()
         {
 	        _fragments.Clear();
         }
@@ -138,18 +150,12 @@ namespace Blowdart.UI
 	        }
 		}
 
-		protected virtual void Dispose(bool disposing)
+		protected override void Dispose(bool disposing)
 		{
 			if (disposing)
 			{
 				Begin();
 			}
-		}
-
-		public void Dispose()
-		{
-			Dispose(true);
-			GC.SuppressFinalize(this);
 		}
 	}
 }
