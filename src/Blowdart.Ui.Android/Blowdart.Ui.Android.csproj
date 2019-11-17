@@ -71,6 +71,7 @@
     <Compile Include="Rendering\SeparatorRenderer.cs" />
     <Compile Include="Rendering\TextBlockRenderer.cs" />
     <Compile Include="Rendering\TextRenderer.cs" />
+    <Compile Include="Rendering\ToastRenderer.cs" />
     <Compile Include="Resources\Resource.designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

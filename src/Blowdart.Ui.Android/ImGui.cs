@@ -31,8 +31,8 @@ namespace Blowdart.Ui
 
 			var builder = new BlowdartBuilder(pageMap, services);
             builder.AddPage("/", IndexPage.Index);
-
-            _ui.UiServices = services.BuildServiceProvider();
+            
+			_ui.UiServices = services.BuildServiceProvider();
 		}
 
         protected override void OnCreate(Bundle savedInstanceState)
