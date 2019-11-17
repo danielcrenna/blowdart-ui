@@ -59,11 +59,12 @@ namespace Blowdart.UI.Demo
 ### Planned Platforms :white_square_button:
 
 - [x] HTML/CSS
-- [ ] WebAssembly
-- [X] FNA
-- [ ] iOS
-- [ ] tvOS
-- [ ] macOS
+- [ ] FNA
 - [ ] Android
-- [X] WinForms
+- [ ] iOS
+- [ ] watchOS
+- [ ] tvOS
+- [ ] WinForms
+- [ ] WebAssembly
+- [ ] macOS
 - [ ] CLI

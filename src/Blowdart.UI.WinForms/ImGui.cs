@@ -13,17 +13,13 @@ namespace Blowdart.UI.WinForms
 	    private readonly Panel _panel;
 		private readonly PageMap _pages;
 	    private readonly Ui _ui;
-	    private readonly FormRenderTarget _target;
 	    private Action<Ui> _layout;
 	    private Action<Ui> _handler;
 
 	    public ImGui(string title, IServiceProvider serviceProvider)
 	    {
 		    Icon = Resources.icon;
-
-			_target = new FormRenderTarget();
-			_target.RegisterRenderers(this);
-
+			
 		    _panel = new FlowLayoutPanel
 		    {
 				FlowDirection = FlowDirection.TopDown,
@@ -37,7 +33,11 @@ namespace Blowdart.UI.WinForms
 			Controls.Add(_panel);
 
 			_pages = serviceProvider.GetRequiredService<PageMap>();
-		    _ui = new Ui(_target) {UiServices = serviceProvider};
+
+			var target = new FormRenderTarget();
+			target.RegisterRenderers(this);
+			_ui = new Ui(target) {UiServices = serviceProvider};
+
 		    InitializeComponent(title);
 	    }
 
@@ -68,7 +68,6 @@ namespace Blowdart.UI.WinForms
 		private void Begin()
 		{
 			_ui.Begin();
-			_target.Begin();
 			_panel.Controls.Clear();
 		}
 
@@ -90,7 +89,7 @@ namespace Blowdart.UI.WinForms
 					_handler(_ui);
 				}
 				
-				_ui.RenderToTarget(_target, _panel);
+				_ui.RenderToTarget(_panel);
 			}
 			ResumeLayout(true);
 		}
@@ -102,7 +101,6 @@ namespace Blowdart.UI.WinForms
 				_components?.Dispose();
 				_ui?.Dispose();
 				_panel?.Dispose();
-				_target?.Dispose();
 			}
 			base.Dispose(disposing);
 		}
