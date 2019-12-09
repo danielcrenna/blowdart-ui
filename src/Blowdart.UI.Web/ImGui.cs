@@ -19,7 +19,9 @@ namespace Blowdart.UI.Web
 
         [Parameter] public Action<Ui> Layout { get; set; }
 		[Parameter] public Action<Ui> Handler { get; set; }
-        
+		[Parameter] public object Model { get; set; }
+		[Parameter] public EventCallback OnModelChanged { get; set; }
+
 		[Inject] public IOptionsMonitor<BlowdartOptions> Options { get; set; }
 		[Inject] public NavigationManager NavigationManager { get; set; }
 
@@ -50,7 +52,7 @@ namespace Blowdart.UI.Web
         private void Begin()
         {
             Sequence.Begin(0, this);
-            Ui.Begin();
+            Ui.Begin(Model);
         }
 
         public void Dispose()
@@ -81,6 +83,12 @@ namespace Blowdart.UI.Web
                 if(firstRender)
                     StateHasChanged();
             }
+
+			if(Ui._pendingRefresh)
+			{
+				await OnModelChanged.InvokeAsync(Model);
+				Ui._pendingRefresh = false;
+			}
         }
 	}
 }

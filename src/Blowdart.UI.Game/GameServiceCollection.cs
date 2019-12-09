@@ -8,85 +8,85 @@ using System.Reflection;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Xna.Framework;
 
-namespace Blowdart.UI.Game
+namespace Blowdart.UI.Gaming
 {
 	public class GameServiceCollection : IServiceCollection
 	{
-		private readonly List<ServiceDescriptor> _descriptors;
-		private readonly Dictionary<Type, object> _services;
+		private readonly List<ServiceDescriptor> descriptors;
+		private readonly Dictionary<Type, object> services;
 
 		public GameServiceCollection(GameServiceContainer serviceProvider)
 		{
-			_descriptors = new List<ServiceDescriptor>();
-			_services = (Dictionary<Type, object>) typeof(GameServiceContainer).GetField("services", BindingFlags.Instance | BindingFlags.NonPublic)?.GetValue(serviceProvider);
-			if (_services == null)
+			descriptors = new List<ServiceDescriptor>();
+			services = (Dictionary<Type, object>) typeof(GameServiceContainer).GetField("services", BindingFlags.Instance | BindingFlags.NonPublic)?.GetValue(serviceProvider);
+			if (services == null)
 				return;
-			foreach (var service in _services)
+			foreach (var service in services)
 			{
-				_descriptors.Add(ServiceDescriptor.Singleton(service.Key, service.Value));
+				descriptors.Add(ServiceDescriptor.Singleton(service.Key, service.Value));
 			}
 		}
 		
 		public IEnumerator<ServiceDescriptor> GetEnumerator()
 		{
-			return _descriptors.GetEnumerator();
+			return descriptors.GetEnumerator();
 		}
 
 		IEnumerator IEnumerable.GetEnumerator()
 		{
-			return ((IEnumerable) _descriptors).GetEnumerator();
+			return ((IEnumerable) descriptors).GetEnumerator();
 		}
 
 		public void Add(ServiceDescriptor item)
 		{
-			_descriptors.Add(item);
+			descriptors.Add(item);
 			if (item != null)
-				_services.Add(item.ServiceType, item.ImplementationInstance);
+				services.Add(item.ServiceType, item.ImplementationInstance);
 		}
 
 		public void Clear()
 		{
-			_descriptors.Clear();
+			descriptors.Clear();
 		}
 
 		public bool Contains(ServiceDescriptor item)
 		{
-			return _descriptors.Contains(item);
+			return descriptors.Contains(item);
 		}
 
 		public void CopyTo(ServiceDescriptor[] array, int arrayIndex)
 		{
-			_descriptors.CopyTo(array, arrayIndex);
+			descriptors.CopyTo(array, arrayIndex);
 		}
 
 		public bool Remove(ServiceDescriptor item)
 		{
-			return _descriptors.Remove(item);
+			return descriptors.Remove(item);
 		}
 
-		public int Count => _descriptors.Count;
+		public int Count => descriptors.Count;
 
 		public bool IsReadOnly => false;
 
 		public int IndexOf(ServiceDescriptor item)
 		{
-			return _descriptors.IndexOf(item);
+			return descriptors.IndexOf(item);
 		}
 
 		public void Insert(int index, ServiceDescriptor item)
 		{
-			_descriptors.Insert(index, item);
+			descriptors.Insert(index, item);
 		}
 
 		public void RemoveAt(int index)
 		{
-			_descriptors.RemoveAt(index);
+			descriptors.RemoveAt(index);
 		}
 
 		public ServiceDescriptor this[int index]
 		{
-			get => _descriptors[index];
-			set => _descriptors[index] = value;
+			get => descriptors[index];
+			set => descriptors[index] = value;
 		}
 	}
 }

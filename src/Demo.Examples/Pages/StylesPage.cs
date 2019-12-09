@@ -20,7 +20,7 @@ namespace Demo.Examples.Pages
 				{
 					ui.InlineIcon(icon);
 					ui.NextColumn(ref i);
-					ui.Text(icon.ToCssCase());
+					ui.Text(icon.ToIconCase());
 					ui.NextColumn(ref i);
 				}
 			});
@@ -36,7 +36,7 @@ ui.ListTable(Icons.InGroupsOf(5), icons =>
 	{
 		ui.InlineIcon(icon);
 		ui.NextColumn();
-		ui.Literal(icon.ToCssCase());
+		ui.Text(icon.ToIconCase());
 		ui.NextColumn();
 	}
 });");

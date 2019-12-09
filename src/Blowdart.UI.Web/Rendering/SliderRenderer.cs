@@ -64,10 +64,10 @@ namespace Blowdart.UI.Web.Rendering
 
 					switch (slider.Activation)
 					{
-						case InputActivation.OnDragEnd:
+						case InputActivation.OnChange:
 							b.AddAttribute(DomEvents.OnChange, _imGui.OnChangeCallback(slider.Id));
 							break;
-						case InputActivation.Continuous:
+						case InputActivation.OnInput:
 							b.AddAttribute(DomEvents.OnInput, _imGui.OnInputCallback(slider.Id));
 							break;
 						default:

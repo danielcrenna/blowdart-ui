@@ -7,6 +7,6 @@ namespace Blowdart.UI
     
 	public interface IRenderer<in T, in TRenderer> : IRenderer where T : RenderInstruction
 	{
-		void Render(TRenderer renderer, T instruction);
+		void Render(TRenderer g, T instruction);
 	}
 }

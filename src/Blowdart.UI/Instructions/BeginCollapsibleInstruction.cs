@@ -7,11 +7,13 @@ namespace Blowdart.UI.Instructions
 	{
 		public string Title { get; }
 		public Value128 Id { get; }
+		public ElementSize Size { get; }
 
-		public BeginCollapsibleInstruction(string title, Value128 id)
+		public BeginCollapsibleInstruction(string title, Value128 id, ElementSize size)
 		{
 			Title = title;
 			Id = id;
+			Size = size;
 		}
 
 		public override string DebuggerDisplay => "BeginCollapsible";

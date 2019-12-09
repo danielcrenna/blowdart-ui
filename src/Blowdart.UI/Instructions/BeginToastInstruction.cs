@@ -7,12 +7,14 @@ namespace Blowdart.UI.Instructions
 {
 	public class BeginToastInstruction : RenderInstruction
 	{
+		public ElementContext Context { get; }
 		public string Body { get; }
 		public string HeaderText { get; }
 		public DateTimeOffset? Timestamp { get; }
 
-		public BeginToastInstruction(string body, string headerText = "", DateTimeOffset? timestamp = null)
+		public BeginToastInstruction(ElementContext context, string body, string headerText = "", DateTimeOffset? timestamp = null)
 		{
+			Context = context;
 			Body = body;
 			HeaderText = headerText;
 			Timestamp = timestamp;

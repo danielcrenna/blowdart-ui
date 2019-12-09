@@ -9,6 +9,7 @@ namespace Blowdart.UI
 		ExtraSmall,
 		Small,
 		Large,
-		Block
+		Block,
+		Auto
 	}
 }

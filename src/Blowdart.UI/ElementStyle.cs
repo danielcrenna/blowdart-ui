@@ -6,6 +6,7 @@ namespace Blowdart.UI
 	public enum ElementStyle
 	{
 		None,
-		Outline
+		Outline,
+		Rounded
 	}
 }

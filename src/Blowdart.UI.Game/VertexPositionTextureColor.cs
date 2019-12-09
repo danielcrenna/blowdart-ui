@@ -4,7 +4,7 @@
 using ImGuiNET;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace Blowdart.UI.Game
+namespace Blowdart.UI.Gaming
 {
 	public static class VertexPositionTextureColor
 	{

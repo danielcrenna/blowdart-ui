@@ -2,6 +2,8 @@
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using Blowdart.UI;
 
 namespace Demo.Examples.Pages
@@ -59,25 +61,39 @@ namespace Demo.Examples.Pages
 				ui.Toast("That happened.", "Blowdart says...", DateTimeOffset.UtcNow);
 		}
 
+		private static string _text;
 		private static bool _checked;
 		private static int _slider;
 		private static bool _radioButton;
+		private static readonly List<string> _list = new List<string>
+		{
+			"apple", "pear", "plum", 
+			"banana", "peach"
+		};
 		
 		public static void InputControlsTab(Ui ui)
 		{
 			ui.NextLine();
 			ui.Header(3, "Input Controls");
 			ui.Separator();
-
-			ui.Push(ElementAlignment.Right);
-			if (ui.CheckBox(ref _checked, "Check me"))
-			{
-				ui.Log($"checked the box: ({_checked})");
-			}
+			
+			ui.Push(ElementStyle.Rounded);
+			ui.Push(MaterialIcons.FilterList);
+			ui.Push(FieldType.Search);
+			ui.Push(InputActivation.OnInput);
+			if(ui.TextBox(ref _text, placeholder: "Filter fruit"))
+				ui.Log("Filter changed to " + _text);
+			ui.List(ListDirection.LeftToRight, _list.Where(x => string.IsNullOrWhiteSpace(_text) || x.Contains(_text)), ui.Text);
 
 			ui.NextLine();
 
-			ui.Push(InputActivation.Continuous);
+			ui.Push(ElementAlignment.Right);
+			if (ui.CheckBox(ref _checked, "Check me"))
+				ui.Log($"checked the box: ({_checked})");
+
+			ui.NextLine();
+
+			ui.Push(InputActivation.OnInput);
 			if (ui.Slider(ref _slider, "Slide me"))
 			{
 				ui.Log($"changed slider: ({_slider})");
@@ -228,8 +244,6 @@ ui.Push(ElementContext.Light);
 ui.Alert(""This is a light alert—check it out!"");");
 			#endregion
 		}
-
-		
 
 		#endregion
 	}

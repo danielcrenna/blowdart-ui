@@ -27,7 +27,7 @@ namespace Blowdart.UI.Web.Rendering
 
 				b.OpenElement(HtmlElements.Anchor);
 				{
-					var tabId = tabListItem.Text.ToCssCase();
+					var tabId = tabListItem.Text.ToDashCase();
 
 					b.AddAttribute(HtmlAttributes.Class, tabListItem.Active ? "nav-link active" : "nav-link");
 					b.AddAttribute(HtmlAttributes.Id, tabListItem.Id);

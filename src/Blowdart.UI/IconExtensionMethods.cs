@@ -7,15 +7,25 @@ namespace Blowdart.UI
 {
 	public static class IconExtensionMethods
 	{
-		public static string ToCssCase(this OpenIconicIcons icon)
+		public static string ToIconCase(this OpenIconicIcons icon)
 		{
-			return ToCssCase(icon.ToString());
+			return ToDashCase(icon.ToString());
 		}
 
-		internal static string ToCssCase(this string value)
+		public static string ToIconCase(this MaterialIcons icon)
+		{
+			return icon == MaterialIcons.ThreeDRotation ? "3d_rotation" : ToSnakeCase(icon.ToString());
+		}
+
+		internal static string ToDashCase(this string value)
 		{
 			return string.Concat(value.Select((x, i) => i > 0 && char.IsUpper(x) ? $"-{x}" : $"{x}"))
 				.ToLowerInvariant();
+		}
+
+		internal static string ToSnakeCase(this string value)
+		{
+			return string.Concat(value.Select((x, i) => i > 0 && char.IsUpper(x) ? $"_{x}" : $"{x}")).ToLowerInvariant();
 		}
 	}
 }

@@ -2,7 +2,6 @@
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
 using System;
-using Blowdart.UI.Web.Components;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Rendering;
 
@@ -114,10 +113,18 @@ namespace Blowdart.UI.Web.Extensions
 		public static void InlineIcon(this RenderTreeBuilder b, OpenIconicIcons icon, string @class = "")
 		{
 			b.BeginElement("i", @class);
-			b.Class($"oi oi-{icon.ToCssCase()}");
+			b.Class($"oi oi-{icon.ToIconCase()}");
 			b.AriaHidden();
             b.CloseElement();
         }
+
+		public static void InlineIcon(this RenderTreeBuilder b, MaterialIcons icon)
+		{
+			b.BeginElement("i", "material-icons");
+			b.AriaHidden();
+			b.AddContent(icon.ToIconCase());
+			b.CloseElement();
+		}
 
 		public static void BeginAnchor(this RenderTreeBuilder b, string @class = "", string href = "")
 		{
@@ -191,6 +198,11 @@ namespace Blowdart.UI.Web.Extensions
 		public static void AriaHidden(this RenderTreeBuilder b)
         {
 	        b.AddAttribute(HtmlAttributes.Aria.Hidden, true);
+		}
+
+		public static void AriaLabel(this RenderTreeBuilder b, string label)
+		{
+			b.AddAttribute(HtmlAttributes.Aria.Label, label);
 		}
 
 		public static void AriaLabelledBy(this RenderTreeBuilder b, string id)

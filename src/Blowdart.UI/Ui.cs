@@ -2,6 +2,7 @@
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Security.Principal;
@@ -18,6 +19,7 @@ namespace Blowdart.UI
 	public partial class Ui : IDisposable, IServiceProvider
 	{
 		private readonly RenderTarget _target;
+
 		internal List<RenderInstruction> Instructions { get; }
         internal IServiceProvider UiServices { get; set; }
         public IPrincipal User => UiServices.GetRequiredService<IUserResolver>().GetCurrentUser();
@@ -28,19 +30,21 @@ namespace Blowdart.UI
 	        Instructions = new List<RenderInstruction>();
         }
 
-        internal void Begin()
+        internal void Begin(object model = null)
         {
-	        Instructions.Clear();
+	        Model = model;
+			Instructions.Clear();
 	        NextIdHash = default;
 	        _count = default;
 	        _body = default;
 	        CalledLayout = default;
 	        ClearBindings();
-
-	        _target.Begin();
+			_target.Begin();
         }
 
-		public void RenderToTarget<TRenderer>(TRenderer renderer)
+        public object Model { get; set; }
+
+        public void RenderToTarget<TRenderer>(TRenderer renderer)
         {
 	        _target.AddInstructions(Instructions);
 	        _target.Render(renderer);
@@ -719,9 +723,24 @@ namespace Blowdart.UI
             return OnEvent(DomEvents.OnClick, id, out var _);
         }
 
-        #region Modals
+        public bool FloatingButton(string text = "")
+        {
+	        var id = ResolveId();
 
-        public void BeginModal(string title)
+	        TryPop<ElementContext>(out var context);
+	        TryPop<ElementSize>(out var size);
+	        TryPop<ElementDecorator>(out var decorator);
+	        TryPop<ElementAlignment>(out var alignment);
+	        TryPop<ElementStyle>(out var style);
+	        TryPop<OpenIconicIcons>(out var icon);
+
+	        Instructions.Add(new ButtonInstruction(this, id, context, size, decorator, alignment, style, icon, _(text)));
+	        return OnEvent(DomEvents.OnClick, id, out var _);
+        }
+
+		#region Modals
+
+		public void BeginModal(string title)
         {
 	        var id = HashId($"modal:{title}");
 	        Instructions.Add(new BeginModalInstruction(_(title), id));
@@ -739,7 +758,8 @@ namespace Blowdart.UI
         public void BeginCollapsible(string name)
         {
 	        var id = HashId($"collapse:{name}");
-	        Instructions.Add(new BeginCollapsibleInstruction(_(name), id));
+	        TryPop(out ElementSize size);
+	        Instructions.Add(new BeginCollapsibleInstruction(_(name), id, size));
         }
 
         public void EndCollapsible()
@@ -753,7 +773,8 @@ namespace Blowdart.UI
 
 		public void Toast(string body, string headerText = "", DateTimeOffset? timestamp = null)
 		{
-			Instructions.Add(new BeginToastInstruction(body, headerText, timestamp));
+			TryPop(out ElementContext context);
+			Instructions.Add(new BeginToastInstruction(context, body, headerText, timestamp));
 		}
 
 		#endregion
@@ -859,13 +880,13 @@ namespace Blowdart.UI
         private readonly MultiValueDictionary<string, Value128> _events =
 	        MultiValueDictionary<string, Value128>.Create<HashSet<Value128>>();
 
-        private readonly Dictionary<Value128, object> _eventData = new Dictionary<Value128, object>();
+        private readonly Hashtable _eventData = new Hashtable();
 
         public void AddEvent(string eventType, Value128 id, object data)
         {
 	        _events.Add(eventType, id);
 	        if (data != null)
-		        _eventData.Add(id, data);
+		        _eventData[id] = data;
         }
 
         internal bool OnEvent(string eventType, Value128 id, out object data)
@@ -874,7 +895,8 @@ namespace Blowdart.UI
 	        if (contains)
 	        {
 		        _events.Remove(eventType, id);
-		        if (_eventData.TryGetValue(id, out data))
+		        data = _eventData[id];
+		        if (data != null)
 			        _eventData.Remove(id);
 		        return true;
 	        }

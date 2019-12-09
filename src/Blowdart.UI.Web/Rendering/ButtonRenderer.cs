@@ -17,12 +17,7 @@ namespace Blowdart.UI.Web.Rendering
             _imGui = imGui;
         }
 
-        public void Render(RenderTreeBuilder b, ButtonInstruction button)
-        {
-            RenderButton(b, button);
-        }
-		
-        private void RenderButton(RenderTreeBuilder b, ButtonInstruction instruction)
+        public void Render(RenderTreeBuilder b, ButtonInstruction instruction)
         {
 	        var modifier = instruction.Icon != 0 ? "btn-labelled " : "";
 

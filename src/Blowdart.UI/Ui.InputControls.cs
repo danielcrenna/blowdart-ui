@@ -31,7 +31,7 @@ namespace Blowdart.UI
 			Instructions.Add(new SliderInstruction(this, id, _(label), alignment, activation, value));
 			switch (activation)
 			{
-				case InputActivation.OnDragEnd:
+				case InputActivation.OnChange:
 				{
 					var changed = OnEvent(DomEvents.OnChange, id, out var data);
 					if (changed && data != default && data is string dataString)
@@ -41,7 +41,7 @@ namespace Blowdart.UI
 					}
 					return changed;
 				}
-				case InputActivation.Continuous:
+				case InputActivation.OnInput:
 				{
 					var changed = OnEvent(DomEvents.OnInput, id, out var data);
 					if (changed && data != default && data is string dataString)
@@ -72,21 +72,24 @@ namespace Blowdart.UI
 			return clicked;
 		}
 
-		public bool TextBox(ref string value, string label = "", string placeholder = "", string name = "")
+		public bool TextBox(ref string value, string @class = "", string label = "", string placeholder = "", string name = "")
 		{
 			var id = ResolveId();
 
 			TryPop<FieldType>(out var fieldType);
 			TryPop<ElementAlignment>(out var alignment);
+			TryPop<ElementStyle>(out var style);
+			TryPop<InputActivation>(out var activation);
+			TryPop<OpenIconicIcons>(out var iconic);
+			TryPop<MaterialIcons>(out var material);
 
-			Instructions.Add(new TextBoxInstruction(this, id, fieldType, alignment, name, value, _(placeholder), _(label), _inForm));
-			var changed = OnEvent(DomEvents.OnChange, id, out var data);
-			if (changed)
-			{
-				value = (string) data;
-				CompletePendingBindings();
-			}
-			return changed;
+			Instructions.Add(new TextBoxInstruction(this, id, fieldType, alignment, style, activation, iconic, material, name, value, _(placeholder), _(label), _inForm, @class));
+			var changed = OnEvent(activation == InputActivation.OnInput ? DomEvents.OnInput : DomEvents.OnChange, id, out var data);
+			if (!changed)
+				return false;
+			value = (string) data;
+			CompletePendingBindings();
+			return true;
 		}
 
 		#region Implicit Read Only

@@ -5,7 +5,7 @@ namespace Blowdart.UI
 {
 	public enum InputActivation
 	{
-		OnDragEnd,
-		Continuous
+		OnChange,
+		OnInput
 	}
 }

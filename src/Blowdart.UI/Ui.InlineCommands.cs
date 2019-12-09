@@ -2,6 +2,7 @@
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
 using System.Collections.Generic;
+using System.Reflection.Metadata.Ecma335;
 using Blowdart.UI.Instructions;
 
 namespace Blowdart.UI
@@ -50,10 +51,10 @@ namespace Blowdart.UI
 		private readonly Stack<ElementDecorator> _decorators = new Stack<ElementDecorator>();
 		private readonly Stack<ElementSize> _sizes = new Stack<ElementSize>();
 		private readonly Stack<ElementStyle> _styles = new Stack<ElementStyle>();
-
 		private readonly Stack<InputActivation> _activations = new Stack<InputActivation>();
 		private readonly Stack<FieldType> _fieldTypes = new Stack<FieldType>();
-		private readonly Stack<OpenIconicIcons> _icons = new Stack<OpenIconicIcons>();
+		private readonly Stack<OpenIconicIcons> _iconic = new Stack<OpenIconicIcons>();
+		private readonly Stack<MaterialIcons> _material = new Stack<MaterialIcons>();
 
 		public ElementContext Push(ElementContext context)
 		{
@@ -81,7 +82,13 @@ namespace Blowdart.UI
 
 		public OpenIconicIcons Push(OpenIconicIcons icon)
 		{
-			_icons.Push(icon);
+			_iconic.Push(icon);
+			return icon;
+		}
+
+		public MaterialIcons Push(MaterialIcons icon)
+		{
+			_material.Push(icon);
 			return icon;
 		}
 
@@ -161,9 +168,18 @@ namespace Blowdart.UI
 
 			if (typeof(T) == typeof(OpenIconicIcons))
 			{
-				if (_icons.Count > 0)
+				if (_iconic.Count > 0)
 				{
-					option = (T) (object) _icons.Pop();
+					option = (T) (object) _iconic.Pop();
+					return true;
+				}
+			}
+
+			if (typeof(T) == typeof(MaterialIcons))
+			{
+				if (_material.Count > 0)
+				{
+					option = (T) (object) _material.Pop();
 					return true;
 				}
 			}

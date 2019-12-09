@@ -15,7 +15,7 @@ namespace Blowdart.UI.Web.Rendering
 		{
 			b.OpenElement(HtmlElements.Div);
 			{
-				var tabId = beginTabContent.Text.ToCssCase();
+				var tabId = beginTabContent.Text.ToDashCase();
 
 				b.AddAttribute(HtmlAttributes.Id, tabId);
 				b.AddAttribute(HtmlAttributes.Class, beginTabContent.Active ? "tab-pane fade show active" : "tab-pane fade");

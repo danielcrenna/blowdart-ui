@@ -4,7 +4,7 @@
   <Import Project="$(ProjectDir)..\..\build\build.props" />
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp3.0</TargetFramework>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
     <AddRazorSupportForMvc>true</AddRazorSupportForMvc>
     <RazorLangVersion>3.0</RazorLangVersion>
     <LangVersion>8.0</LangVersion>
@@ -13,15 +13,31 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Include="..\..\..\WebStrings\src\WebStrings\DomEvents.cs" Link="DomEvents.cs" />
+    <Compile Include="..\..\..\WebStrings\src\WebStrings\HtmlAttributes.cs" Link="HtmlAttributes.cs" />
+    <Compile Include="..\..\..\WebStrings\src\WebStrings\HtmlElements.cs" Link="HtmlElements.cs" />
+    <Compile Include="..\..\..\WebStrings\src\WebStrings\HtmlInputTypes.cs" Link="HtmlInputTypes.cs" />
+    <Compile Include="..\..\..\WebStrings\src\WebStrings\HttpHeaders.cs" Link="HttpHeaders.cs" />
+    <Compile Include="..\..\..\WebStrings\src\WebStrings\HttpMethods.cs" Link="HttpMethods.cs" />
+    <Compile Include="..\..\..\WebStrings\src\WebStrings\MediaTypeNames.cs" Link="MediaTypeNames.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <FrameworkReference Include="Microsoft.AspNetCore.App" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Blazor" Version="3.0.0-preview9.19465.2" />
-    <PackageReference Include="Microsoft.AspNetCore.Blazor.Server" Version="3.0.0-preview9.19465.2" />
+    <PackageReference Include="Microsoft.AspNetCore.Blazor" Version="3.1.0-preview4.19579.2" />
+    <PackageReference Include="Microsoft.AspNetCore.Blazor.Server" Version="3.1.0-preview4.19579.2" />
     <PackageReference Include="Microsoft.Web.LibraryManager.Build" Version="2.0.96" />
     <PackageReference Include="SharpScss" Version="1.4.0" />
-    <PackageReference Include="WebStrings" Version="1.0.2" />
+
+    <!-- Required by .NET Core 3.1 but lower versions referenced in Blazor preview -->
+    <PackageReference Include="System.Collections" Version="4.3.0" />
+    <PackageReference Include="System.IO.FileSystem.Primitives" Version="4.3.0" />
+    <PackageReference Include="System.Runtime.Extensions" Version="4.3.0" />
+    <PackageReference Include="System.Runtime.Handles" Version="4.3.0" />
+    <PackageReference Include="System.Threading" Version="4.3.0" />
   </ItemGroup>
 
   <ItemGroup>

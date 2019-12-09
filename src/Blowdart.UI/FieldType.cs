@@ -7,6 +7,7 @@ namespace Blowdart.UI
 	{
 		Text,
 		Email,
-		Password
+		Password,
+		Search
 	}
 }

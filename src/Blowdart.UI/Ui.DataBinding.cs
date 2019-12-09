@@ -84,6 +84,7 @@ namespace Blowdart.UI
 		}
 
 		private long[] _boundInt64 = new long[0];
+		
 		public ref long Bind<T>(T model, Expression<Func<T, long>> binder)
 		{
 			return ref GetBoundRef(model, GetMemberInfo(binder), ref _boundInt64);
@@ -201,6 +202,13 @@ namespace Blowdart.UI
 				throw new ArgumentException($"Expression '{expression}' refers to a field that is not from type {type}.");
 
 			return field;
+		}
+
+		internal bool _pendingRefresh;
+
+		public void Refresh()
+		{
+			_pendingRefresh = true;
 		}
 	}
 }

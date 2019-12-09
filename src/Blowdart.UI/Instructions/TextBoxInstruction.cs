@@ -9,23 +9,37 @@ namespace Blowdart.UI.Instructions
 		public Value128 Id { get; }
 		public FieldType Type { get; }
 		public ElementAlignment Alignment { get; }
+		public ElementStyle Style { get; }
+		public InputActivation Activation { get; }
+		public OpenIconicIcons Iconic { get; }
+		public MaterialIcons Material { get; }
+
 		public string Name { get; }
 		public string Value { get; }
 		public string Placeholder { get; }
 		public string Label { get; }
 		public bool InForm { get; }
+		public string Class { get; }
 
-		public TextBoxInstruction(Ui ui, Value128 id, FieldType type, ElementAlignment alignment, string name, string value, string placeholder, string label, bool inForm)
+		public TextBoxInstruction(Ui ui, Value128 id, FieldType type, ElementAlignment alignment, ElementStyle style,
+			InputActivation activation,
+			OpenIconicIcons iconic, MaterialIcons material, string name, string value, string placeholder, string label,
+			bool inForm, string @class)
 		{
 			Ui = ui;
 			Id = id;
 			Type = type;
 			Alignment = alignment;
+			Style = style;
+			Activation = activation;
+			Iconic = iconic;
+			Material = material;
 			Name = name;
 			Value = value;
 			Placeholder = placeholder;
 			Label = label;
 			InForm = inForm;
+			Class = @class;
 		}
 
 		public override string DebuggerDisplay => $"TextBox: {Value}";
