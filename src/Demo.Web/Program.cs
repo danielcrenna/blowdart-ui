@@ -27,6 +27,7 @@ namespace Demo.Web
             builder.AddPage("/styles", WebLayout.Index, StylesPage.Index);
             builder.AddPage("/i18n", WebLayout.Index, LocalizationPage.Index);
 			builder.AddPage("/patterns", WebLayout.Index, PatternsPage.Index);
+			builder.AddPage("/payments", WebLayout.Index, PaymentsPage.Index);
 
 			builder.AddPage("/signin", AuthPages.SignIn);
 		});

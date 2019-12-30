@@ -3,7 +3,7 @@
 
 using System.Runtime.CompilerServices;
 
-namespace Blowdart.UI.Web
+namespace Blowdart.UI.Web.Core
 {
     internal static class Sequence
     {

@@ -3,7 +3,7 @@
 
 using System.Collections.Generic;
 
-namespace Blowdart.UI.Web.Configuration
+namespace Blowdart.UI.Web.Core.Configuration
 {
     public class BlowdartOptions
     {

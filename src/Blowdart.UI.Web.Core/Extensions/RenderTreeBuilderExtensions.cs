@@ -6,7 +6,7 @@ using System.Runtime.CompilerServices;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Rendering;
 
-namespace Blowdart.UI.Web.Extensions
+namespace Blowdart.UI.Web.Core.Extensions
 {
 	[SuppressMessage("ReSharper", "ExplicitCallerInfoArgument")]
 	public static class RenderTreeBuilderExtensions
@@ -79,7 +79,7 @@ namespace Blowdart.UI.Web.Extensions
 		private static int GetNextSequence(this RenderTreeBuilder b, string callerMemberName, int? callerLineNumber)
 		{
             var sequence = b.NextSequence(callerMemberName, callerLineNumber);
-            //Trace.TraceInformation($"sequence:{callerMemberName}:{callerLineNumber} = {sequence}");
+            Trace.TraceInformation($"sequence:{callerMemberName}:{callerLineNumber} = {sequence}");
 			return sequence;
 		}
 	}

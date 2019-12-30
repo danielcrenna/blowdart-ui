@@ -204,11 +204,11 @@ namespace Blowdart.UI
 			return field;
 		}
 
-		internal bool _pendingRefresh;
+		internal bool PendingRefresh;
 
 		public void Refresh()
 		{
-			_pendingRefresh = true;
+			PendingRefresh = true;
 		}
 	}
 }

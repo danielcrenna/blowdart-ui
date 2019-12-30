@@ -9,28 +9,49 @@ namespace Blowdart.UI.Instructions
     {
         public Ui Ui { get; }
         public Value128 Id { get; }
-        public ElementContext Type { get; }
+        public ElementContext Context { get; }
         public ElementSize Size { get; }
         public ElementDecorator Decorator { get; }
         public ElementAlignment Alignment { get; }
         public ElementStyle Style { get; }
-        public OpenIconicIcons Icon { get; }
-        public string Text { get; }
+        
+        public OpenIconicIcons? Iconic { get; }
+		public MaterialIcons? Material { get; }
 
-        public ButtonInstruction(Ui ui, Value128 id, ElementContext type, ElementSize size, ElementDecorator decorator,
-	        ElementAlignment alignment, ElementStyle style, OpenIconicIcons icon, string text)
+		public string Text { get; }
+        public string Tooltip { get; }
+
+        public ButtonInstruction(Ui ui, Value128 id, ElementContext context, ElementSize size, ElementDecorator decorator,
+	        ElementAlignment alignment, ElementStyle style, OpenIconicIcons? iconic, string text, string tooltip)
         {
             Ui = ui;
             Id = id;
-            Type = type;
+            Context = context;
             Size = size;
             Decorator = decorator;
             Alignment = alignment;
             Style = style;
-            Icon = icon;
+            Iconic = iconic;
             Text = text;
+            Tooltip = tooltip;
         }
 
-        public override string DebuggerDisplay => $"Button: {Text}";
+        public ButtonInstruction(Ui ui, Value128 id, ElementContext context, ElementSize size, ElementDecorator decorator,
+	        ElementAlignment alignment, ElementStyle style, MaterialIcons? material, string text, string tooltip)
+        {
+	        Ui = ui;
+	        Id = id;
+	        Context = context;
+	        Size = size;
+	        Decorator = decorator;
+	        Alignment = alignment;
+	        Style = style;
+	        Material = material;
+	        Text = text;
+	        Tooltip = tooltip;
+        }
+
+
+		public override string DebuggerDisplay => $"Button: {Text}";
     }
 }

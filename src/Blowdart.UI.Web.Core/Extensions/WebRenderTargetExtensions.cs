@@ -5,7 +5,7 @@ using System;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Rendering;
 
-namespace Blowdart.UI.Web.Extensions
+namespace Blowdart.UI.Web.Core.Extensions
 {
 	public static class WebRenderTargetExtensions
     {

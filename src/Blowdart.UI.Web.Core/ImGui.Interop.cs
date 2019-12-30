@@ -2,10 +2,11 @@
 using System.Diagnostics;
 using System.Linq;
 using Blowdart.UI.Instructions;
-using Blowdart.UI.Web.Configuration;
+using Blowdart.UI.Web.Core.Configuration;
+using Blowdart.UI.Web.Core.Internal;
 using Microsoft.JSInterop;
 
-namespace Blowdart.UI.Web
+namespace Blowdart.UI.Web.Core
 {
 	partial class ImGui
 	{

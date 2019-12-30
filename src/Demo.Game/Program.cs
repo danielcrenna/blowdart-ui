@@ -1,5 +1,4 @@
-﻿using Blowdart.UI.Game;
-using Demo.Examples;
+﻿using Blowdart.UI.Gaming;
 using Demo.Examples.Pages;
 
 namespace Demo.Game
@@ -10,14 +9,10 @@ namespace Demo.Game
         {
 	        Bootstrap.Initialize_FNA();
 
-			using var game = new SampleGame();
-
-			UiGame.Start(args, game, builder =>
+			UiLoop.Start(args, ()=> new SampleGame(), builder =>
 			{
 				builder.AddPage("/", IndexPage.Index);
 			});
-			
-			game.Run();
 		}
     }
 }

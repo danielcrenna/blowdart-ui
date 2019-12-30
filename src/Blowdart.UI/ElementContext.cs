@@ -5,6 +5,7 @@ namespace Blowdart.UI
 {
 	public enum ElementContext
     {
+		Unspecified,
         Primary,
         Secondary,
         Success,

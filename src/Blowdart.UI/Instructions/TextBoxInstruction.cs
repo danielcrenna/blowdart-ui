@@ -20,11 +20,12 @@ namespace Blowdart.UI.Instructions
 		public string Label { get; }
 		public bool InForm { get; }
 		public string Class { get; }
+		public string LabelClass { get; }
 
 		public TextBoxInstruction(Ui ui, Value128 id, FieldType type, ElementAlignment alignment, ElementStyle style,
 			InputActivation activation,
 			OpenIconicIcons iconic, MaterialIcons material, string name, string value, string placeholder, string label,
-			bool inForm, string @class)
+			bool inForm, string @class, string labelClass)
 		{
 			Ui = ui;
 			Id = id;
@@ -40,6 +41,7 @@ namespace Blowdart.UI.Instructions
 			Label = label;
 			InForm = inForm;
 			Class = @class;
+			LabelClass = labelClass;
 		}
 
 		public override string DebuggerDisplay => $"TextBox: {Value}";

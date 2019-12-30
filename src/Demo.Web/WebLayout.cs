@@ -21,6 +21,7 @@ namespace Demo.Web
 				ui.MenuItem(OpenIconicIcons.Aperture, "Styles", "/styles");
 				ui.MenuItem(OpenIconicIcons.Globe, "i18n", "/i18n");
 				ui.MenuItem(OpenIconicIcons.Paperclip, "Patterns", "/patterns");
+				ui.MenuItem(OpenIconicIcons.CreditCard, "Payments", "/payments");
 
 				ui.EndMenu();
 			}
@@ -31,7 +32,7 @@ namespace Demo.Web
 				{
 					if (ui.User.Identity.IsAuthenticated)
 					{
-						ui.Text("Hello, " + ui.User.Identity.Name);
+						ui.Text($"Hello, {ui.User.Identity.Name}");
 					}
 					else
 					{

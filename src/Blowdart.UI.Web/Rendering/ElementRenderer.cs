@@ -4,7 +4,7 @@
 using System;
 using System.Collections.Generic;
 using Blowdart.UI.Instructions;
-using Blowdart.UI.Web.Extensions;
+using Blowdart.UI.Web.Core.Extensions;
 using Microsoft.AspNetCore.Components.Rendering;
 
 namespace Blowdart.UI.Web.Rendering

@@ -10,8 +10,6 @@ namespace Demo.Examples.Pages
 {
 	public class ElementsPage
 	{
-		#region Elements Page
-
 		private static bool _alertsTabOpen = true;
 		private static bool _inputControlsTabOpen;
 		private static bool _toastsTabOpen;
@@ -40,7 +38,7 @@ namespace Demo.Examples.Pages
 
 				ui.EndTabList();
 			}
-			
+
 			ui.BeginTabContent();
 			{
 				ui.TabContent("Alerts", _alertsTabOpen, AlertsTab);
@@ -67,21 +65,21 @@ namespace Demo.Examples.Pages
 		private static bool _radioButton;
 		private static readonly List<string> _list = new List<string>
 		{
-			"apple", "pear", "plum", 
+			"apple", "pear", "plum",
 			"banana", "peach"
 		};
-		
+
 		public static void InputControlsTab(Ui ui)
 		{
 			ui.NextLine();
 			ui.Header(3, "Input Controls");
 			ui.Separator();
-			
+
 			ui.Push(ElementStyle.Rounded);
 			ui.Push(MaterialIcons.FilterList);
 			ui.Push(FieldType.Search);
 			ui.Push(InputActivation.OnInput);
-			if(ui.TextBox(ref _text, placeholder: "Filter fruit"))
+			if (ui.TextBox(ref _text, placeholder: "Filter fruit"))
 				ui.Log("Filter changed to " + _text);
 			ui.List(ListDirection.LeftToRight, _list.Where(x => string.IsNullOrWhiteSpace(_text) || x.Contains(_text)), ui.Text);
 
@@ -244,8 +242,6 @@ ui.Push(ElementContext.Light);
 ui.Alert(""This is a light alert—check it out!"");");
 			#endregion
 		}
-
-		#endregion
 	}
 }
  

@@ -3,7 +3,7 @@
 
 using System;
 using System.Threading.Tasks;
-using Blowdart.UI.Web.Configuration;
+using Blowdart.UI.Web.Core.Configuration;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Options;
 

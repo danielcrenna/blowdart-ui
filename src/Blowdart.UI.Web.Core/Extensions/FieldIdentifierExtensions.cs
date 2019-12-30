@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Components.Forms;
 using TypeKitchen;
 
-namespace Blowdart.UI.Web.Extensions
+namespace Blowdart.UI.Web.Core.Extensions
 {
     internal static class FieldIdentifierExtensions
 	{

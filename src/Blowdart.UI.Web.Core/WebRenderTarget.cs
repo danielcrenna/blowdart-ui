@@ -3,7 +3,7 @@
 
 using Microsoft.AspNetCore.Components.Rendering;
 
-namespace Blowdart.UI.Web
+namespace Blowdart.UI.Web.Core
 {
     internal sealed class WebRenderTarget : RenderTarget<RenderTreeBuilder> { }
 }

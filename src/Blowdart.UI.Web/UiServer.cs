@@ -5,7 +5,7 @@ using System;
 using System.Linq;
 using System.Net.Http;
 using System.Reflection;
-using Blowdart.UI.Web.Configuration;
+using Blowdart.UI.Web.Core.Configuration;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Hosting;

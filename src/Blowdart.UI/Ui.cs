@@ -708,7 +708,7 @@ namespace Blowdart.UI
             Instructions.Add(new HeaderInstruction(level, _(innerText), @class));
         }
 
-        public bool Button(string text = "")
+        public bool Button(string text = "", string tooltip = "")
         {
 	        var id = ResolveId();
 
@@ -717,28 +717,26 @@ namespace Blowdart.UI
 			TryPop<ElementDecorator>(out var decorator);
 			TryPop<ElementAlignment>(out var alignment);
 			TryPop<ElementStyle>(out var style);
-			TryPop<OpenIconicIcons>(out var icon);
 
-			Instructions.Add(new ButtonInstruction(this, id, context, size, decorator, alignment, style, icon, _(text)));
-            return OnEvent(DomEvents.OnClick, id, out var _);
+			if (TryPop<OpenIconicIcons>(out var iconic))
+			{
+				Instructions.Add(new ButtonInstruction(this, id, context, size, decorator, alignment, style, iconic, _(text), _(tooltip)));
+			}
+			else
+			{
+				MaterialIcons? material;
+				if (!TryPop<MaterialIcons>(out var m))
+					material = null;
+				else
+					material = m;
+
+				Instructions.Add(new ButtonInstruction(this, id, context, size, decorator, alignment, style, material, _(text), _(tooltip)));
+			}
+
+			return OnEvent(DomEvents.OnClick, id, out var _);
         }
 
-        public bool FloatingButton(string text = "")
-        {
-	        var id = ResolveId();
-
-	        TryPop<ElementContext>(out var context);
-	        TryPop<ElementSize>(out var size);
-	        TryPop<ElementDecorator>(out var decorator);
-	        TryPop<ElementAlignment>(out var alignment);
-	        TryPop<ElementStyle>(out var style);
-	        TryPop<OpenIconicIcons>(out var icon);
-
-	        Instructions.Add(new ButtonInstruction(this, id, context, size, decorator, alignment, style, icon, _(text)));
-	        return OnEvent(DomEvents.OnClick, id, out var _);
-        }
-
-		#region Modals
+        #region Modals
 
 		public void BeginModal(string title)
         {
@@ -824,7 +822,7 @@ namespace Blowdart.UI
 
 		public void InlineIcon(OpenIconicIcons icon)
         {
-	        Instructions.Add(new InlineIconInstruction(icon));
+			Instructions.Add(new InlineIconInstruction(icon));
         }
 
 		public void InlineImage(string source, int width, int height)

@@ -72,7 +72,7 @@ namespace Blowdart.UI
 			return clicked;
 		}
 
-		public bool TextBox(ref string value, string @class = "", string label = "", string placeholder = "", string name = "")
+		public bool TextBox(ref string value, string @class = "", string label = "", string labelClass = "", string placeholder = "", string name = "")
 		{
 			var id = ResolveId();
 
@@ -83,7 +83,7 @@ namespace Blowdart.UI
 			TryPop<OpenIconicIcons>(out var iconic);
 			TryPop<MaterialIcons>(out var material);
 
-			Instructions.Add(new TextBoxInstruction(this, id, fieldType, alignment, style, activation, iconic, material, name, value, _(placeholder), _(label), _inForm, @class));
+			Instructions.Add(new TextBoxInstruction(this, id, fieldType, alignment, style, activation, iconic, material, name, value, _(placeholder), _(label), _inForm, @class, labelClass));
 			var changed = OnEvent(activation == InputActivation.OnInput ? DomEvents.OnInput : DomEvents.OnChange, id, out var data);
 			if (!changed)
 				return false;

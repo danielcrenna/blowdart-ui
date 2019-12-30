@@ -3,8 +3,9 @@
 
 using System;
 using Blowdart.UI.Instructions;
+using Blowdart.UI.Web.Core;
+using Blowdart.UI.Web.Core.Extensions;
 using Microsoft.AspNetCore.Components.Rendering;
-using Blowdart.UI.Web.Extensions;
 
 namespace Blowdart.UI.Web.Rendering
 {
@@ -19,26 +20,28 @@ namespace Blowdart.UI.Web.Rendering
 
         public void Render(RenderTreeBuilder b, ButtonInstruction instruction)
         {
-	        var modifier = instruction.Icon != 0 ? "btn-labelled " : "";
+	        var modifier = instruction.Iconic != 0 ? "btn-labelled " : "";
 
-			var style = instruction.Style switch
+	        var style = instruction.Style switch
 	        {
 		        ElementStyle.Outline => "btn-outline",
+		        ElementStyle.Rounded => "btn-round",
 		        _ => "btn"
 	        };
 
-	        var css = instruction.Type switch
-            {
-                ElementContext.Primary => $"btn {modifier}{style}-primary",
-                ElementContext.Secondary => $"btn {modifier}{style}-secondary",
-                ElementContext.Success => $"btn {modifier}{style}-success",
-                ElementContext.Danger => $"btn {modifier}{style}-danger",
-                ElementContext.Warning => $"btn {modifier}{style}-warning",
-                ElementContext.Info => $"btn {modifier}{style}-info",
-                ElementContext.Light => $"btn {modifier}{style}-light",
-                ElementContext.Dark => $"btn {modifier}{style}-dark",
-                _ => throw new ArgumentOutOfRangeException()
-            };
+	        var css = instruction.Context switch
+	        {
+		        ElementContext.Unspecified => $"btn {modifier}{style}",
+		        ElementContext.Primary => $"btn {modifier}{style}-primary",
+		        ElementContext.Secondary => $"btn {modifier}{style}-secondary",
+		        ElementContext.Success => $"btn {modifier}{style}-success",
+		        ElementContext.Danger => $"btn {modifier}{style}-danger",
+		        ElementContext.Warning => $"btn {modifier}{style}-warning",
+		        ElementContext.Info => $"btn {modifier}{style}-info",
+		        ElementContext.Light => $"btn {modifier}{style}-light",
+		        ElementContext.Dark => $"btn {modifier}{style}-dark",
+		        _ => throw new ArgumentOutOfRangeException()
+	        };
 
 			switch (instruction.Size)
 			{
@@ -67,6 +70,9 @@ namespace Blowdart.UI.Web.Rendering
 				b.AddAttribute(HtmlAttributes.Id, instruction.Id);
 	            b.AddAttribute(HtmlAttributes.Class, css);
 	            b.AddAttribute(DomEvents.OnClick, _imGui.OnClickCallback(instruction.Id));
+
+				if(!string.IsNullOrWhiteSpace(instruction.Tooltip))
+					b.AddAttribute(HtmlAttributes.Title, instruction.Tooltip);
 
 	            switch (instruction.Alignment)
 				{
@@ -103,11 +109,18 @@ namespace Blowdart.UI.Web.Rendering
 		        b.CloseElement();
 	        }
 
-	        if (instruction.Icon != 0)
+	        if (instruction.Iconic.HasValue)
 	        {
 				b.BeginSpan("btn-label");
-		        b.InlineIcon(instruction.Icon, "btn-label");
+		        b.InlineIcon(instruction.Iconic.Value, "btn-label");
 				b.CloseElement();
+	        }
+
+	        if (instruction.Material.HasValue)
+	        {
+		        b.BeginSpan();
+		        b.InlineIcon(instruction.Material.Value);
+		        b.CloseElement();
 	        }
 
 			switch (instruction.Decorator)

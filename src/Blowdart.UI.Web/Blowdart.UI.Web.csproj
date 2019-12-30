@@ -12,15 +12,7 @@
     <Platforms>AnyCPU;x64</Platforms>
   </PropertyGroup>
 
-  <ItemGroup>
-    <Compile Include="..\..\..\WebStrings\src\WebStrings\DomEvents.cs" Link="DomEvents.cs" />
-    <Compile Include="..\..\..\WebStrings\src\WebStrings\HtmlAttributes.cs" Link="HtmlAttributes.cs" />
-    <Compile Include="..\..\..\WebStrings\src\WebStrings\HtmlElements.cs" Link="HtmlElements.cs" />
-    <Compile Include="..\..\..\WebStrings\src\WebStrings\HtmlInputTypes.cs" Link="HtmlInputTypes.cs" />
-    <Compile Include="..\..\..\WebStrings\src\WebStrings\HttpHeaders.cs" Link="HttpHeaders.cs" />
-    <Compile Include="..\..\..\WebStrings\src\WebStrings\HttpMethods.cs" Link="HttpMethods.cs" />
-    <Compile Include="..\..\..\WebStrings\src\WebStrings\MediaTypeNames.cs" Link="MediaTypeNames.cs" />
-  </ItemGroup>
+  
 
   <ItemGroup>
     <FrameworkReference Include="Microsoft.AspNetCore.App" />
@@ -29,18 +21,19 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Blazor" Version="3.1.0-preview4.19579.2" />
     <PackageReference Include="Microsoft.AspNetCore.Blazor.Server" Version="3.1.0-preview4.19579.2" />
-    <PackageReference Include="Microsoft.Web.LibraryManager.Build" Version="2.0.96" />
+    <!--<PackageReference Include="Microsoft.Web.LibraryManager.Build" Version="2.0.96" />-->
     <PackageReference Include="SharpScss" Version="1.4.0" />
 
     <!-- Required by .NET Core 3.1 but lower versions referenced in Blazor preview -->
     <PackageReference Include="System.Collections" Version="4.3.0" />
     <PackageReference Include="System.IO.FileSystem.Primitives" Version="4.3.0" />
-    <PackageReference Include="System.Runtime.Extensions" Version="4.3.0" />
+    <PackageReference Include="System.Runtime.Extensions" Version="4.3.1" />
     <PackageReference Include="System.Runtime.Handles" Version="4.3.0" />
     <PackageReference Include="System.Threading" Version="4.3.0" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Blowdart.UI.Web.Core\Blowdart.UI.Web.Core.csproj" />
     <ProjectReference Include="..\Blowdart.UI\Blowdart.UI.csproj" />
   </ItemGroup>
 

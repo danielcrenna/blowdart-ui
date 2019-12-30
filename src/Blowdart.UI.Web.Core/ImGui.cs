@@ -4,13 +4,14 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
-using Blowdart.UI.Web.Configuration;
+using Blowdart.UI.Web.Core.Configuration;
+using Blowdart.UI.Web.Core.Internal;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Rendering;
 using Microsoft.Extensions.Options;
 using Microsoft.JSInterop;
 
-namespace Blowdart.UI.Web
+namespace Blowdart.UI.Web.Core
 {
     [SuppressMessage("ReSharper", "UnusedAutoPropertyAccessor.Local")]
     public sealed partial class ImGui : ComponentBase, IDisposable
@@ -84,10 +85,10 @@ namespace Blowdart.UI.Web
                     StateHasChanged();
             }
 
-			if(Ui._pendingRefresh)
+			if(Ui.PendingRefresh)
 			{
 				await OnModelChanged.InvokeAsync(Model);
-				Ui._pendingRefresh = false;
+				Ui.PendingRefresh = false;
 			}
         }
 	}
