@@ -2,24 +2,22 @@
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
 using Blowdart.UI.Instructions;
-using Blowdart.UI.Web.Components;
-using Blowdart.UI.Web.Core;
 using Microsoft.AspNetCore.Components.Rendering;
 
-namespace Blowdart.UI.Web.Rendering
+namespace Blowdart.UI.Web.Core.Rendering
 {
-	internal sealed class LogRenderer : IRenderer<LogInstruction, RenderTreeBuilder>
+	internal sealed class ChangePageRenderer : IRenderer<ChangePageInstruction, RenderTreeBuilder>
 	{
 		private readonly ImGui _imGui;
 
-		public LogRenderer(ImGui imGui)
+		public ChangePageRenderer(ImGui imGui)
 		{
 			_imGui = imGui;
 		}
 
-		public void Render(RenderTreeBuilder b, LogInstruction log)
+		public void Render(RenderTreeBuilder renderer, ChangePageInstruction instruction)
 		{
-			_imGui.LogInstruction(log);
+			_imGui.ChangePage(instruction.Template);
 		}
 	}
 }

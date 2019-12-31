@@ -4,7 +4,7 @@
 using Blowdart.UI.Instructions;
 using Microsoft.AspNetCore.Components.Rendering;
 
-namespace Blowdart.UI.Web.Rendering
+namespace Blowdart.UI.Web.Core.Rendering
 {
 	internal sealed class EndMenuRenderer : IRenderer<EndMenuInstruction, RenderTreeBuilder>
 	{

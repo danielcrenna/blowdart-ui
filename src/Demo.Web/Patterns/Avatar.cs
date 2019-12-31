@@ -1,4 +1,4 @@
-﻿namespace Blowdart.UI.Patterns
+﻿namespace Demo.Web.Patterns
 {
 	public class Avatar
 	{

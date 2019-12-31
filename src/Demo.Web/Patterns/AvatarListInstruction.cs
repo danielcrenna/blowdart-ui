@@ -3,7 +3,6 @@
 
 using System.Collections.Generic;
 using Blowdart.UI;
-using Blowdart.UI.Patterns;
 
 namespace Demo.Web.Patterns
 {

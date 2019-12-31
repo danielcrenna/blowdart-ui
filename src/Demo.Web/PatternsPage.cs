@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using Blowdart.UI;
-using Blowdart.UI.Patterns;
+using Demo.Web.Patterns;
 
 namespace Demo.Web
 {

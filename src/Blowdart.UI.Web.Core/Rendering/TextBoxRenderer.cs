@@ -3,11 +3,10 @@
 
 using System;
 using Blowdart.UI.Instructions;
-using Blowdart.UI.Web.Core;
 using Blowdart.UI.Web.Core.Extensions;
 using Microsoft.AspNetCore.Components.Rendering;
 
-namespace Blowdart.UI.Web.Rendering
+namespace Blowdart.UI.Web.Core.Rendering
 {
 	internal sealed class TextBoxRenderer : IRenderer<TextBoxInstruction, RenderTreeBuilder>
 	{

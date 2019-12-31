@@ -5,13 +5,13 @@ using Blowdart.UI.Instructions;
 using Blowdart.UI.Web.Core.Extensions;
 using Microsoft.AspNetCore.Components.Rendering;
 
-namespace Blowdart.UI.Web.Rendering
+namespace Blowdart.UI.Web.Core.Rendering
 {
-    internal sealed class TextRenderer : IRenderer<TextInstruction, RenderTreeBuilder>
-    {
-        public void Render(RenderTreeBuilder b, TextInstruction text)
-        {
-            b.AddContent(text.Text);
-        }
-    }
+	internal sealed class InlineIconRenderer : IRenderer<InlineIconInstruction, RenderTreeBuilder>
+	{
+		public void Render(RenderTreeBuilder b, InlineIconInstruction icon)
+		{
+			b.InlineIcon(icon.Icon);
+		}
+	}
 }
