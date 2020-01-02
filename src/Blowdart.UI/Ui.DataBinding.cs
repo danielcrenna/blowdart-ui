@@ -21,7 +21,16 @@ namespace Blowdart.UI
 			_models.Add(model);
 			return model;
 		}
-        
+
+		public T Capture<T>() where T : class
+		{
+			foreach (var entry in _models.OfType<T>())
+				return entry;
+			var model = GetService(typeof(T)) as T ?? Instancing.CreateInstance<T>();
+			_models.Add(model);
+			return model;
+		}
+
 		public T Release<T>(T model) where T : class
 		{
 			_models.Remove(model);
