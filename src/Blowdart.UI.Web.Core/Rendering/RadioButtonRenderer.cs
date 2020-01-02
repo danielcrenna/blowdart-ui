@@ -17,27 +17,13 @@ namespace Blowdart.UI.Web.Core.Rendering
 			_imGui = imGui;
 		}
 
-		public void Render(RenderTreeBuilder b, RadioButtonInstruction radioButton)
+		public void Render(RenderTreeBuilder r, RadioButtonInstruction instruction)
 		{
-			var onclick = _imGui.OnClickCallback(radioButton.Id);
-
-			void RenderLabel()
+			r.OpenElement(HtmlElements.Div);
 			{
-				b.OpenElement(HtmlElements.Label);
-				{
-					b.AddAttribute(HtmlAttributes.Class, "form-radio-label");
-					b.AddAttribute(HtmlAttributes.For, radioButton.Id);
-					b.AddContent(radioButton.Text);
+				r.AddAttribute(HtmlAttributes.Class, HtmlInputTypes.Radio);
 
-					b.CloseElement();
-				}
-			}
-
-			b.OpenElement(HtmlElements.Div);
-			{
-				b.AddAttribute(HtmlAttributes.Class, HtmlInputTypes.Radio);
-
-				switch (radioButton.Alignment)
+				switch (instruction.Alignment)
 				{
 					case ElementAlignment.Left:
 						RenderInput();
@@ -51,20 +37,32 @@ namespace Blowdart.UI.Web.Core.Rendering
 						throw new ArgumentOutOfRangeException();
 				}
 
-				b.CloseElement();
+				r.CloseElement();
 			}
 
 			void RenderInput()
 			{
-				b.OpenElement(HtmlElements.Input);
+				r.OpenElement(HtmlElements.Input);
 				{
-					b.AddAttribute(HtmlAttributes.Class, "form-radio-input");
-					b.AddAttribute(HtmlAttributes.Type, HtmlInputTypes.Radio);
-					b.AddAttribute(HtmlAttributes.Checked, radioButton.Value);
-					b.AddAttribute(HtmlAttributes.Id, radioButton.Id);
-					b.AddAttribute(DomEvents.OnClick, onclick);
+					r.AddAttribute(HtmlAttributes.Class, "form-radio-input");
+					r.AddAttribute(HtmlAttributes.Type, HtmlInputTypes.Radio);
+					r.AddAttribute(HtmlAttributes.Checked, instruction.Value);
+					r.AddAttribute(HtmlAttributes.Id, instruction.Id);
+					r.AddAttribute(DomEvents.OnClick, _imGui.OnClickCallback(instruction.Id));
 
-					b.CloseElement();
+					r.CloseElement();
+				}
+			}
+
+			void RenderLabel()
+			{
+				r.OpenElement(HtmlElements.Label);
+				{
+					r.AddAttribute(HtmlAttributes.Class, "form-radio-label");
+					r.AddAttribute(HtmlAttributes.For, instruction.Id);
+					r.AddContent(instruction.Text);
+
+					r.CloseElement();
 				}
 			}
 		}

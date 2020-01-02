@@ -6,12 +6,11 @@ using Blowdart.UI.Instructions;
 
 namespace Blowdart.UI.WinForms.Rendering
 {
-	internal sealed class MenuRenderer : 
-		IRenderer<BeginMenuInstruction, Panel>
+	internal sealed class MenuRenderer : IRenderer<BeginMenuInstruction, Panel>
 	{
 		public void Render(Panel p, BeginMenuInstruction instruction)
 		{
-			var beginMenu = (BeginMenuInstruction) instruction;
+			var beginMenu = instruction;
 
 			var menu = new ToolStrip();
 			menu.Dock = DockStyle.Top;

@@ -11,14 +11,18 @@ namespace Blowdart.UI.Web.Core.Rendering
 	{
 		public void Render(RenderTreeBuilder b, MenuItemInstruction menu)
 		{
-			b.ListItem("nav-item px-3", () =>
+			b.BeginListItem("nav-item px-3");
 			{
-				b.Anchor("nav-link", menu.Template, () =>
+				b.BeginAnchor("nav-link", menu.Template);
 				{
 					b.InlineIcon(menu.Icon);
 					b.AddContent(menu.Title);
-				});
-			});
+
+					b.CloseElement();
+				}
+
+				b.CloseElement();
+			}
 		}
 	}
 }

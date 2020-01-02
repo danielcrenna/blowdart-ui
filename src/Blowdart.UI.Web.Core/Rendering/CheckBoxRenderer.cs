@@ -24,21 +24,6 @@ namespace Blowdart.UI.Web.Core.Rendering
 
 		private void RenderButton(RenderTreeBuilder b, CheckBoxInstruction checkBox)
 		{
-			void RenderLabel()
-			{
-				if(!string.IsNullOrWhiteSpace(checkBox.Text))
-				{
-					b.OpenElement(HtmlElements.Label);
-					{
-						b.AddAttribute(HtmlAttributes.Class, "form-check-label");
-						b.AddAttribute(HtmlAttributes.For, checkBox.Id);
-						b.AddContent(checkBox.Text);
-
-						b.CloseElement();
-					}
-				}
-			}
-
 			b.OpenElement(HtmlElements.Div);
 			{
 				b.AddAttribute(HtmlAttributes.Class, "form-inline");
@@ -76,6 +61,21 @@ namespace Blowdart.UI.Web.Core.Rendering
 						b.AddAttribute(DomEvents.OnClick, _imGui.OnClickCallback(checkBox.Id));
 
 					b.CloseElement();
+				}
+			}
+
+			void RenderLabel()
+			{
+				if (!string.IsNullOrWhiteSpace(checkBox.Text))
+				{
+					b.OpenElement(HtmlElements.Label);
+					{
+						b.AddAttribute(HtmlAttributes.Class, "form-check-label");
+						b.AddAttribute(HtmlAttributes.For, checkBox.Id);
+						b.AddContent(checkBox.Text);
+
+						b.CloseElement();
+					}
 				}
 			}
 		}

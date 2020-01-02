@@ -17,23 +17,23 @@ namespace Blowdart.UI.Web.Core.Rendering
 			_imGui = imGui;
 		}
 
-		public void Render(RenderTreeBuilder b, SliderInstruction slider)
+		public void Render(RenderTreeBuilder r, SliderInstruction slider)
 		{
 			void RenderLabel()
 			{
-				b.OpenElement(HtmlElements.Label);
+				r.OpenElement(HtmlElements.Label);
 				{
-					b.AddAttribute(HtmlAttributes.Class, "form-check-label");
-					b.AddAttribute(HtmlAttributes.For, slider.Id);
-					b.AddContent(slider.Text);
+					r.AddAttribute(HtmlAttributes.Class, "form-check-label");
+					r.AddAttribute(HtmlAttributes.For, slider.Id);
+					r.AddContent(slider.Text);
 
-					b.CloseElement();
+					r.CloseElement();
 				}
 			}
 
-			b.OpenElement(HtmlElements.Div);
+			r.OpenElement(HtmlElements.Div);
 			{
-				b.AddAttribute(HtmlAttributes.Class, "form-inline");
+				r.AddAttribute(HtmlAttributes.Class, "form-inline");
 
 				switch (slider.Alignment)
 				{
@@ -49,31 +49,31 @@ namespace Blowdart.UI.Web.Core.Rendering
 						throw new ArgumentOutOfRangeException();
 				}
 
-				b.CloseElement();
+				r.CloseElement();
 			}
 
 			void RenderInput()
 			{
-				b.OpenElement(HtmlElements.Input);
+				r.OpenElement(HtmlElements.Input);
 				{
-					b.AddAttribute(HtmlAttributes.Class, "form-range-input");
-					b.AddAttribute(HtmlAttributes.Type, HtmlInputTypes.Range);
-					b.AddAttribute(HtmlAttributes.Value, slider.Value);
-					b.AddAttribute(HtmlAttributes.Id, slider.Id);
+					r.AddAttribute(HtmlAttributes.Class, "form-range-input");
+					r.AddAttribute(HtmlAttributes.Type, HtmlInputTypes.Range);
+					r.AddAttribute(HtmlAttributes.Value, slider.Value);
+					r.AddAttribute(HtmlAttributes.Id, slider.Id);
 
 					switch (slider.Activation)
 					{
 						case InputActivation.OnChange:
-							b.AddAttribute(DomEvents.OnChange, _imGui.OnChangeCallback(slider.Id));
+							r.AddAttribute(DomEvents.OnChange, _imGui.OnChangeCallback(slider.Id));
 							break;
 						case InputActivation.OnInput:
-							b.AddAttribute(DomEvents.OnInput, _imGui.OnInputCallback(slider.Id));
+							r.AddAttribute(DomEvents.OnInput, _imGui.OnInputCallback(slider.Id));
 							break;
 						default:
 							throw new ArgumentOutOfRangeException();
 					}
 
-					b.CloseElement();
+					r.CloseElement();
 				}
 			}
 		}

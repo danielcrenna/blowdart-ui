@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using Blowdart.UI.Instructions;
 
 namespace Blowdart.UI
@@ -92,8 +93,22 @@ namespace Blowdart.UI
 			return true;
 		}
 
+		public string FilePicker(string label)
+		{
+			var id = ResolveId();
+			Instructions.Add(new FilePickerInstruction(id, _(label)));
+			var changed = OnEvent(DomEvents.OnChange, id, out var filePath);
+			if (changed)
+			{
+				CompletePendingBindings();
+				var fileName = filePath?.ToString();
+				return Path.GetFileName(fileName);
+			}
+			return null;
+		}
+
 		#region Implicit Read Only
-		
+
 		public void CheckBox(bool value, string label = "")
 		{
 			var id = ResolveId();
