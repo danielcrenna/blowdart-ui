@@ -93,7 +93,6 @@ namespace Blowdart.UI
 		}
 
 		private long[] _boundInt64 = new long[0];
-		
 		public ref long Bind<T>(T model, Expression<Func<T, long>> binder)
 		{
 			return ref GetBoundRef(model, GetMemberInfo(binder), ref _boundInt64);
