@@ -16,7 +16,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Include="..\..\src\Blowdart.UI.Web\wwwroot\android-icon-96x96.png">
+    <None Include="$(MsBuildThisFileDirectory)..\src\Blowdart.UI.Web\wwwroot\favicons\android-icon-96x96.png">
       <Pack>True</Pack>
       <PackagePath></PackagePath>
     </None>

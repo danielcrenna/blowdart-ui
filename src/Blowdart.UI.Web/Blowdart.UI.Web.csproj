@@ -12,8 +12,6 @@
     <Platforms>AnyCPU;x64</Platforms>
   </PropertyGroup>
 
-  
-
   <ItemGroup>
     <FrameworkReference Include="Microsoft.AspNetCore.App" />
   </ItemGroup>
