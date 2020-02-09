@@ -14,6 +14,7 @@ namespace Blowdart.UI.Web.Core.Configuration
 
 		public class WebAppOptions
         {
+			public string Title { get; set; }
 			public string FaviconsLocation { get; set; }
 
 	        public RobotsTxtOptions RobotsTxt { get; set; } = new RobotsTxtOptions();
