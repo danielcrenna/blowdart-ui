@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Razor.TagHelpers;
 using Microsoft.Extensions.Options;
 using TypeKitchen;
 
-namespace Blowdart.UI.Web
+namespace Blowdart.UI.Web.TagHelpers
 {
 	[HtmlTargetElement("appTitle")]
 	public class TitleTagHelper : TagHelper

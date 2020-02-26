@@ -6,6 +6,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 using TypeKitchen;
+using TypeKitchen.Creation;
 
 namespace Blowdart.UI
 {
