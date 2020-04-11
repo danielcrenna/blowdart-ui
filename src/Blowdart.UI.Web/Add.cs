@@ -4,7 +4,6 @@
 using System;
 using System.Diagnostics;
 using Blowdart.UI.Localization;
-//using Blowdart.SplitTesting.AspNetCore;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Blowdart.UI.Web
@@ -13,9 +12,7 @@ namespace Blowdart.UI.Web
     {
         public static IServiceCollection AddBlowdart(this IServiceCollection services, Action<BlowdartBuilder> configureAction)
         {
-	        //services.AddSplitTesting();
-
-			var pages = new PageMap();
+	        var pages = new PageMap();
 
 			services.AddSingleton(pages);
 			services.AddSingleton<IUserResolver, WebUserResolver>();

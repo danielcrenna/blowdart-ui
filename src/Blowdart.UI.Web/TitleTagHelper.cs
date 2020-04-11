@@ -1,12 +1,12 @@
 using System.Threading.Tasks;
-using Blowdart.UI.Web.Core.Configuration;
+using Blowdart.UI.Web.Configuration;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 using Microsoft.Extensions.Options;
 using TypeKitchen;
 
-namespace Blowdart.UI.Web.TagHelpers
+namespace Blowdart.UI.Web
 {
 	[HtmlTargetElement("appTitle")]
 	public class TitleTagHelper : TagHelper

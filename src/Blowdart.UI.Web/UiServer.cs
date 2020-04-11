@@ -5,7 +5,7 @@ using System;
 using System.Linq;
 using System.Net.Http;
 using System.Reflection;
-using Blowdart.UI.Web.Core.Configuration;
+using Blowdart.UI.Web.Configuration;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Hosting;
@@ -65,9 +65,10 @@ namespace Blowdart.UI.Web
 
             webBuilder.ConfigureServices((context, services) =>
             {
-                var config = context.Configuration.GetSection("Blowdart");
+	            var configRoot = context.Configuration;
+	            var config = configRoot.GetSection("Blowdart");
+
                 services.Configure<BlowdartOptions>(config);
-                
                 services.AddSingleton<BlowdartService>();
 
 				var options = new BlowdartOptions();

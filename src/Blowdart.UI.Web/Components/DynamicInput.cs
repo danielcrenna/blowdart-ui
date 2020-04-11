@@ -6,11 +6,10 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
 using System.Threading.Tasks;
-using Blowdart.UI.Web.Core.Extensions;
+using Blowdart.UI.Web.Extensions;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.AspNetCore.Components.Rendering;
-using Microsoft.AspNetCore.Components.Web;
 using TypeKitchen;
 
 namespace Blowdart.UI.Web.Components

@@ -21,8 +21,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="FNA.Package" Version="19.11.0-ps1" />
-    <PackageReference Include="ImGui.NET" Version="1.72.0" />
+    <PackageReference Include="FNA.Package" Version="20.3.0" />
+    <PackageReference Include="ImGui.NET" Version="1.75.0" />
   </ItemGroup>
 
   <ItemGroup>

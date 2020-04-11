@@ -1,5 +1,5 @@
 ﻿using Blowdart.UI;
-using Blowdart.UI.Web.Core.Extensions;
+using Blowdart.UI.Web.Extensions;
 using Microsoft.AspNetCore.Components.Rendering;
 
 namespace Demo.Web.Patterns

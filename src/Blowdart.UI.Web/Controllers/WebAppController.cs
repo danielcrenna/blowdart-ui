@@ -2,7 +2,7 @@
 using System.Reflection;
 using System.Text;
 using Blowdart.UI.Internal;
-using Blowdart.UI.Web.Core.Configuration;
+using Blowdart.UI.Web.Configuration;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.FileProviders;

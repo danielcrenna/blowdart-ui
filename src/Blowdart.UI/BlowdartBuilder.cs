@@ -19,14 +19,14 @@ namespace Blowdart.UI
             _services = services;
         }
 
-        public void AddPage(string template, Action<Ui> handler)
+        public void AddPage(string template, Action<Ui> page)
         {
-            _pages.AddPage(template, handler);
+            _pages.AddPage(template, page);
         }
 
-        public void AddPage(string template, Action<Ui> layout, Action<Ui> handler)
+        public void AddPage(string template, Action<Ui> layout, Action<Ui> page)
         {
-	        _pages.AddPage(template, layout, handler);
+	        _pages.AddPage(template, layout, page);
         }
 		
 		public IEnumerator<ServiceDescriptor> GetEnumerator()

@@ -3,34 +3,10 @@
 
 using System;
 using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.AspNetCore.Components.Rendering;
 
-namespace Blowdart.UI.Web.Core.Extensions
+namespace Blowdart.UI.Web.Extensions
 {
-	public static class EditorExtensions
-	{
-		public static void Label(this RenderTreeBuilder b, string @class)
-		{
-			b.OpenElement(HtmlElements.Label);
-
-			b.AddAttribute(HtmlAttributes.For, FieldIdentifier.FieldName.ToLowerInvariant());
-
-			if (@class != null)
-				b.AddAttribute(HtmlAttributes.Class, @class);
-
-			if (AdditionalAttributes != null)
-				b.AddMultipleAttributes(AdditionalAttributes);
-
-			if (ChildContent != null)
-				b.AddContent(ChildContent);
-
-			b.AddContent(FieldIdentifier.DisplayName());
-
-			b.CloseElement();
-		}
-	}
-
 	public static class WebRenderTargetExtensions
     {
         #region div
@@ -235,5 +211,6 @@ namespace Blowdart.UI.Web.Core.Extensions
 		}
 		
 		#endregion
-    }
+
+	}
 }

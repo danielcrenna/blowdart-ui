@@ -10,7 +10,16 @@ namespace Demo.Examples.Models
     {
         private static readonly string[] Summaries =
         {
-            "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
+            "Freezing", 
+            "Bracing", 
+            "Chilly", 
+            "Cool", 
+            "Mild", 
+            "Warm", 
+            "Balmy", 
+            "Hot", 
+            "Sweltering", 
+            "Scorching"
         };
 
         public WeatherForecast[] GetWeatherForecasts()
