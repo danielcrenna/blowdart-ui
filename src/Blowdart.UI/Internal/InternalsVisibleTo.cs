@@ -4,7 +4,7 @@
 using System.Runtime.CompilerServices;
 
 [assembly: InternalsVisibleTo("Blowdart.UI.Web")]
-[assembly: InternalsVisibleTo("Blowdart.UI.Web.Core")]
+[assembly: InternalsVisibleTo("Blowdart.UI.WebAssembly")]
 [assembly: InternalsVisibleTo("Blowdart.UI.Gaming")]
 [assembly: InternalsVisibleTo("Blowdart.UI.WinForms")]
 [assembly: InternalsVisibleTo("Blowdart.UI.Android")]
