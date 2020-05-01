@@ -21,8 +21,7 @@ namespace Blowdart.UI.Blazor
 			_lastHost = host;
 		}
 
-		public static int NextSequence(this object host, [CallerMemberName] string callerMemberName = null,
-			[CallerLineNumber] int? callerLineNumber = null)
+		public static int NextSequence(this object host, int? callerLineNumber = null)
 		{
 			if (_lastHost != host)
 				Current += 10000;

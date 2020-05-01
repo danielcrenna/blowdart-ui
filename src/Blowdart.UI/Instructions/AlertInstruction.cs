@@ -3,12 +3,13 @@
 
 namespace Blowdart.UI.Instructions
 {
-	public sealed class TextInstruction : RenderInstruction
+	public sealed class AlertInstruction : RenderInstruction
 	{
-		public TextInstruction(string text) => Text = text;
+		public string Title { get; }
 
-		public string Text { get; }
-
-		public override string DebuggerDisplay => Text;
+		public AlertInstruction(string title)
+		{
+			Title = title;
+		}
 	}
 }

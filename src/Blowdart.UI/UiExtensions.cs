@@ -11,5 +11,25 @@ namespace Blowdart.UI
 		{
 			ui.Add(new TextInstruction(text));
 		}
+
+		public static void BeginElement(this Ui ui, string name)
+		{
+			ui.Add(new BeginElementInstruction(name));
+		}
+
+		public static void EndElement(this Ui ui, string name)
+		{
+			ui.Add(new EndElementInstruction(name));
+		}
+
+		public static void Alert(this Ui ui, string title)
+		{
+			ui.Add(new AlertInstruction(title));
+		}
+
+		public static void Log(this Ui ui, string message)
+		{
+			ui.Add(new LogInstruction(message));
+		}
 	}
 }

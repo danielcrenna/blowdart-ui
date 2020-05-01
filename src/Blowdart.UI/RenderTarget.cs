@@ -102,8 +102,7 @@ namespace Blowdart.UI
 				throw new ArgumentException($"No renderer found for {key.Name}");
 
 			var methodType = typeof(IRenderer<,>).MakeGenericType(key, typeof(TRenderer));
-			var method = methodType.GetMethod(nameof(IRenderer<RenderInstruction, TRenderer>.Render)) ??
-			             throw new NullReferenceException();
+			var method = methodType.GetMethod(nameof(IRenderer<RenderInstruction, TRenderer>.Render)) ?? throw new NullReferenceException();
 			method.Invoke(instance, new object[] {renderer, instruction});
 		}
 

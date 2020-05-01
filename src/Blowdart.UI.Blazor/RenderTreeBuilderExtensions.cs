@@ -9,34 +9,36 @@ namespace Blowdart.UI.Blazor
 {
 	internal static class RenderTreeBuilderExtensions
 	{
-		public static void BeginElement(this RenderTreeBuilder b, string elementName)
-		{
-			b.OpenElement(elementName);
-		}
-
-		public static void Element(this RenderTreeBuilder b, string elementName)
-		{
-			b.BeginElement(elementName);
-			b.CloseElement();
-		}
-
-		public static void OpenElement(this RenderTreeBuilder b, string elementName,
-			[CallerMemberName] string callerMemberName = null, [CallerLineNumber] int? callerLineNumber = null)
+		public static void OpenElement(this RenderTreeBuilder b, string elementName, [CallerMemberName] string callerMemberName = null, [CallerLineNumber] int? callerLineNumber = null)
 		{
 			b.OpenElement(b.GetNextSequence(callerMemberName, callerLineNumber), elementName);
 		}
 
-		private static int GetNextSequence(this RenderTreeBuilder b, string callerMemberName, int? callerLineNumber)
+		public static void AddAttribute(this RenderTreeBuilder b, string name, bool value, [CallerMemberName] string callerMemberName = null, [CallerLineNumber] int? callerLineNumber = null)
 		{
-			var sequence = b.NextSequence(callerMemberName, callerLineNumber);
-			Trace.TraceInformation($"sequence:{callerMemberName}:{callerLineNumber} = {sequence}");
-			return sequence;
+			b.AddAttribute(b.GetNextSequence(callerMemberName, callerLineNumber), name, value);
 		}
 
-		public static void AddContent(this RenderTreeBuilder b, string textContent,
-			[CallerMemberName] string callerMemberName = null, [CallerLineNumber] int? callerLineNumber = null)
+		public static void AddAttribute(this RenderTreeBuilder b, string name, string value, [CallerMemberName] string callerMemberName = null, [CallerLineNumber] int? callerLineNumber = null)
+		{
+			b.AddAttribute(b.GetNextSequence(callerMemberName, callerLineNumber), name, value);
+		}
+
+		public static void AddAttribute(this RenderTreeBuilder b, string name, object value, [CallerMemberName] string callerMemberName = null, [CallerLineNumber] int? callerLineNumber = null)
+		{
+			b.AddAttribute(b.GetNextSequence(callerMemberName, callerLineNumber), name, value);
+		}
+
+		public static void AddContent(this RenderTreeBuilder b, string textContent, [CallerMemberName] string callerMemberName = null, [CallerLineNumber] int? callerLineNumber = null)
 		{
 			b.AddContent(b.GetNextSequence(callerMemberName, callerLineNumber), textContent);
+		}
+
+		private static int GetNextSequence(this RenderTreeBuilder b, string callerMemberName, int? callerLineNumber)
+		{
+			var sequence = b.NextSequence(callerLineNumber);
+			Trace.TraceInformation($"sequence:{callerMemberName}:{callerLineNumber} = {sequence}");
+			return sequence;
 		}
 	}
 }
