@@ -14,6 +14,8 @@ namespace Demo
 			ui.EndElement("h1");
 
 			ui.Text("Welcome to your new app.");
+
+			ui.SurveyPrompt("How is Blazor working for you?");
 		}
 	}
 }

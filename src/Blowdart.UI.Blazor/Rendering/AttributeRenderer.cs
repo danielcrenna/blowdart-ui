@@ -6,11 +6,11 @@ using Microsoft.AspNetCore.Components.Rendering;
 
 namespace Blowdart.UI.Blazor.Rendering
 {
-	internal sealed class BeginElementRenderer : IRenderer<BeginElementInstruction, RenderTreeBuilder>
+	internal sealed class AttributeRenderer : IRenderer<AttributeInstruction, RenderTreeBuilder>
 	{
-		public void Render(RenderTreeBuilder b, BeginElementInstruction instruction)
+		public void Render(RenderTreeBuilder b, AttributeInstruction instruction)
 		{
-			b.OpenElement(instruction.Name);
+			b.AddAttribute(instruction.KeyString, instruction.Value);
 		}
 	}
 }

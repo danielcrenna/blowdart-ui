@@ -7,11 +7,6 @@ namespace Blowdart.UI
 {
 	public static class UiExtensions
 	{
-		public static void Text(this Ui ui, string text)
-		{
-			ui.Add(new TextInstruction(text));
-		}
-
 		public static void BeginElement(this Ui ui, string name)
 		{
 			ui.Add(new BeginElementInstruction(name));
@@ -22,11 +17,11 @@ namespace Blowdart.UI
 			ui.Add(new EndElementInstruction(name));
 		}
 
-		public static void Alert(this Ui ui, string title)
+		public static void Text(this Ui ui, string text)
 		{
-			ui.Add(new AlertInstruction(title));
+			ui.Add(new TextInstruction(text));
 		}
-
+		
 		public static void Log(this Ui ui, string message)
 		{
 			ui.Add(new LogInstruction(message));

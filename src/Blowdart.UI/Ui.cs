@@ -5,6 +5,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Text;
+using Blowdart.UI.Instructions;
 using Microsoft.Collections.Extensions;
 
 namespace Blowdart.UI
@@ -32,7 +33,7 @@ namespace Blowdart.UI
 			_target.Render(renderer);
 		}
 
-		public void Add(RenderInstruction instruction)
+		internal void Add(RenderInstruction instruction)
 		{
 			_instructions.Add(instruction);
 		}
@@ -71,7 +72,7 @@ namespace Blowdart.UI
 
 		private readonly Hashtable _eventData = new Hashtable();
 
-		public void AddEvent(string eventType, Value128 id, object data)
+		internal void AddEvent(string eventType, Value128 id, object data)
 		{
 			_events.Add(eventType, id);
 			if (data != null)
@@ -95,5 +96,10 @@ namespace Blowdart.UI
 		}
 
 		#endregion
+
+		public void PushAttribute(object key, object value)
+		{
+			Add(new AttributeInstruction(key, value));
+		}
 	}
 }
