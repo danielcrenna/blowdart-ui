@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 
 namespace Demo
 {
-    public class Program
+	public class Program
     {
         public static async Task Main(string[] args)
         {
