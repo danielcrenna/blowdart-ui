@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Daniel Crenna & Contributors. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
@@ -21,11 +22,18 @@ namespace Blowdart.UI
 			_instructions = new List<RenderInstruction>();
 		}
 
+		public IServiceProvider UiServices { get; internal set; }
+		
 		public void Begin()
 		{
-			_instructions.Clear();
-			_target.Begin();
+			NextIdHash = default;
+
+			_count = default;
+			_instructions?.Clear();
+			_target?.Begin();
 		}
+
+		public int InstructionCount => _instructions.Count;
 
 		public void RenderToTarget<TRenderer>(TRenderer renderer)
 		{
@@ -100,6 +108,12 @@ namespace Blowdart.UI
 		public void PushAttribute(object key, object value)
 		{
 			Add(new AttributeInstruction(key, value));
+		}
+
+		public void Dispose()
+		{
+			_instructions?.Clear();
+			_target?.Dispose();
 		}
 	}
 }

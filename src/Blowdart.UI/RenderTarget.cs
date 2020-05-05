@@ -11,11 +11,22 @@ using TypeKitchen.Creation;
 
 namespace Blowdart.UI
 {
-	public abstract class RenderTarget
+	public abstract class RenderTarget : IDisposable
 	{
 		internal abstract void AddInstructions(List<RenderInstruction> instructions);
 		internal abstract void Render(object renderer);
 		internal abstract void Begin();
+
+		protected virtual void Dispose(bool disposing) 
+		{
+			if (disposing) { }
+		}
+
+		public void Dispose()
+		{
+			Dispose(true);
+			GC.SuppressFinalize(this);
+		}
 	}
 
 	public abstract class RenderTarget<TRenderer> : RenderTarget

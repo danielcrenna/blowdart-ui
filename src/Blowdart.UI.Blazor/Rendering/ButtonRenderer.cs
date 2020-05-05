@@ -18,7 +18,7 @@ namespace Blowdart.UI.Blazor.Rendering
 		public void Render(RenderTreeBuilder b, ButtonInstruction instruction)
 		{
 			b.OpenElement("button");
-			b.AddAttribute("type", "button");
+			b.AddAttribute("class", "btn btn-primary");
 			b.AddAttribute("role", "button");
 			b.AddAttribute("id", instruction.Id);
 			b.AddAttribute("onclick", _imGui.OnClick(instruction.Id));

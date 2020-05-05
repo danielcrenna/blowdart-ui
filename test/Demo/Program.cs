@@ -1,4 +1,5 @@
 using System.Threading.Tasks;
+using Demo.Extensions;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 
 namespace Demo

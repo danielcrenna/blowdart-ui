@@ -1,0 +1,26 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="..\Demo\DemoComponents.cs" Link="DemoComponents.cs" />
+    <Compile Include="..\Demo\DemoPages.cs" Link="DemoPages.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="..\Demo\Pages\Counter.razor" Link="Pages\Counter.razor" />
+    <Content Include="..\Demo\Pages\FetchData.razor" Link="Pages\FetchData.razor" />
+    <Content Include="..\Demo\Pages\Index.razor" Link="Pages\Index.razor" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Blazor.HttpClient" Version="3.2.0-preview3.20168.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\Blowdart.UI.Blazor\Blowdart.UI.Blazor.csproj" />
+  </ItemGroup>
+
+</Project>

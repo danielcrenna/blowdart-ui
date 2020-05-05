@@ -2,13 +2,15 @@
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
 using System;
+using System.Diagnostics;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Rendering;
 using Microsoft.AspNetCore.Components.Web;
 
 namespace Blowdart.UI.Blazor
 {
-	public sealed class ImGui : ComponentBase
+	public sealed class ImGui : ComponentBase, IDisposable
 	{
 		public ImGui()
 		{
@@ -34,6 +36,19 @@ namespace Blowdart.UI.Blazor
 			Ui.Begin();
 		}
 
+		#region Service Location
+
+		// ReSharper disable once UnusedAutoPropertyAccessor.Local
+		[Inject] private IServiceProvider ServiceProvider { get; set; }
+
+		protected override async Task OnInitializedAsync()
+		{
+			Ui.UiServices = ServiceProvider;
+			await base.OnInitializedAsync();
+		}
+
+		#endregion
+
 		#region Events
 
 		public EventCallback<MouseEventArgs> OnClick(Value128 id)
@@ -46,11 +61,24 @@ namespace Blowdart.UI.Blazor
 
 		private void OnEvent(Value128 id, string eventType, object data)
 		{
+			var instructionCount = Ui.InstructionCount;
+
+			Trace.TraceInformation($"Event: {eventType} on element {id}");
 			Ui.AddEvent(eventType, id, data);
 			Begin();
 			Handler(Ui);
+
+			if (Ui.InstructionCount != instructionCount)
+			{
+				Trace.TraceInformation("Pending update");
+			}
 		}
 
 		#endregion
+
+		public void Dispose()
+		{
+			Ui?.Dispose();
+		}
 	}
 }

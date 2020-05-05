@@ -6,9 +6,9 @@ using System.Net.Http;
 using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Demo
+namespace Demo.Extensions
 {
-	public static class HttpClientServiceCollectionExtensions
+	internal static class HttpClientServiceCollectionExtensions
 	{
 		public static IServiceCollection AddBaseAddressHttpClient(this IServiceCollection serviceCollection)
 		{
