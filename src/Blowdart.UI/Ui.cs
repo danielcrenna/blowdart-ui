@@ -110,6 +110,25 @@ namespace Blowdart.UI
 			Add(new AttributeInstruction(key, value));
 		}
 
+		public void PushStyle(Action<StyleContext> styleBuilder)
+		{
+			_styles.Push(styleBuilder);
+		}
+
+		private readonly Stack<Action<StyleContext>> _styles = new Stack<Action<StyleContext>>();
+
+		internal bool TryPopStyle(out Action<StyleContext> style)
+		{
+			if (_styles.Count == 0)
+			{
+				style = default;
+				return false;
+			}
+
+			style = _styles.Pop();
+			return true;
+		}
+
 		public void Dispose()
 		{
 			_instructions?.Clear();

@@ -14,6 +14,14 @@ namespace Blowdart.UI.Blazor
 			b.OpenElement(b.GetNextSequence(callerMemberName, callerLineNumber), elementName);
 		}
 
+		public static void AddStyle(this RenderTreeBuilder b, Ui ui, StyleContext context)
+		{
+			if (!ui.TryPopStyle(out var style) || style == default)
+				return;
+			style(context);
+			b.AddAttribute("class", context.ToString());
+		}
+
 		public static void AddAttribute(this RenderTreeBuilder b, string name, bool value, [CallerMemberName] string callerMemberName = null, [CallerLineNumber] int? callerLineNumber = null)
 		{
 			b.AddAttribute(b.GetNextSequence(callerMemberName, callerLineNumber), name, value);

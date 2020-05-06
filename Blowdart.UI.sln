@@ -22,7 +22,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blowdart.UI.Blazor", "src\B
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Demo", "test\Demo\Demo.csproj", "{1D59FDE5-CCF0-4119-9A22-94CDFEFF68EE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Demo.Server", "test\Demo.Server\Demo.Server.csproj", "{824749D9-3236-49B9-8EDC-35A93A8B6C52}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Demo.Server", "test\Demo.Server\Demo.Server.csproj", "{824749D9-3236-49B9-8EDC-35A93A8B6C52}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Blowdart.UI.Tests", "test\Blowdart.UI.Tests\Blowdart.UI.Tests.csproj", "{FDF70F5F-A48E-4B2D-ACAE-9EF680303BE0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -190,6 +192,42 @@ Global
 		{824749D9-3236-49B9-8EDC-35A93A8B6C52}.Release|x64.Build.0 = Release|Any CPU
 		{824749D9-3236-49B9-8EDC-35A93A8B6C52}.Release|x86.ActiveCfg = Release|Any CPU
 		{824749D9-3236-49B9-8EDC-35A93A8B6C52}.Release|x86.Build.0 = Release|Any CPU
+		{FDF70F5F-A48E-4B2D-ACAE-9EF680303BE0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FDF70F5F-A48E-4B2D-ACAE-9EF680303BE0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FDF70F5F-A48E-4B2D-ACAE-9EF680303BE0}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{FDF70F5F-A48E-4B2D-ACAE-9EF680303BE0}.Debug|ARM.Build.0 = Debug|Any CPU
+		{FDF70F5F-A48E-4B2D-ACAE-9EF680303BE0}.Debug|iPhone.ActiveCfg = Debug|Any CPU
+		{FDF70F5F-A48E-4B2D-ACAE-9EF680303BE0}.Debug|iPhone.Build.0 = Debug|Any CPU
+		{FDF70F5F-A48E-4B2D-ACAE-9EF680303BE0}.Debug|iPhoneSimulator.ActiveCfg = Debug|Any CPU
+		{FDF70F5F-A48E-4B2D-ACAE-9EF680303BE0}.Debug|iPhoneSimulator.Build.0 = Debug|Any CPU
+		{FDF70F5F-A48E-4B2D-ACAE-9EF680303BE0}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{FDF70F5F-A48E-4B2D-ACAE-9EF680303BE0}.Debug|x64.Build.0 = Debug|Any CPU
+		{FDF70F5F-A48E-4B2D-ACAE-9EF680303BE0}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{FDF70F5F-A48E-4B2D-ACAE-9EF680303BE0}.Debug|x86.Build.0 = Debug|Any CPU
+		{FDF70F5F-A48E-4B2D-ACAE-9EF680303BE0}.Package|Any CPU.ActiveCfg = Debug|Any CPU
+		{FDF70F5F-A48E-4B2D-ACAE-9EF680303BE0}.Package|Any CPU.Build.0 = Debug|Any CPU
+		{FDF70F5F-A48E-4B2D-ACAE-9EF680303BE0}.Package|ARM.ActiveCfg = Debug|Any CPU
+		{FDF70F5F-A48E-4B2D-ACAE-9EF680303BE0}.Package|ARM.Build.0 = Debug|Any CPU
+		{FDF70F5F-A48E-4B2D-ACAE-9EF680303BE0}.Package|iPhone.ActiveCfg = Debug|Any CPU
+		{FDF70F5F-A48E-4B2D-ACAE-9EF680303BE0}.Package|iPhone.Build.0 = Debug|Any CPU
+		{FDF70F5F-A48E-4B2D-ACAE-9EF680303BE0}.Package|iPhoneSimulator.ActiveCfg = Debug|Any CPU
+		{FDF70F5F-A48E-4B2D-ACAE-9EF680303BE0}.Package|iPhoneSimulator.Build.0 = Debug|Any CPU
+		{FDF70F5F-A48E-4B2D-ACAE-9EF680303BE0}.Package|x64.ActiveCfg = Debug|Any CPU
+		{FDF70F5F-A48E-4B2D-ACAE-9EF680303BE0}.Package|x64.Build.0 = Debug|Any CPU
+		{FDF70F5F-A48E-4B2D-ACAE-9EF680303BE0}.Package|x86.ActiveCfg = Debug|Any CPU
+		{FDF70F5F-A48E-4B2D-ACAE-9EF680303BE0}.Package|x86.Build.0 = Debug|Any CPU
+		{FDF70F5F-A48E-4B2D-ACAE-9EF680303BE0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FDF70F5F-A48E-4B2D-ACAE-9EF680303BE0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FDF70F5F-A48E-4B2D-ACAE-9EF680303BE0}.Release|ARM.ActiveCfg = Release|Any CPU
+		{FDF70F5F-A48E-4B2D-ACAE-9EF680303BE0}.Release|ARM.Build.0 = Release|Any CPU
+		{FDF70F5F-A48E-4B2D-ACAE-9EF680303BE0}.Release|iPhone.ActiveCfg = Release|Any CPU
+		{FDF70F5F-A48E-4B2D-ACAE-9EF680303BE0}.Release|iPhone.Build.0 = Release|Any CPU
+		{FDF70F5F-A48E-4B2D-ACAE-9EF680303BE0}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
+		{FDF70F5F-A48E-4B2D-ACAE-9EF680303BE0}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
+		{FDF70F5F-A48E-4B2D-ACAE-9EF680303BE0}.Release|x64.ActiveCfg = Release|Any CPU
+		{FDF70F5F-A48E-4B2D-ACAE-9EF680303BE0}.Release|x64.Build.0 = Release|Any CPU
+		{FDF70F5F-A48E-4B2D-ACAE-9EF680303BE0}.Release|x86.ActiveCfg = Release|Any CPU
+		{FDF70F5F-A48E-4B2D-ACAE-9EF680303BE0}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

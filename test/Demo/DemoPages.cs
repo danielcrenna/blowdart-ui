@@ -2,8 +2,6 @@
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
 using Blowdart.UI;
-using Blowdart.UI.Blazor;
-using static Blowdart.UI.Blazor.WebElements;
 
 namespace Demo
 {
@@ -22,6 +20,8 @@ namespace Demo
 		{
 			ui.h1("Counter");
 			ui.p($"Current count: {_currentCount}");
+
+			ui.PushStyle(x => { x.Named("btn btn-primary"); });
 			if (ui.Button("Click me"))
 				_currentCount++;
 		}

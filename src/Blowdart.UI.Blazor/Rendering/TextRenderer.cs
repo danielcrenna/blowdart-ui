@@ -10,9 +10,9 @@ namespace Blowdart.UI.Blazor.Rendering
 {
 	internal sealed class TextRenderer : IRenderer<TextInstruction, RenderTreeBuilder>
 	{
-		public void Render(RenderTreeBuilder b, TextInstruction alert)
+		public void Render(RenderTreeBuilder b, TextInstruction instruction)
 		{
-			b.AddContent(alert.Text);
+			b.AddContent(instruction.Text);
 		}
 	}
 }
