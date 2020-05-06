@@ -17,7 +17,7 @@ namespace Blowdart.UI
 			ui.Add(new EndElementInstruction(name));
 		}
 
-		public static void Text(this Ui ui, string text)
+		public static void _(this Ui ui, string text)
 		{
 			ui.Add(new TextInstruction(text));
 		}

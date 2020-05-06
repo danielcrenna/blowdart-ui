@@ -30,25 +30,25 @@ namespace Demo
 				ui.EndElement("span");
 
 				ui.BeginElement("strong");
-				ui.Text(title);
+				ui._(title);
 				ui.EndElement("strong");
 
 				ui.BeginElement("span");
 				ui.PushAttribute("class", "text-nowrap");
 				{
-					ui.Text(" Please take our ");
+					ui._(" Please take our ");
 					ui.BeginElement("a");
 					{
 						ui.PushAttribute("target", "_blank");
 						ui.PushAttribute("class", "font-weight-bold");
 						ui.PushAttribute("href", "https://go.microsoft.com/fwlink/?linkid=2121313");
-						ui.Text(" brief survey");
+						ui._(" brief survey");
 						ui.EndElement("a");
 					}
 					ui.EndElement("span");
 				}
 
-				ui.Text(" and tell us what you think.");
+				ui._(" and tell us what you think.");
 				ui.EndElement("div");
 			}
 		}

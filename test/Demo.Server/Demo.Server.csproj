@@ -7,6 +7,7 @@
   <ItemGroup>
     <Compile Include="..\Demo\DemoComponents.cs" Link="DemoComponents.cs" />
     <Compile Include="..\Demo\DemoPages.cs" Link="DemoPages.cs" />
+    <Compile Include="..\Demo\Extensions\HttpClientServiceCollectionExtensions.cs" Link="Extensions\HttpClientServiceCollectionExtensions.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -21,6 +22,10 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\Blowdart.UI.Blazor\Blowdart.UI.Blazor.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Extensions\" />
   </ItemGroup>
 
 </Project>

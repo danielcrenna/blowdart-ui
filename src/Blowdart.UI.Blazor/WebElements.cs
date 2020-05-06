@@ -19,7 +19,7 @@ public static class WebElements
 	private static void InlineTextDirective(Ui ui, string element, string text)
 	{
 		ui.BeginElement(element);
-		ui.Text(text);
+		ui._(text);
 		ui.EndElement(element);
 	}
 

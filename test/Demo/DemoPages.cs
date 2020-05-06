@@ -5,18 +5,18 @@ using Blowdart.UI;
 
 namespace Demo
 {
-	public static class DemoPages
+	public class DemoPages
 	{
-		public static void Index(Ui ui)
+		public void Index(Ui ui)
 		{
 			ui.h1("Hello, world!");
-			ui.Text("Welcome to your new app.");
+			ui._("Welcome to your new app.");
 			ui.SurveyPrompt("How is Blazor working for you?");
 		}
 
-		private static int _currentCount;
+		private int _currentCount;
 
-		public static void Counter(Ui ui)
+		public void Counter(Ui ui)
 		{
 			ui.h1("Counter");
 			ui.p($"Current count: {_currentCount}");
@@ -26,7 +26,7 @@ namespace Demo
 				_currentCount++;
 		}
 
-		public static void FetchData(Ui ui)
+		public void FetchData(Ui ui)
 		{
 			ui.h1("Weather forecast");
 			ui.p("This component demonstrates fetching data from the server.");
