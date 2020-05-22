@@ -54,7 +54,6 @@ namespace Demo
 							ui._(" Home");
 							ui.EndElement("a");
 						}
-						
 
 						ui.BeginElement("a");
 						ui.PushAttribute("class", "nav-link");
