@@ -1,6 +1,10 @@
+using System;
+using System.Net.Http;
 using System.Threading.Tasks;
-using Demo.Extensions;
+using Blowdart.UI;
+using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Demo
 {
@@ -11,8 +15,15 @@ namespace Demo
             var builder = WebAssemblyHostBuilder.CreateDefault(args);
             builder.RootComponents.Add<App>("app");
 
-            builder.Services.AddBaseAddressHttpClient();
-            await builder.Build().RunAsync();
+			builder.Services.AddSingleton(r => new HttpClient { BaseAddress = new Uri(r.GetRequiredService<NavigationManager>().BaseUri)});
+			builder.Services.AddBlowdart(bd =>
+			{
+				bd.AddPage("/", "DemoLayouts.MainLayout", "DemoPages.Index");
+				bd.AddPage("/counter", "DemoLayouts.MainLayout", "DemoPages.Counter");
+				bd.AddPage("/fetchdata", "DemoLayouts.MainLayout", "DemoPages.FetchData");
+			});
+
+			await builder.Build().RunAsync();
         }
     }
 }

@@ -4,10 +4,15 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Net.Http;
 using System.Runtime.CompilerServices;
 using System.Text;
+using System.Threading.Tasks;
 using Blowdart.UI.Instructions;
 using Microsoft.Collections.Extensions;
+using Microsoft.Extensions.DependencyInjection;
+using TypeKitchen;
+using TypeKitchen.Creation;
 
 namespace Blowdart.UI
 {
@@ -31,6 +36,8 @@ namespace Blowdart.UI
 			_count = default;
 			_instructions?.Clear();
 			_target?.Begin();
+
+			CalledLayout = default;
 		}
 
 		public int InstructionCount => _instructions.Count;
@@ -105,6 +112,107 @@ namespace Blowdart.UI
 
 		#endregion
 
+		#region Layouts
+
+		private string _body;
+
+		internal bool CalledLayout { get; private set; }
+
+		public void Body()
+		{
+			CalledLayout = true;
+			Invoke(_body ?? throw new BlowdartException("Missing layout body"));
+		}
+
+		public void SetLayoutBody(string body)
+		{
+			_body = body;
+		}
+
+		private readonly Dictionary<string, IMethodCallAccessor> _handlers = new Dictionary<string, IMethodCallAccessor>();
+		private readonly Dictionary<string, object> _instances = new Dictionary<string, object>();
+
+		public void Invoke(string handler)
+		{
+			if (!_handlers.TryGetValue(handler, out var accessor))
+			{
+				var tokens = handler.Split('.');
+				if (tokens.Length > 1)
+				{
+					var typeString = tokens[0];
+					var methodString = tokens[1];
+
+					var resolver = UiServices.GetRequiredService<ITypeResolver>();
+					var type = resolver.FindFirstByName(typeString);
+					var method = type.GetMethod(methodString);
+
+					_instances[handler] = Instancing.CreateInstance(type, UiServices);
+					_handlers[handler] = accessor = CallAccessor.Create(method);
+				}
+			}
+
+			accessor?.Call(_instances[handler], UiServices);
+		}
+
+		#endregion
+
+		#region Data Loading
+
+		private readonly List<IPromise> _dataLoaders = new List<IPromise>();
+
+		private interface IPromise
+		{
+			Task LoadAsync(IServiceProvider serviceProvider);
+		}
+
+		private struct Promise<T> : IPromise
+		{
+			private readonly Func<IServiceProvider, Task<T>> _getData;
+			private readonly Action<T> _setData;
+
+			public Promise(Func<IServiceProvider, Task<T>> getData, Action<T> setData)
+			{
+				_getData = getData;
+				_setData = setData;
+			}
+
+			public async Task LoadAsync(IServiceProvider serviceProvider)
+			{
+				var data = await _getData(serviceProvider);
+				_setData(data);
+			}
+		}
+
+		public void DataLoader<TResult>(Func<IServiceProvider, Task<TResult>> getData, Action<TResult> setData)
+		{
+			_dataLoaders.Add(new Promise<TResult>(getData, setData));
+		}
+
+		public void DataLoader<TService, TResult>(Func<TService, Task<TResult>> getData, Action<TResult> setData)
+		{
+			async Task<TResult> Fetch(IServiceProvider r) => await getData(r.GetRequiredService<TService>());
+
+			_dataLoaders.Add(new Promise<TResult>(Fetch, setData));
+		}
+
+		public void DataLoader<TResult>(Func<HttpClient, Task<TResult>> getData, Action<TResult> setData)
+		{
+			async Task<TResult> Fetch(IServiceProvider r) => await getData(r.GetRequiredService<HttpClient>());
+
+			_dataLoaders.Add(new Promise<TResult>(Fetch, setData));
+		}
+
+		internal async Task<bool> DispatchDataLoaders()
+		{
+			if (_dataLoaders.Count == 0)
+				return false;
+			foreach (var dataLoader in _dataLoaders)
+				await dataLoader.LoadAsync(UiServices);
+			return true;
+		}
+
+		#endregion
+
 		public void PushAttribute(object key, object value)
 		{
 			Add(new AttributeInstruction(key, value));
@@ -132,6 +240,8 @@ namespace Blowdart.UI
 		public void Dispose()
 		{
 			_instructions?.Clear();
+			_handlers?.Clear();
+			_instances?.Clear();
 			_target?.Dispose();
 		}
 	}

@@ -7,8 +7,6 @@
 using System;
 using Blowdart.UI;
 
-// FIXME: use source generators or something similar
-
 public static class WebElements
 {
 	#region Inline Text Directives

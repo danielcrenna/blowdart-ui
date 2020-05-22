@@ -9,6 +9,11 @@ namespace Blowdart.UI.Blazor
 {
 	internal static class RenderTreeBuilderExtensions
 	{
+		public static void OpenComponent<T>(this RenderTreeBuilder b, [CallerMemberName] string callerMemberName = null, [CallerLineNumber] int? callerLineNumber = null)
+		{
+			b.OpenComponent(b.GetNextSequence(callerMemberName, callerLineNumber), typeof(T));
+		}
+
 		public static void OpenElement(this RenderTreeBuilder b, string elementName, [CallerMemberName] string callerMemberName = null, [CallerLineNumber] int? callerLineNumber = null)
 		{
 			b.OpenElement(b.GetNextSequence(callerMemberName, callerLineNumber), elementName);

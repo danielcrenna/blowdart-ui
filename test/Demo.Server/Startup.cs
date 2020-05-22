@@ -1,4 +1,4 @@
-using Demo.Extensions;
+using Blowdart.UI;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -8,7 +8,7 @@ using Demo.Server.Data;
 
 namespace Demo.Server
 {
-    public class Startup
+	public class Startup
     {
         public Startup(IConfiguration configuration)
         {
@@ -24,7 +24,13 @@ namespace Demo.Server
             services.AddRazorPages();
             services.AddServerSideBlazor();
             services.AddSingleton<WeatherForecastService>();
-            services.AddBaseAddressHttpClient();
+
+            services.AddBlowdart(bd =>
+            {
+	            bd.AddPage("/", "DemoLayouts.MainLayout", "DemoPages.Index");
+	            bd.AddPage("/counter", "DemoLayouts.MainLayout", "DemoPages.Counter");
+	            bd.AddPage("/fetchdata", "DemoLayouts.MainLayout", "DemoPages.FetchData");
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

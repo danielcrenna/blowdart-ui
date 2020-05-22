@@ -7,17 +7,91 @@ namespace Demo
 {
 	public static class DemoComponents
 	{
-		/*
-			<div class="alert alert-secondary mt-4" role="alert">
-			    <span class="oi oi-pencil mr-2" aria-hidden="true"></span>
-			    <strong>@Title</strong>
-			    <span class="text-nowrap">
-			        Please take our
-			        <a target="_blank" class="font-weight-bold" href="https://go.microsoft.com/fwlink/?linkid=2121313">brief survey</a>
-			    </span>
-			    and tell us what you think.
-			</div>
-		 */
+		public static void NavBar(this Ui ui, bool collapse)
+		{
+			ui.BeginElement("div");
+			ui.PushAttribute("class", "top-row pl-4 navbar navbar-dark");
+			{
+				ui.BeginElement("a");
+				ui.PushAttribute("class", "navbar-brand");
+				ui.PushAttribute("href", "");
+				{	
+					ui._("BlazorApp1");
+					ui.EndElement("a");
+				}
+
+				ui.BeginElement("button");
+				ui.PushAttribute("class", "navbar-toggler");
+				{
+					ui.BeginElement("span");
+					ui.PushAttribute("class", "navbar-toggler-icon");
+					ui.EndElement("span");
+					
+					ui.EndElement("button");
+				}
+
+				ui.EndElement("div");
+			}
+
+			ui.BeginElement("div");
+			ui.PushAttribute("class", collapse ? "collapse" : "");
+			{
+				ui.BeginElement("ul");
+				ui.PushAttribute("class", "nav flex-column");
+				{
+					ui.BeginElement("li");
+					ui.PushAttribute("class", "nav-item px-3");
+					{
+						ui.BeginElement("a");
+						ui.PushAttribute("class", "nav-link");
+						ui.PushAttribute("href", "");
+						{
+							ui.BeginElement("span");
+							ui.PushAttribute("class", "oi oi-home");
+							ui.PushAttribute("aria-hidden", true);
+							ui.EndElement("span");
+
+							ui._(" Home");
+							ui.EndElement("a");
+						}
+						
+
+						ui.BeginElement("a");
+						ui.PushAttribute("class", "nav-link");
+						ui.PushAttribute("href", "counter");
+						{
+							ui.BeginElement("span");
+							ui.PushAttribute("class", "oi oi-plus");
+							ui.PushAttribute("aria-hidden", true);
+							ui.EndElement("span");
+
+							ui._(" Counter");
+							ui.EndElement("a");
+						}
+						
+						ui.BeginElement("a");
+						ui.PushAttribute("class", "nav-link");
+						ui.PushAttribute("href", "fetchdata");
+						{
+							ui.BeginElement("span");
+							ui.PushAttribute("class", "oi oi-list-rich");
+							ui.PushAttribute("aria-hidden", true);
+							ui.EndElement("span");
+
+							ui._(" Fetch Data");
+							ui.EndElement("a");
+						}
+
+						ui.EndElement("li");
+					}
+
+					ui.EndElement("ul");
+				}
+				
+				ui.EndElement("div");
+			}
+		}
+
 		public static void SurveyPrompt(this Ui ui, string title)
 		{
 			ui.BeginElement("div");

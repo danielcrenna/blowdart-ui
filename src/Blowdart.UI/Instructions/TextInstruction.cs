@@ -5,10 +5,10 @@ namespace Blowdart.UI.Instructions
 {
 	public sealed class TextInstruction : RenderInstruction
 	{
-		public TextInstruction(string text) => Text = text;
+		public TextInstruction(object text) => Text = text;
 
-		public string Text { get; }
+		public object Text { get; }
 
-		public override string DebuggerDisplay => Text;
+		public override string DebuggerDisplay => Text?.ToString();
 	}
 }

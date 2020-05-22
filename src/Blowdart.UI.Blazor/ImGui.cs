@@ -7,8 +7,6 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Rendering;
 using Microsoft.AspNetCore.Components.Web;
-using TypeKitchen;
-using TypeKitchen.Creation;
 
 namespace Blowdart.UI.Blazor
 {
@@ -23,12 +21,23 @@ namespace Blowdart.UI.Blazor
 
 		internal Ui Ui { get; }
 
+		[Parameter] public string Layout { get; set; }
 		[Parameter] public string Handler { get; set; }
 
 		protected override void BuildRenderTree(RenderTreeBuilder builder)
 		{
 			Begin();
-			InvokeHandler();
+			if (Layout != null)
+			{
+				Ui.SetLayoutBody(Handler);
+				Ui.Invoke(Layout);
+				if (!Ui.CalledLayout)
+					throw new BlowdartException("Layout did not call ui.Body();");
+			}
+			else
+			{
+				Ui.Invoke(Handler);
+			}
 			Ui.RenderToTarget(builder);
 		}
 		
@@ -51,6 +60,21 @@ namespace Blowdart.UI.Blazor
 
 		#endregion
 
+		#region Data Loading
+
+		protected override async Task OnAfterRenderAsync(bool firstRender)
+		{
+			if (await Ui.DispatchDataLoaders())
+			{
+				Begin();
+				Ui.Invoke(Handler);
+				if(firstRender)
+					StateHasChanged();
+			}
+		}
+
+		#endregion
+
 		#region Events
 
 		public EventCallback<MouseEventArgs> OnClick(Value128 id)
@@ -68,7 +92,7 @@ namespace Blowdart.UI.Blazor
 			Trace.TraceInformation($"Event: {eventType} on element {id}");
 			Ui.AddEvent(eventType, id, data);
 			Begin();
-			InvokeHandler();
+			Ui.Invoke(Handler);
 
 			if (Ui.InstructionCount != instructionCount)
 			{
@@ -77,29 +101,6 @@ namespace Blowdart.UI.Blazor
 		}
 
 		#endregion
-
-		private static readonly ITypeResolver TypeResolver = new ReflectionTypeResolver();
-		
-		private IMethodCallAccessor _accessor;
-		private object _instance;
-
-		private void InvokeHandler()
-		{
-			if (_accessor == default)
-			{
-				var tokens = Handler?.Split('.');
-				var typeString = tokens?[0];
-				var methodString = tokens?[1];
-
-				var type = TypeResolver.FindFirstByName(typeString);
-				var method = type.GetMethod(methodString);
-
-				_instance = Instancing.CreateInstance(type, Ui.UiServices);
-				_accessor = CallAccessor.Create(method);
-			}
-
-			_accessor.Call(_instance, Ui.UiServices);
-		}
 
 		#region Virtual Resolver
 
@@ -122,9 +123,6 @@ namespace Blowdart.UI.Blazor
 		public void Dispose()
 		{
 			Ui?.Dispose();
-
-			if(_instance is IDisposable disposable)
-				disposable.Dispose();
 		}
 	}
 }

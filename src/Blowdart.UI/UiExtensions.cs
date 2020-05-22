@@ -17,7 +17,7 @@ namespace Blowdart.UI
 			ui.Add(new EndElementInstruction(name));
 		}
 
-		public static void _(this Ui ui, string text)
+		public static void _(this Ui ui, object text)
 		{
 			ui.Add(new TextInstruction(text));
 		}
@@ -26,5 +26,16 @@ namespace Blowdart.UI
 		{
 			ui.Add(new LogInstruction(message));
 		}
+
+		#region Button
+
+		public static bool Button(this Ui ui, string text)
+		{
+			var id = ui.NextId();
+			ui.Add(new ButtonInstruction(id, text));
+			return ui.OnEvent("onclick", id, out var _);
+		}
+
+		#endregion
 	}
 }
