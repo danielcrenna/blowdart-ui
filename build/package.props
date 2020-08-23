@@ -10,13 +10,13 @@
     <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
     <RepositoryUrl>https://github.com/blowdart-ui/blowdart-ui</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
-    <PackageTags>imgui csharp ui-framework multi-platform</PackageTags>
+    <PackageTags>imgui csharp ui-framework multi-platform blazor</PackageTags>
     <Version>0.0.4-pre</Version>
     <PackageReleaseNotes></PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>
-    <None Include="$(MsBuildThisFileDirectory)..\src\Blowdart.UI.Web\wwwroot\favicons\android-icon-96x96.png">
+    <None Include="$(MsBuildThisFileDirectory)..\test\Demo\wwwroot\favicons\android-icon-96x96.png">
       <Pack>True</Pack>
       <PackagePath></PackagePath>
     </None>

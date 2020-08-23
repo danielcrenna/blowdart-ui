@@ -213,6 +213,8 @@ namespace Blowdart.UI
 
 		#endregion
 
+		#region Stack Objects
+
 		public void PushAttribute(object key, object value)
 		{
 			Add(new AttributeInstruction(key, value));
@@ -236,6 +238,8 @@ namespace Blowdart.UI
 			style = _styles.Pop();
 			return true;
 		}
+
+		#endregion
 
 		public void Dispose()
 		{
