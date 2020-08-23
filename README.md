@@ -1,4 +1,4 @@
-![logo](https://github.com/Blowdart-UI/blowdart-ui/blob/master/src/Blowdart.UI.Web/wwwroot/favicon-96x96.png "Logo")
+![logo](https://github.com/danielcrenna/blowdart-ui/blob/master/test/Demo/wwwroot/favicons/favicon-96x96.png "Logo")
 
 ## Blowdart UI
 
