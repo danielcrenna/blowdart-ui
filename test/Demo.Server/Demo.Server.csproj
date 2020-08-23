@@ -1,22 +1,16 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Include="..\Demo\DemoComponents.cs" Link="DemoComponents.cs" />
-    <Compile Include="..\Demo\DemoLayouts.cs" Link="DemoLayouts.cs" />
-    <Compile Include="..\Demo\DemoPages.cs" Link="DemoPages.cs" />
-    <Compile Include="..\Demo\WeatherForecast.cs" Link="WeatherForecast.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Blazor.HttpClient" Version="3.2.0-preview3.20168.3" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="3.2.1" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\Blowdart.UI.Blazor\Blowdart.UI.Blazor.csproj" />
+    <ProjectReference Include="..\Demo\Demo.csproj" />
   </ItemGroup>
 
 </Project>

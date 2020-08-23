@@ -3,8 +3,8 @@
 
 using System.Collections.Generic;
 using System.Net.Http;
+using System.Net.Http.Json;
 using Blowdart.UI;
-using Microsoft.AspNetCore.Components;
 
 namespace Demo
 {
@@ -34,7 +34,7 @@ namespace Demo
 		public void FetchData(Ui ui)
 		{
 			ui.DataLoader<HttpClient, WeatherForecast[]>(
-				http => http.GetJsonAsync<WeatherForecast[]>("sample-data/weather.json"),
+				http => http.GetFromJsonAsync<WeatherForecast[]>("sample-data/weather.json"),
 				d => { _forecasts = d; });
 
 			ui.h1("Weather forecast");
