@@ -19,5 +19,10 @@
   <ItemGroup>
     <ProjectReference Include="..\Blowdart.UI\Blowdart.UI.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Blowdart.UI.Web">
+      <HintPath>..\Blowdart.UI.Web\bin\Debug\netstandard2.0\Blowdart.UI.Web.dll</HintPath>
+    </Reference>
+  </ItemGroup>
 </Project>
 
