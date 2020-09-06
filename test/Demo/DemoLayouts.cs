@@ -12,23 +12,23 @@ namespace Demo
 		public void MainLayout(Ui ui)
 		{
 			ui.BeginElement("div");
-			ui.PushAttribute("class", "sidebar");
+			ui.Attribute("class", "sidebar");
 			{	
 				ui.NavBar(collapseNavMenu);
 				ui.EndElement("div");
 			}
 
 			ui.BeginElement("div");
-			ui.PushAttribute("class", "main");
+			ui.Attribute("class", "main");
 			{
 				ui.BeginElement("div");
 				{
-					ui.PushAttribute("class", "top-row px-4");
+					ui.Attribute("class", "top-row px-4");
 
 					ui.BeginElement("a");
-					ui.PushAttribute("href", "http://blazor.net");
-					ui.PushAttribute("target", "_blank");
-					ui.PushAttribute("class", "ml-md-auto");
+					ui.Attribute("href", "http://blazor.net");
+					ui.Attribute("target", "_blank");
+					ui.Attribute("class", "ml-md-auto");
 					{
 						ui._("About");
 						ui.EndElement("a");
@@ -39,7 +39,7 @@ namespace Demo
 
 				ui.BeginElement("div");
 				{
-					ui.PushAttribute("class", "content px-4");
+					ui.Attribute("class", "content px-4");
 					ui.Body();
 					ui.EndElement("div");
 				}

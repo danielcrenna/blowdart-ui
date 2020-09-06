@@ -5,8 +5,8 @@ using System;
 
 namespace Blowdart.UI
 {
-	public sealed class BlowdartException : Exception
+	public sealed class UiException : Exception
 	{
-		public BlowdartException(string message) : base(message) { }
+		public UiException(string message) : base(message) { }
 	}
 }

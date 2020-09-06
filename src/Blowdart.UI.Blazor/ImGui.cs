@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Components.Web;
 
 namespace Blowdart.UI.Blazor
 {
-	public sealed class ImGui : ComponentBase, IDisposable
+	public sealed partial class ImGui : ComponentBase, IDisposable
 	{
 		public ImGui()
 		{
@@ -32,7 +32,7 @@ namespace Blowdart.UI.Blazor
 				Ui.SetLayoutBody(Handler);
 				Ui.Invoke(Layout);
 				if (!Ui.CalledLayout)
-					throw new BlowdartException("Layout did not call ui.Body();");
+					throw new UiException("Layout did not call ui.Body();");
 			}
 			else
 			{
@@ -76,14 +76,6 @@ namespace Blowdart.UI.Blazor
 		#endregion
 
 		#region Events
-
-		public EventCallback<MouseEventArgs> OnClick(Value128 id)
-		{
-			return EventCallback.Factory.Create<MouseEventArgs>(this, args =>
-			{
-				OnEvent(id, "onclick", null);
-			});
-		}
 
 		private void OnEvent(Value128 id, string eventType, object data)
 		{

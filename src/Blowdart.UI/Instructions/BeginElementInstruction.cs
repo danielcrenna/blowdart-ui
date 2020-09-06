@@ -5,11 +5,13 @@ namespace Blowdart.UI.Instructions
 {
 	public sealed class BeginElementInstruction : RenderInstruction
 	{
+		public Value128? Id { get; }
 		public string Name { get; }
-
-		public BeginElementInstruction(string name)
+		
+		public BeginElementInstruction(string name, Value128? id = default)
 		{
 			Name = name;
+			Id = id;
 		}
 	}
 }

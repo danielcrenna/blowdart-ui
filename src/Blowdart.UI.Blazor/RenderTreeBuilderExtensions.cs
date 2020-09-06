@@ -24,7 +24,9 @@ namespace Blowdart.UI.Blazor
 			if (!ui.TryPopStyle(out var style) || style == default)
 				return;
 			style(context);
-			b.AddAttribute("class", context.ToString());
+
+			var cssClass = context.ToString().Trim('\'');
+			b.AddAttribute(HtmlAttributes.Class, cssClass);
 		}
 
 		public static void AddAttribute(this RenderTreeBuilder b, string name, bool value, [CallerMemberName] string callerMemberName = null, [CallerLineNumber] int? callerLineNumber = null)
@@ -50,7 +52,7 @@ namespace Blowdart.UI.Blazor
 		private static int GetNextSequence(this RenderTreeBuilder b, string callerMemberName, int? callerLineNumber)
 		{
 			var sequence = b.NextSequence(callerLineNumber);
-			Trace.TraceInformation($"sequence:{callerMemberName}:{callerLineNumber} = {sequence}");
+			Trace.TraceInformation($"seq:{callerMemberName}:{callerLineNumber} = {sequence}");
 			return sequence;
 		}
 	}

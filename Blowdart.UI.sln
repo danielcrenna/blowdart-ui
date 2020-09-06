@@ -24,7 +24,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Demo", "test\Demo\Demo.cspr
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Demo.Server", "test\Demo.Server\Demo.Server.csproj", "{824749D9-3236-49B9-8EDC-35A93A8B6C52}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Blowdart.UI.Tests", "test\Blowdart.UI.Tests\Blowdart.UI.Tests.csproj", "{FDF70F5F-A48E-4B2D-ACAE-9EF680303BE0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blowdart.UI.Tests", "test\Blowdart.UI.Tests\Blowdart.UI.Tests.csproj", "{FDF70F5F-A48E-4B2D-ACAE-9EF680303BE0}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blowdart.UI.Web", "src\Blowdart.UI.Web\Blowdart.UI.Web.csproj", "{1FBD4C26-96D1-438F-BF63-63634E927905}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -228,6 +230,42 @@ Global
 		{FDF70F5F-A48E-4B2D-ACAE-9EF680303BE0}.Release|x64.Build.0 = Release|Any CPU
 		{FDF70F5F-A48E-4B2D-ACAE-9EF680303BE0}.Release|x86.ActiveCfg = Release|Any CPU
 		{FDF70F5F-A48E-4B2D-ACAE-9EF680303BE0}.Release|x86.Build.0 = Release|Any CPU
+		{1FBD4C26-96D1-438F-BF63-63634E927905}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1FBD4C26-96D1-438F-BF63-63634E927905}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1FBD4C26-96D1-438F-BF63-63634E927905}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{1FBD4C26-96D1-438F-BF63-63634E927905}.Debug|ARM.Build.0 = Debug|Any CPU
+		{1FBD4C26-96D1-438F-BF63-63634E927905}.Debug|iPhone.ActiveCfg = Debug|Any CPU
+		{1FBD4C26-96D1-438F-BF63-63634E927905}.Debug|iPhone.Build.0 = Debug|Any CPU
+		{1FBD4C26-96D1-438F-BF63-63634E927905}.Debug|iPhoneSimulator.ActiveCfg = Debug|Any CPU
+		{1FBD4C26-96D1-438F-BF63-63634E927905}.Debug|iPhoneSimulator.Build.0 = Debug|Any CPU
+		{1FBD4C26-96D1-438F-BF63-63634E927905}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{1FBD4C26-96D1-438F-BF63-63634E927905}.Debug|x64.Build.0 = Debug|Any CPU
+		{1FBD4C26-96D1-438F-BF63-63634E927905}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{1FBD4C26-96D1-438F-BF63-63634E927905}.Debug|x86.Build.0 = Debug|Any CPU
+		{1FBD4C26-96D1-438F-BF63-63634E927905}.Package|Any CPU.ActiveCfg = Debug|Any CPU
+		{1FBD4C26-96D1-438F-BF63-63634E927905}.Package|Any CPU.Build.0 = Debug|Any CPU
+		{1FBD4C26-96D1-438F-BF63-63634E927905}.Package|ARM.ActiveCfg = Debug|Any CPU
+		{1FBD4C26-96D1-438F-BF63-63634E927905}.Package|ARM.Build.0 = Debug|Any CPU
+		{1FBD4C26-96D1-438F-BF63-63634E927905}.Package|iPhone.ActiveCfg = Debug|Any CPU
+		{1FBD4C26-96D1-438F-BF63-63634E927905}.Package|iPhone.Build.0 = Debug|Any CPU
+		{1FBD4C26-96D1-438F-BF63-63634E927905}.Package|iPhoneSimulator.ActiveCfg = Debug|Any CPU
+		{1FBD4C26-96D1-438F-BF63-63634E927905}.Package|iPhoneSimulator.Build.0 = Debug|Any CPU
+		{1FBD4C26-96D1-438F-BF63-63634E927905}.Package|x64.ActiveCfg = Debug|Any CPU
+		{1FBD4C26-96D1-438F-BF63-63634E927905}.Package|x64.Build.0 = Debug|Any CPU
+		{1FBD4C26-96D1-438F-BF63-63634E927905}.Package|x86.ActiveCfg = Debug|Any CPU
+		{1FBD4C26-96D1-438F-BF63-63634E927905}.Package|x86.Build.0 = Debug|Any CPU
+		{1FBD4C26-96D1-438F-BF63-63634E927905}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1FBD4C26-96D1-438F-BF63-63634E927905}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1FBD4C26-96D1-438F-BF63-63634E927905}.Release|ARM.ActiveCfg = Release|Any CPU
+		{1FBD4C26-96D1-438F-BF63-63634E927905}.Release|ARM.Build.0 = Release|Any CPU
+		{1FBD4C26-96D1-438F-BF63-63634E927905}.Release|iPhone.ActiveCfg = Release|Any CPU
+		{1FBD4C26-96D1-438F-BF63-63634E927905}.Release|iPhone.Build.0 = Release|Any CPU
+		{1FBD4C26-96D1-438F-BF63-63634E927905}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
+		{1FBD4C26-96D1-438F-BF63-63634E927905}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
+		{1FBD4C26-96D1-438F-BF63-63634E927905}.Release|x64.ActiveCfg = Release|Any CPU
+		{1FBD4C26-96D1-438F-BF63-63634E927905}.Release|x64.Build.0 = Release|Any CPU
+		{1FBD4C26-96D1-438F-BF63-63634E927905}.Release|x86.ActiveCfg = Release|Any CPU
+		{1FBD4C26-96D1-438F-BF63-63634E927905}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
