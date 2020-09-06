@@ -6,7 +6,6 @@ using System.Diagnostics;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Rendering;
-using Microsoft.AspNetCore.Components.Web;
 
 namespace Blowdart.UI.Blazor
 {
@@ -24,6 +23,11 @@ namespace Blowdart.UI.Blazor
 		[Parameter] public string Layout { get; set; }
 		[Parameter] public string Handler { get; set; }
 
+		public void Dispose()
+		{
+			Ui?.Dispose();
+		}
+
 		protected override void BuildRenderTree(RenderTreeBuilder builder)
 		{
 			Begin();
@@ -38,27 +42,15 @@ namespace Blowdart.UI.Blazor
 			{
 				Ui.Invoke(Handler);
 			}
+
 			Ui.RenderToTarget(builder);
 		}
-		
+
 		private void Begin()
 		{
 			Sequence.Begin(0, this);
 			Ui.Begin();
 		}
-
-		#region Service Location
-
-		// ReSharper disable once UnusedAutoPropertyAccessor.Local
-		[Inject] private IServiceProvider ServiceProvider { get; set; }
-
-		protected override async Task OnInitializedAsync()
-		{
-			Ui.UiServices = new VirtualResolver(ServiceProvider, Ui);
-			await base.OnInitializedAsync();
-		}
-
-		#endregion
 
 		#region Data Loading
 
@@ -68,7 +60,7 @@ namespace Blowdart.UI.Blazor
 			{
 				Begin();
 				Ui.Invoke(Handler);
-				if(firstRender)
+				if (firstRender)
 					StateHasChanged();
 			}
 		}
@@ -107,14 +99,25 @@ namespace Blowdart.UI.Blazor
 				_ui = ui;
 			}
 
-			public object GetService(Type serviceType) => serviceType == typeof(Ui) ? _ui : _inner.GetService(serviceType);
+			public object GetService(Type serviceType)
+			{
+				return serviceType == typeof(Ui) ? _ui : _inner.GetService(serviceType);
+			}
 		}
 
 		#endregion
 
-		public void Dispose()
+		#region Service Location
+
+		// ReSharper disable once UnusedAutoPropertyAccessor.Local
+		[Inject] private IServiceProvider ServiceProvider { get; set; }
+
+		protected override async Task OnInitializedAsync()
 		{
-			Ui?.Dispose();
+			Ui.UiServices = new VirtualResolver(ServiceProvider, Ui);
+			await base.OnInitializedAsync();
 		}
+
+		#endregion
 	}
 }

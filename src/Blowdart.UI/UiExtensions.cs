@@ -11,7 +11,7 @@ namespace Blowdart.UI
 		{
 			ui.Add(new BeginElementInstruction(name, id));
 
-			while(ui.TryPopAttribute(out var attribute))
+			while (ui.TryPopAttribute(out var attribute))
 				ui.Attribute(attribute.name, attribute.value);
 
 			if (ui.TryPopStyle(out var style))
@@ -36,7 +36,7 @@ namespace Blowdart.UI
 		{
 			ui.Add(new TextInstruction(text));
 		}
-		
+
 		public static void Log(this Ui ui, string message)
 		{
 			ui.Add(new LogInstruction(message));

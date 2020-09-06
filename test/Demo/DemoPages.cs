@@ -8,14 +8,16 @@ namespace Demo
 {
 	public class DemoPages
 	{
+		private int _currentCount;
+
+		private IEnumerable<WeatherForecast> _forecasts;
+
 		public void Index(Ui ui)
 		{
 			ui.h1("Hello, world!");
 			ui._("Welcome to your new app.");
 			ui.SurveyPrompt("How is Blazor working for you?");
 		}
-
-		private int _currentCount;
 
 		public void Counter(Ui ui)
 		{
@@ -28,12 +30,10 @@ namespace Demo
 				_currentCount++;
 		}
 
-		private IEnumerable<WeatherForecast> _forecasts;
-		
 		public void FetchData(Ui ui)
 		{
 			ui.DataLoader<WeatherForecast[]>("sample-data/weather.json", d => { _forecasts = d; });
-			
+
 			ui.h1("Weather forecast");
 			ui.p("This component demonstrates fetching data from the server.");
 
@@ -58,7 +58,7 @@ namespace Demo
 
 					t.tbody(b =>
 					{
-						b.Repeat(_forecasts, (x, row) => 
+						b.Repeat(_forecasts, (x, row) =>
 						{
 							x.tr(r =>
 							{

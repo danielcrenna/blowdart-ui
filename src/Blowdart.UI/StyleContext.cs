@@ -9,10 +9,7 @@ namespace Blowdart.UI
 	{
 		private readonly StringBuilder _writer;
 
-		public StyleContext()
-		{
-			_writer = new StringBuilder();
-		}
+		public StyleContext() => _writer = new StringBuilder();
 
 		public StyleContext Named(string styleName)
 		{

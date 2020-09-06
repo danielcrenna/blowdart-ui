@@ -10,13 +10,15 @@ namespace Blowdart.UI
 {
 	public partial class Ui
 	{
-		private readonly MultiValueDictionary<Value128, string> _eventsHandled = 
+		private static readonly ImmutableList<string> NoEvents = new List<string>().ToImmutableList();
+
+		private readonly Hashtable _eventData = new Hashtable();
+
+		private readonly MultiValueDictionary<Value128, string> _eventsHandled =
 			MultiValueDictionary<Value128, string>.Create<HashSet<string>>();
 
 		private readonly MultiValueDictionary<string, Value128> _eventsRaised =
 			MultiValueDictionary<string, Value128>.Create<HashSet<Value128>>();
-		
-		private readonly Hashtable _eventData = new Hashtable();
 
 		internal void AddEvent(string eventType, Value128 id, object data)
 		{
@@ -38,16 +40,15 @@ namespace Blowdart.UI
 					_eventData.Remove(id);
 				return true;
 			}
-			
+
 			_eventsHandled.Add(id, eventType);
 			data = default;
 			return false;
 		}
 
-		private static readonly ImmutableList<string> NoEvents = new List<string>().ToImmutableList();
 		internal IEnumerable<string> GetEventsFor(Value128 id)
 		{
-			return _eventsHandled.TryGetValue(id, out var @events) ? @events : NoEvents;
+			return _eventsHandled.TryGetValue(id, out var events) ? events : NoEvents;
 		}
 	}
 }

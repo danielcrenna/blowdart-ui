@@ -15,7 +15,7 @@ namespace Demo
 				ui.BeginElement("a");
 				ui.Attribute("class", "navbar-brand");
 				ui.Attribute("href", "");
-				{	
+				{
 					ui._("BlazorApp1");
 					ui.EndElement("a");
 				}
@@ -26,7 +26,7 @@ namespace Demo
 					ui.BeginElement("span");
 					ui.Attribute("class", "navbar-toggler-icon");
 					ui.EndElement("span");
-					
+
 					ui.EndElement("button");
 				}
 
@@ -67,7 +67,7 @@ namespace Demo
 							ui._(" Counter");
 							ui.EndElement("a");
 						}
-						
+
 						ui.BeginElement("a");
 						ui.Attribute("class", "nav-link");
 						ui.Attribute("href", "fetchdata");
@@ -86,7 +86,7 @@ namespace Demo
 
 					ui.EndElement("ul");
 				}
-				
+
 				ui.EndElement("div");
 			}
 		}

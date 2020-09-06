@@ -9,12 +9,14 @@ namespace Blowdart.UI.Blazor
 {
 	internal static class RenderTreeBuilderExtensions
 	{
-		public static void OpenComponent<T>(this RenderTreeBuilder b, [CallerMemberName] string callerMemberName = null, [CallerLineNumber] int? callerLineNumber = null)
+		public static void OpenComponent<T>(this RenderTreeBuilder b, [CallerMemberName] string callerMemberName = null,
+			[CallerLineNumber] int? callerLineNumber = null)
 		{
 			b.OpenComponent(b.GetNextSequence(callerMemberName, callerLineNumber), typeof(T));
 		}
 
-		public static void OpenElement(this RenderTreeBuilder b, string elementName, [CallerMemberName] string callerMemberName = null, [CallerLineNumber] int? callerLineNumber = null)
+		public static void OpenElement(this RenderTreeBuilder b, string elementName,
+			[CallerMemberName] string callerMemberName = null, [CallerLineNumber] int? callerLineNumber = null)
 		{
 			b.OpenElement(b.GetNextSequence(callerMemberName, callerLineNumber), elementName);
 		}
@@ -29,22 +31,26 @@ namespace Blowdart.UI.Blazor
 			b.AddAttribute(HtmlAttributes.Class, cssClass);
 		}
 
-		public static void AddAttribute(this RenderTreeBuilder b, string name, bool value, [CallerMemberName] string callerMemberName = null, [CallerLineNumber] int? callerLineNumber = null)
+		public static void AddAttribute(this RenderTreeBuilder b, string name, bool value,
+			[CallerMemberName] string callerMemberName = null, [CallerLineNumber] int? callerLineNumber = null)
 		{
 			b.AddAttribute(b.GetNextSequence(callerMemberName, callerLineNumber), name, value);
 		}
 
-		public static void AddAttribute(this RenderTreeBuilder b, string name, string value, [CallerMemberName] string callerMemberName = null, [CallerLineNumber] int? callerLineNumber = null)
+		public static void AddAttribute(this RenderTreeBuilder b, string name, string value,
+			[CallerMemberName] string callerMemberName = null, [CallerLineNumber] int? callerLineNumber = null)
 		{
 			b.AddAttribute(b.GetNextSequence(callerMemberName, callerLineNumber), name, value);
 		}
 
-		public static void AddAttribute(this RenderTreeBuilder b, string name, object value, [CallerMemberName] string callerMemberName = null, [CallerLineNumber] int? callerLineNumber = null)
+		public static void AddAttribute(this RenderTreeBuilder b, string name, object value,
+			[CallerMemberName] string callerMemberName = null, [CallerLineNumber] int? callerLineNumber = null)
 		{
 			b.AddAttribute(b.GetNextSequence(callerMemberName, callerLineNumber), name, value);
 		}
 
-		public static void AddContent(this RenderTreeBuilder b, string textContent, [CallerMemberName] string callerMemberName = null, [CallerLineNumber] int? callerLineNumber = null)
+		public static void AddContent(this RenderTreeBuilder b, string textContent,
+			[CallerMemberName] string callerMemberName = null, [CallerLineNumber] int? callerLineNumber = null)
 		{
 			b.AddContent(b.GetNextSequence(callerMemberName, callerLineNumber), textContent);
 		}

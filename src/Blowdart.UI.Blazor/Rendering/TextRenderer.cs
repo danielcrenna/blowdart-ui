@@ -13,7 +13,7 @@ namespace Blowdart.UI.Blazor.Rendering
 		public void Render(RenderTreeBuilder b, TextInstruction instruction)
 		{
 			var content = instruction.Text?.ToString();
-			if(!string.IsNullOrEmpty(content))
+			if (!string.IsNullOrEmpty(content))
 				b.AddContent(content);
 		}
 	}

@@ -8,12 +8,12 @@ using Microsoft.AspNetCore.Components.Rendering;
 
 namespace Blowdart.UI.Blazor.Rendering
 {
-	internal sealed class ElementRenderer : 
+	internal sealed class ElementRenderer :
 		IRenderer<BeginElementInstruction, RenderTreeBuilder>,
 		IRenderer<EndElementInstruction, RenderTreeBuilder>
 	{
-		private readonly Stack<string> _pendingElements;
 		private readonly ImGui _imGui;
+		private readonly Stack<string> _pendingElements;
 
 		public ElementRenderer(ImGui imGui)
 		{
@@ -26,7 +26,7 @@ namespace Blowdart.UI.Blazor.Rendering
 			_pendingElements.Push(instruction.Name);
 
 			b.OpenElement(instruction.Name);
-			
+
 			if (instruction.Id.HasValue)
 			{
 				var id = instruction.Id.Value;
@@ -51,7 +51,8 @@ namespace Blowdart.UI.Blazor.Rendering
 		{
 			var elementType = _pendingElements.Peek();
 			if (elementType != instruction.Name)
-				throw new ArgumentException($"Attempted to end a mismatched element: expected '{instruction.Name}' but was '{elementType}'");
+				throw new ArgumentException(
+					$"Attempted to end a mismatched element: expected '{instruction.Name}' but was '{elementType}'");
 			b.CloseElement();
 			_pendingElements.Pop();
 		}

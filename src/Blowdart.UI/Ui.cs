@@ -18,7 +18,10 @@ namespace Blowdart.UI
 	{
 		private readonly List<RenderInstruction> _instructions;
 		private readonly RenderTarget _target;
-		
+		private int _count;
+
+		internal Value128 nextIdHash;
+
 		public Ui(RenderTarget target)
 		{
 			_target = target;
@@ -26,7 +29,9 @@ namespace Blowdart.UI
 		}
 
 		public IServiceProvider UiServices { get; internal set; }
-		
+
+		public int InstructionCount => _instructions.Count;
+
 		public void Begin()
 		{
 			nextIdHash = default;
@@ -37,8 +42,6 @@ namespace Blowdart.UI
 
 			CalledLayout = default;
 		}
-
-		public int InstructionCount => _instructions.Count;
 
 		public void RenderToTarget<TRenderer>(TRenderer renderer)
 		{
@@ -51,9 +54,6 @@ namespace Blowdart.UI
 			_instructions.Add(instruction);
 		}
 
-		internal Value128 nextIdHash;
-		private int _count;
-		
 		public Value128 NextId(string id = null, [CallerMemberName] string callerMemberName = null)
 		{
 			nextIdHash = Hashing.MurmurHash3(id ?? $"{callerMemberName}{_count++}", nextIdHash) ^ nextIdHash;
@@ -68,10 +68,29 @@ namespace Blowdart.UI
 
 		public Value128 NextId(int i)
 		{
-			nextIdHash = Hashing.MurmurHash3((ulong)i, nextIdHash) ^ nextIdHash;
+			nextIdHash = Hashing.MurmurHash3((ulong) i, nextIdHash) ^ nextIdHash;
 			return nextIdHash;
 		}
-		
+
+		#region Helpers
+
+		public void Repeat<T>(IEnumerable<T> items, Action<Ui, T> action)
+		{
+			foreach (var item in items)
+				action(this, item);
+		}
+
+		#endregion
+
+		public void Dispose()
+		{
+			_instructions?.Clear();
+			_handlers?.Clear();
+			_instances?.Clear();
+			_styles?.Clear();
+			_target?.Dispose();
+		}
+
 		#region Layouts
 
 		private string _body;
@@ -89,7 +108,9 @@ namespace Blowdart.UI
 			_body = body;
 		}
 
-		private readonly Dictionary<string, IMethodCallAccessor> _handlers = new Dictionary<string, IMethodCallAccessor>();
+		private readonly Dictionary<string, IMethodCallAccessor> _handlers =
+			new Dictionary<string, IMethodCallAccessor>();
+
 		private readonly Dictionary<string, object> _instances = new Dictionary<string, object>();
 
 		public void Invoke(string handler)
@@ -150,20 +171,29 @@ namespace Blowdart.UI
 
 		public void DataLoader<TService, TResult>(Func<TService, Task<TResult>> getData, Action<TResult> setData)
 		{
-			async Task<TResult> Fetch(IServiceProvider r) => await getData(r.GetRequiredService<TService>());
+			async Task<TResult> Fetch(IServiceProvider r)
+			{
+				return await getData(r.GetRequiredService<TService>());
+			}
 
 			_dataLoaders.Add(new Promise<TResult>(Fetch, setData));
 		}
 
 		public void DataLoader<TResult>(Func<HttpClient, Task<TResult>> getData, Action<TResult> setData)
 		{
-			async Task<TResult> Fetch(IServiceProvider r) => await getData(r.GetRequiredService<HttpClient>());
+			async Task<TResult> Fetch(IServiceProvider r)
+			{
+				return await getData(r.GetRequiredService<HttpClient>());
+			}
 
 			_dataLoaders.Add(new Promise<TResult>(Fetch, setData));
 		}
 
-		public void DataLoader<TResult>(string requestUri, Action<TResult> setData) => DataLoader(http => http.GetFromJsonAsync<TResult>(requestUri), setData);
-		
+		public void DataLoader<TResult>(string requestUri, Action<TResult> setData)
+		{
+			DataLoader(http => http.GetFromJsonAsync<TResult>(requestUri), setData);
+		}
+
 		internal async Task<bool> DispatchDataLoaders()
 		{
 			if (_dataLoaders.Count == 0)
@@ -174,7 +204,7 @@ namespace Blowdart.UI
 		}
 
 		#endregion
-		
+
 		#region Stack Objects
 
 		public void PushStyle(Action<StyleContext> styleBuilder)
@@ -183,6 +213,7 @@ namespace Blowdart.UI
 		}
 
 		private readonly Stack<Action<StyleContext>> _styles = new Stack<Action<StyleContext>>();
+
 		internal bool TryPopStyle(out Action<StyleContext> style)
 		{
 			if (_styles.Count == 0)
@@ -201,6 +232,7 @@ namespace Blowdart.UI
 		}
 
 		private readonly Stack<(string name, object value)> _attributes = new Stack<(string name, object value)>();
+
 		internal bool TryPopAttribute(out (string name, object value) attribute)
 		{
 			if (_attributes.Count == 0)
@@ -214,24 +246,5 @@ namespace Blowdart.UI
 		}
 
 		#endregion
-
-		#region Helpers
-
-		public void Repeat<T>(IEnumerable<T> items, Action<Ui, T> action)
-		{
-			foreach (var item in items)
-				action(this, item);
-		}
-
-		#endregion
-
-		public void Dispose()
-		{
-			_instructions?.Clear();
-			_handlers?.Clear();
-			_instances?.Clear();
-			_styles?.Clear();
-			_target?.Dispose();
-		}
 	}
 }

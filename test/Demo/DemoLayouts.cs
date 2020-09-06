@@ -13,7 +13,7 @@ namespace Demo
 		{
 			ui.BeginElement("div");
 			ui.Attribute("class", "sidebar");
-			{	
+			{
 				ui.NavBar(collapseNavMenu);
 				ui.EndElement("div");
 			}
@@ -43,7 +43,7 @@ namespace Demo
 					ui.Body();
 					ui.EndElement("div");
 				}
-				
+
 				ui.EndElement("div");
 			}
 		}

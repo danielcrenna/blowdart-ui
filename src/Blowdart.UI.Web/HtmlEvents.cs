@@ -1,8 +1,11 @@
-﻿// ReSharper disable CheckNamespace
+﻿// Copyright (c) Daniel Crenna & Contributors. All rights reserved.
+// Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
+
+// ReSharper disable CheckNamespace
 
 /// <summary>
-/// HTML Events
-/// Source: https://www.w3schools.com/TAGS/ref_eventattributes.asp
+///     HTML Events
+///     Source: https://www.w3schools.com/TAGS/ref_eventattributes.asp
 /// </summary>
 public static class HtmlEvents
 {
@@ -57,7 +60,7 @@ public static class HtmlEvents
 		public const string OnMouseUp = "onmouseup";
 		public const string OnWheel = "onwheel";
 	}
-		
+
 	public static class Drag
 	{
 		public const string OnDrag = "ondrag";
@@ -102,8 +105,8 @@ public static class HtmlEvents
 		public const string OnTimeUpdate = "ontimeupdate";
 		public const string OnVolumeChange = "onvolumechange";
 		public const string OnWaiting = "onwaiting";
-	} 
-	
+	}
+
 	public static class Misc
 	{
 		public const string OnToggle = "ontoggle";

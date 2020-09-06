@@ -5,5 +5,7 @@ using Microsoft.AspNetCore.Components.Rendering;
 
 namespace Blowdart.UI.Blazor
 {
-	internal sealed class WebRenderTarget : RenderTarget<RenderTreeBuilder> { }
+	internal sealed class WebRenderTarget : RenderTarget<RenderTreeBuilder>
+	{
+	}
 }

@@ -5,15 +5,15 @@ namespace Blowdart.UI.Instructions
 {
 	public sealed class AttributeInstruction : RenderInstruction
 	{
-		public object Key { get; }
-		public object Value { get; }
-
-		public string KeyString => Key is string key ? key : Key?.ToString() ?? string.Empty;
-
 		public AttributeInstruction(object key, object value)
 		{
 			Key = key;
 			Value = value;
 		}
+
+		public object Key { get; }
+		public object Value { get; }
+
+		public string KeyString => Key is string key ? key : Key?.ToString() ?? string.Empty;
 	}
 }

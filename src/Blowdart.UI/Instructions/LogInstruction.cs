@@ -5,11 +5,8 @@ namespace Blowdart.UI.Instructions
 {
 	public sealed class LogInstruction : RenderInstruction
 	{
-		public string Message { get; }
+		public LogInstruction(string message) => Message = message;
 
-		public LogInstruction(string message)
-		{
-			Message = message;
-		}
+		public string Message { get; }
 	}
 }
