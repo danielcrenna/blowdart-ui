@@ -11,6 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Blowdart.UI.Web\Blowdart.UI.Web.csproj" />
     <ProjectReference Include="..\Blowdart.UI\Blowdart.UI.csproj" />
   </ItemGroup>
 

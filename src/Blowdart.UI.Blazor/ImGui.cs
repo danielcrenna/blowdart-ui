@@ -6,6 +6,7 @@ using System.Diagnostics;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Rendering;
+using Microsoft.AspNetCore.Components.Web;
 
 namespace Blowdart.UI.Blazor
 {
@@ -82,14 +83,6 @@ namespace Blowdart.UI.Blazor
 
 		#region Events
 
-		public EventCallback<MouseEventArgs> OnClick(Value128 id)
-		{
-			return EventCallback.Factory.Create<MouseEventArgs>(this, args =>
-			{
-				OnEvent(id, "onclick", null);
-			});
-		}
-
 		private void OnEvent(Value128 id, string eventType, object? data)
 		{
 			var instructionCount = Ui.InstructionCount;
@@ -121,18 +114,6 @@ namespace Blowdart.UI.Blazor
 			}
 
 			public object? GetService(Type serviceType) => serviceType == typeof(Ui) ? _ui : _inner?.GetService(serviceType);
-		}
-
-		#endregion
-
-		#region Service Location
-
-		// ReSharper disable once UnusedAutoPropertyAccessor.Local
-		[Inject] private IServiceProvider ServiceProvider { get; set; }
-
-		protected override async Task OnInitializedAsync()
-		{
-			Ui.Dispose();
 		}
 
 		#endregion
