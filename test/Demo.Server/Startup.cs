@@ -1,4 +1,3 @@
-using Blowdart.UI;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -21,15 +20,7 @@ namespace Demo.Server
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddRazorPages();
-            services.AddServerSideBlazor();
             services.AddSingleton<WeatherForecastService>();
-
-            services.AddBlowdart(bd =>
-            {
-	            bd.AddPage("/", "DemoLayouts.MainLayout", "DemoPages.Index");
-	            bd.AddPage("/counter", "DemoLayouts.MainLayout", "DemoPages.Counter");
-	            bd.AddPage("/fetchdata", "DemoLayouts.MainLayout", "DemoPages.FetchData");
-            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -51,8 +42,8 @@ namespace Demo.Server
             app.UseRouting();
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapBlazorHub();
-                endpoints.MapFallbackToPage("/_Host");
+	            endpoints.MapRazorPages();
+	            endpoints.MapFallbackToFile("index.html");
             });
         }
     }

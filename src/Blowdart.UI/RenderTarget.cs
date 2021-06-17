@@ -6,8 +6,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
-using TypeKitchen;
-using TypeKitchen.Creation;
 
 namespace Blowdart.UI
 {
@@ -141,7 +139,7 @@ namespace Blowdart.UI
 			{
 				if (!_rendererInstances.TryGetValue(rendererType, out var renderer))
 					_rendererInstances.Add(rendererType,
-						renderer = (TInstructionRenderer) Instancing.CreateInstance(rendererType, args));
+						renderer = (TInstructionRenderer) Activator.CreateInstance(rendererType, args));
 				_renderers.Add(instructionType, renderer);
 				return true;
 			}

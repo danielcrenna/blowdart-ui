@@ -15,7 +15,7 @@ namespace Demo
             var builder = WebAssemblyHostBuilder.CreateDefault(args);
             builder.RootComponents.Add<App>("app");
 
-			builder.Services.AddSingleton(r => new HttpClient { BaseAddress = new Uri(r.GetRequiredService<NavigationManager>().BaseUri)});
+            builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
 			builder.Services.AddBlowdart(bd =>
 			{
 				bd.AddPage("/", "DemoLayouts.MainLayout", "DemoPages.Index");

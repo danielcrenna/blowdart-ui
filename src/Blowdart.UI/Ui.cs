@@ -5,14 +5,13 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Net.Http;
+using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using Blowdart.UI.Instructions;
 using Microsoft.Collections.Extensions;
 using Microsoft.Extensions.DependencyInjection;
-using TypeKitchen;
-using TypeKitchen.Creation;
 
 namespace Blowdart.UI
 {
@@ -129,7 +128,7 @@ namespace Blowdart.UI
 			_body = body;
 		}
 
-		private readonly Dictionary<string, IMethodCallAccessor> _handlers = new Dictionary<string, IMethodCallAccessor>();
+		private readonly Dictionary<string, MethodInfo> _handlers = new Dictionary<string, MethodInfo>();
 		private readonly Dictionary<string, object> _instances = new Dictionary<string, object>();
 
 		public void Invoke(string handler)
@@ -146,12 +145,12 @@ namespace Blowdart.UI
 					var type = resolver.FindFirstByName(typeString);
 					var method = type.GetMethod(methodString);
 
-					_instances[handler] = Instancing.CreateInstance(type, UiServices);
-					_handlers[handler] = accessor = CallAccessor.Create(method);
+					_instances[handler] = Activator.CreateInstance(type, UiServices);
+					_handlers[handler] = method;
 				}
 			}
 
-			accessor?.Call(_instances[handler], UiServices);
+			accessor?.Invoke(_instances[handler], new object[] { UiServices });
 		}
 
 		#endregion

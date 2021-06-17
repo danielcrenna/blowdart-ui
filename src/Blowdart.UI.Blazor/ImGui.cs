@@ -21,8 +21,8 @@ namespace Blowdart.UI.Blazor
 
 		internal Ui Ui { get; }
 
-		[Parameter] public string Layout { get; set; }
-		[Parameter] public string Handler { get; set; }
+		[Parameter] public string? Layout { get; set; }
+		[Parameter] public string? Handler { get; set; }
 
 		protected override void BuildRenderTree(RenderTreeBuilder builder)
 		{
@@ -50,7 +50,7 @@ namespace Blowdart.UI.Blazor
 		#region Service Location
 
 		// ReSharper disable once UnusedAutoPropertyAccessor.Local
-		[Inject] private IServiceProvider ServiceProvider { get; set; }
+		[Inject] private IServiceProvider? ServiceProvider { get; set; }
 
 		protected override async Task OnInitializedAsync()
 		{
@@ -85,7 +85,7 @@ namespace Blowdart.UI.Blazor
 			});
 		}
 
-		private void OnEvent(Value128 id, string eventType, object data)
+		private void OnEvent(Value128 id, string eventType, object? data)
 		{
 			var instructionCount = Ui.InstructionCount;
 
@@ -106,23 +106,23 @@ namespace Blowdart.UI.Blazor
 
 		private class VirtualResolver : IServiceProvider
 		{
-			private readonly IServiceProvider _inner;
+			private readonly IServiceProvider? _inner;
 			private readonly Ui _ui;
 
-			public VirtualResolver(IServiceProvider inner, Ui ui)
+			public VirtualResolver(IServiceProvider? inner, Ui ui)
 			{
 				_inner = inner;
 				_ui = ui;
 			}
 
-			public object GetService(Type serviceType) => serviceType == typeof(Ui) ? _ui : _inner.GetService(serviceType);
+			public object? GetService(Type serviceType) => serviceType == typeof(Ui) ? _ui : _inner?.GetService(serviceType);
 		}
 
 		#endregion
 
 		public void Dispose()
 		{
-			Ui?.Dispose();
+			Ui.Dispose();
 		}
 	}
 }
