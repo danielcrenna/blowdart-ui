@@ -10,23 +10,23 @@ namespace Demo
 		public static void NavBar(this Ui ui, bool collapse)
 		{
 			ui.BeginElement("div");
-			ui.PushAttribute("class", "top-row pl-4 navbar navbar-dark");
+			ui.Attribute("class", "top-row pl-4 navbar navbar-dark");
 			{
 				ui.BeginElement("a");
-				ui.PushAttribute("class", "navbar-brand");
-				ui.PushAttribute("href", "");
-				{	
+				ui.Attribute("class", "navbar-brand");
+				ui.Attribute("href", "");
+				{
 					ui._("BlazorApp1");
 					ui.EndElement("a");
 				}
 
 				ui.BeginElement("button");
-				ui.PushAttribute("class", "navbar-toggler");
+				ui.Attribute("class", "navbar-toggler");
 				{
 					ui.BeginElement("span");
-					ui.PushAttribute("class", "navbar-toggler-icon");
+					ui.Attribute("class", "navbar-toggler-icon");
 					ui.EndElement("span");
-					
+
 					ui.EndElement("button");
 				}
 
@@ -34,21 +34,21 @@ namespace Demo
 			}
 
 			ui.BeginElement("div");
-			ui.PushAttribute("class", collapse ? "collapse" : "");
+			ui.Attribute("class", collapse ? "collapse" : "");
 			{
 				ui.BeginElement("ul");
-				ui.PushAttribute("class", "nav flex-column");
+				ui.Attribute("class", "nav flex-column");
 				{
 					ui.BeginElement("li");
-					ui.PushAttribute("class", "nav-item px-3");
+					ui.Attribute("class", "nav-item px-3");
 					{
 						ui.BeginElement("a");
-						ui.PushAttribute("class", "nav-link");
-						ui.PushAttribute("href", "");
+						ui.Attribute("class", "nav-link");
+						ui.Attribute("href", "");
 						{
 							ui.BeginElement("span");
-							ui.PushAttribute("class", "oi oi-home");
-							ui.PushAttribute("aria-hidden", true);
+							ui.Attribute("class", "oi oi-home");
+							ui.Attribute("aria-hidden", true);
 							ui.EndElement("span");
 
 							ui._(" Home");
@@ -56,25 +56,25 @@ namespace Demo
 						}
 
 						ui.BeginElement("a");
-						ui.PushAttribute("class", "nav-link");
-						ui.PushAttribute("href", "counter");
+						ui.Attribute("class", "nav-link");
+						ui.Attribute("href", "counter");
 						{
 							ui.BeginElement("span");
-							ui.PushAttribute("class", "oi oi-plus");
-							ui.PushAttribute("aria-hidden", true);
+							ui.Attribute("class", "oi oi-plus");
+							ui.Attribute("aria-hidden", true);
 							ui.EndElement("span");
 
 							ui._(" Counter");
 							ui.EndElement("a");
 						}
-						
+
 						ui.BeginElement("a");
-						ui.PushAttribute("class", "nav-link");
-						ui.PushAttribute("href", "fetchdata");
+						ui.Attribute("class", "nav-link");
+						ui.Attribute("href", "fetchdata");
 						{
 							ui.BeginElement("span");
-							ui.PushAttribute("class", "oi oi-list-rich");
-							ui.PushAttribute("aria-hidden", true);
+							ui.Attribute("class", "oi oi-list-rich");
+							ui.Attribute("aria-hidden", true);
 							ui.EndElement("span");
 
 							ui._(" Fetch Data");
@@ -86,7 +86,7 @@ namespace Demo
 
 					ui.EndElement("ul");
 				}
-				
+
 				ui.EndElement("div");
 			}
 		}
@@ -94,12 +94,12 @@ namespace Demo
 		public static void SurveyPrompt(this Ui ui, string title)
 		{
 			ui.BeginElement("div");
-			ui.PushAttribute("class", "alert alert-secondary mt-4");
-			ui.PushAttribute("role", "alert");
+			ui.Attribute("class", "alert alert-secondary mt-4");
+			ui.Attribute("role", "alert");
 			{
 				ui.BeginElement("span");
-				ui.PushAttribute("class", "oi oi-pencil mr-2");
-				ui.PushAttribute("aria-hidden", true);
+				ui.Attribute("class", "oi oi-pencil mr-2");
+				ui.Attribute("aria-hidden", true);
 				ui.EndElement("span");
 
 				ui.BeginElement("strong");
@@ -107,14 +107,14 @@ namespace Demo
 				ui.EndElement("strong");
 
 				ui.BeginElement("span");
-				ui.PushAttribute("class", "text-nowrap");
+				ui.Attribute("class", "text-nowrap");
 				{
 					ui._(" Please take our ");
 					ui.BeginElement("a");
 					{
-						ui.PushAttribute("target", "_blank");
-						ui.PushAttribute("class", "font-weight-bold");
-						ui.PushAttribute("href", "https://go.microsoft.com/fwlink/?linkid=2121313");
+						ui.Attribute("target", "_blank");
+						ui.Attribute("class", "font-weight-bold");
+						ui.Attribute("href", "https://go.microsoft.com/fwlink/?linkid=2121313");
 						ui._(" brief survey");
 						ui.EndElement("a");
 					}

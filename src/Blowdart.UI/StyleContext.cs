@@ -9,14 +9,12 @@ namespace Blowdart.UI
 	{
 		private readonly StringBuilder _writer;
 
-		public StyleContext()
-		{
-			_writer = new StringBuilder();
-		}
+		public StyleContext() => _writer = new StringBuilder();
 
-		public void Named(string className)
+		public StyleContext Named(string styleName)
 		{
-			_writer.Append(className);
+			_writer.Append(styleName);
+			return this;
 		}
 
 		public override string ToString()

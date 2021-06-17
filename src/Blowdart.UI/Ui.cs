@@ -2,24 +2,24 @@
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
-using Blowdart.UI.Instructions;
-using Microsoft.Collections.Extensions;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Blowdart.UI
 {
-	public class Ui
+	public partial class Ui
 	{
 		private readonly List<RenderInstruction> _instructions;
 		private readonly RenderTarget _target;
-		
+		private int _count;
+
+		internal Value128 nextIdHash;
+
 		public Ui(RenderTarget target)
 		{
 			_target = target;
@@ -27,10 +27,12 @@ namespace Blowdart.UI
 		}
 
 		public IServiceProvider UiServices { get; internal set; }
-		
+
+		public int InstructionCount => _instructions.Count;
+
 		public void Begin()
 		{
-			NextIdHash = default;
+			nextIdHash = default;
 
 			_count = default;
 			_instructions?.Clear();
@@ -38,8 +40,6 @@ namespace Blowdart.UI
 
 			CalledLayout = default;
 		}
-
-		public int InstructionCount => _instructions.Count;
 
 		public void RenderToTarget<TRenderer>(TRenderer renderer)
 		{
@@ -52,64 +52,42 @@ namespace Blowdart.UI
 			_instructions.Add(instruction);
 		}
 
-		internal Value128 NextIdHash;
-		private int _count;
-
-		internal Value128 HashId(string id = null, [CallerMemberName] string callerMemberName = null)
-		{
-			NextIdHash = Hashing.MurmurHash3(id ?? $"{callerMemberName}{_count++}");
-			return NextIdHash;
-		}
-
 		public Value128 NextId(string id = null, [CallerMemberName] string callerMemberName = null)
 		{
-			NextIdHash = Hashing.MurmurHash3(id ?? $"{callerMemberName}{_count++}", NextIdHash) ^ NextIdHash;
-			return NextIdHash;
+			nextIdHash = Hashing.MurmurHash3(id ?? $"{callerMemberName}{_count++}", nextIdHash) ^ nextIdHash;
+			return nextIdHash;
 		}
 
 		public Value128 NextId(StringBuilder id)
 		{
-			NextIdHash = Hashing.MurmurHash3(id, NextIdHash) ^ NextIdHash;
-			return NextIdHash;
+			nextIdHash = Hashing.MurmurHash3(id, nextIdHash) ^ nextIdHash;
+			return nextIdHash;
 		}
 
 		public Value128 NextId(int i)
 		{
-			NextIdHash = Hashing.MurmurHash3((ulong)i, NextIdHash) ^ NextIdHash;
-			return NextIdHash;
+			nextIdHash = Hashing.MurmurHash3((ulong) i, nextIdHash) ^ nextIdHash;
+			return nextIdHash;
 		}
 
-		#region Events
+		#region Helpers
 
-		private readonly MultiValueDictionary<string, Value128> _events =
-			MultiValueDictionary<string, Value128>.Create<HashSet<Value128>>();
-
-		private readonly Hashtable _eventData = new Hashtable();
-
-		internal void AddEvent(string eventType, Value128 id, object data)
+		public void Repeat<T>(IEnumerable<T> items, Action<Ui, T> action)
 		{
-			_events.Add(eventType, id);
-			if (data != null)
-				_eventData[id] = data;
-		}
-
-		internal bool OnEvent(string eventType, Value128 id, out object data)
-		{
-			var contains = _events.Contains(eventType, id);
-			if (contains)
-			{
-				_events.Remove(eventType, id);
-				data = _eventData[id];
-				if (data != null)
-					_eventData.Remove(id);
-				return true;
-			}
-
-			data = default;
-			return false;
+			foreach (var item in items)
+				action(this, item);
 		}
 
 		#endregion
+
+		public void Dispose()
+		{
+			_instructions?.Clear();
+			_handlers?.Clear();
+			_instances?.Clear();
+			_styles?.Clear();
+			_target?.Dispose();
+		}
 
 		#region Layouts
 
@@ -120,7 +98,7 @@ namespace Blowdart.UI
 		public void Body()
 		{
 			CalledLayout = true;
-			Invoke(_body ?? throw new BlowdartException("Missing layout body"));
+			Invoke(_body ?? throw new UiException("Missing layout body"));
 		}
 
 		public void SetLayoutBody(string body)
@@ -189,16 +167,27 @@ namespace Blowdart.UI
 
 		public void DataLoader<TService, TResult>(Func<TService, Task<TResult>> getData, Action<TResult> setData)
 		{
-			async Task<TResult> Fetch(IServiceProvider r) => await getData(r.GetRequiredService<TService>());
+			async Task<TResult> Fetch(IServiceProvider r)
+			{
+				return await getData(r.GetRequiredService<TService>());
+			}
 
 			_dataLoaders.Add(new Promise<TResult>(Fetch, setData));
 		}
 
 		public void DataLoader<TResult>(Func<HttpClient, Task<TResult>> getData, Action<TResult> setData)
 		{
-			async Task<TResult> Fetch(IServiceProvider r) => await getData(r.GetRequiredService<HttpClient>());
+			async Task<TResult> Fetch(IServiceProvider r)
+			{
+				return await getData(r.GetRequiredService<HttpClient>());
+			}
 
 			_dataLoaders.Add(new Promise<TResult>(Fetch, setData));
+		}
+
+		public void DataLoader<TResult>(string requestUri, Action<TResult> setData)
+		{
+			DataLoader(http => http.GetFromJsonAsync<TResult>(requestUri), setData);
 		}
 
 		internal async Task<bool> DispatchDataLoaders()
@@ -213,11 +202,6 @@ namespace Blowdart.UI
 		#endregion
 
 		#region Stack Objects
-
-		public void PushAttribute(object key, object value)
-		{
-			Add(new AttributeInstruction(key, value));
-		}
 
 		public void PushStyle(Action<StyleContext> styleBuilder)
 		{
@@ -238,14 +222,25 @@ namespace Blowdart.UI
 			return true;
 		}
 
-		#endregion
-
-		public void Dispose()
+		public void PushAttribute(string key, object value)
 		{
-			_instructions?.Clear();
-			_handlers?.Clear();
-			_instances?.Clear();
-			_target?.Dispose();
+			_attributes.Push((key, value));
 		}
+
+		private readonly Stack<(string name, object value)> _attributes = new Stack<(string name, object value)>();
+
+		internal bool TryPopAttribute(out (string name, object value) attribute)
+		{
+			if (_attributes.Count == 0)
+			{
+				attribute = default;
+				return false;
+			}
+
+			attribute = _attributes.Pop();
+			return true;
+		}
+
+		#endregion
 	}
 }

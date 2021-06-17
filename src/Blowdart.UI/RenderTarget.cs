@@ -11,19 +11,19 @@ namespace Blowdart.UI
 {
 	public abstract class RenderTarget : IDisposable
 	{
-		internal abstract void AddInstructions(List<RenderInstruction> instructions);
-		internal abstract void Render(object renderer);
-		internal abstract void Begin();
-
-		protected virtual void Dispose(bool disposing) 
-		{
-			if (disposing) { }
-		}
-
 		public void Dispose()
 		{
 			Dispose(true);
 			GC.SuppressFinalize(this);
+		}
+
+		internal abstract void AddInstructions(List<RenderInstruction> instructions);
+		internal abstract void Render(object renderer);
+		internal abstract void Begin();
+
+		protected virtual void Dispose(bool disposing)
+		{
+			if (disposing) { }
 		}
 	}
 
@@ -111,7 +111,8 @@ namespace Blowdart.UI
 				throw new ArgumentException($"No renderer found for {key.Name}");
 
 			var methodType = typeof(IRenderer<,>).MakeGenericType(key, typeof(TRenderer));
-			var method = methodType.GetMethod(nameof(IRenderer<RenderInstruction, TRenderer>.Render)) ?? throw new NullReferenceException();
+			var method = methodType.GetMethod(nameof(IRenderer<RenderInstruction, TRenderer>.Render)) ??
+			             throw new NullReferenceException();
 			method.Invoke(instance, new object[] {renderer, instruction});
 		}
 

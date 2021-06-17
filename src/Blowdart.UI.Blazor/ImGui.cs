@@ -6,11 +6,10 @@ using System.Diagnostics;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Rendering;
-using Microsoft.AspNetCore.Components.Web;
 
 namespace Blowdart.UI.Blazor
 {
-	public sealed class ImGui : ComponentBase, IDisposable
+	public sealed partial class ImGui : ComponentBase, IDisposable
 	{
 		public ImGui()
 		{
@@ -24,6 +23,11 @@ namespace Blowdart.UI.Blazor
 		[Parameter] public string? Layout { get; set; }
 		[Parameter] public string? Handler { get; set; }
 
+		public void Dispose()
+		{
+			Ui?.Dispose();
+		}
+
 		protected override void BuildRenderTree(RenderTreeBuilder builder)
 		{
 			Begin();
@@ -32,15 +36,16 @@ namespace Blowdart.UI.Blazor
 				Ui.SetLayoutBody(Handler);
 				Ui.Invoke(Layout);
 				if (!Ui.CalledLayout)
-					throw new BlowdartException("Layout did not call ui.Body();");
+					throw new UiException("Layout did not call ui.Body();");
 			}
 			else
 			{
 				Ui.Invoke(Handler);
 			}
+
 			Ui.RenderToTarget(builder);
 		}
-		
+
 		private void Begin()
 		{
 			Sequence.Begin(0, this);
@@ -68,7 +73,7 @@ namespace Blowdart.UI.Blazor
 			{
 				Begin();
 				Ui.Invoke(Handler);
-				if(firstRender)
+				if (firstRender)
 					StateHasChanged();
 			}
 		}
@@ -120,9 +125,16 @@ namespace Blowdart.UI.Blazor
 
 		#endregion
 
-		public void Dispose()
+		#region Service Location
+
+		// ReSharper disable once UnusedAutoPropertyAccessor.Local
+		[Inject] private IServiceProvider ServiceProvider { get; set; }
+
+		protected override async Task OnInitializedAsync()
 		{
 			Ui.Dispose();
 		}
+
+		#endregion
 	}
 }

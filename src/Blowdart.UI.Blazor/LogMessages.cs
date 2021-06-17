@@ -11,13 +11,16 @@ namespace Blowdart.UI.Blazor
 		public static class ImGuiRouter
 		{
 			private static readonly Action<ILogger, string, string, Exception> _displayingNotFound =
-				LoggerMessage.Define<string, string>(LogLevel.Debug, new EventId(1, "DisplayingNotFound"), $"Displaying {nameof(Blazor.ImGuiRouter.NotFound)} because path '{{Path}}' with base URI '{{BaseUri}}' does not match any component route");
+				LoggerMessage.Define<string, string>(LogLevel.Debug, new EventId(1, "DisplayingNotFound"),
+					$"Displaying {nameof(Blazor.ImGuiRouter.NotFound)} because path '{{Path}}' with base URI '{{BaseUri}}' does not match any component route");
 
 			private static readonly Action<ILogger, Type, string, string, Exception> _navigatingToComponent =
-				LoggerMessage.Define<Type, string, string>(LogLevel.Debug, new EventId(2, "NavigatingToComponent"), "Navigating to component {ComponentType} in response to path '{Path}' with base URI '{BaseUri}'");
+				LoggerMessage.Define<Type, string, string>(LogLevel.Debug, new EventId(2, "NavigatingToComponent"),
+					"Navigating to component {ComponentType} in response to path '{Path}' with base URI '{BaseUri}'");
 
 			private static readonly Action<ILogger, string, string, string, Exception> _navigatingToExternalUri =
-				LoggerMessage.Define<string, string, string>(LogLevel.Debug, new EventId(3, "NavigatingToExternalUri"), "Navigating to non-component URI '{ExternalUri}' in response to path '{Path}' with base URI '{BaseUri}'");
+				LoggerMessage.Define<string, string, string>(LogLevel.Debug, new EventId(3, "NavigatingToExternalUri"),
+					"Navigating to non-component URI '{ExternalUri}' in response to path '{Path}' with base URI '{BaseUri}'");
 
 			internal static void DisplayingNotFound(ILogger logger, string path, string baseUri)
 			{
@@ -29,7 +32,8 @@ namespace Blowdart.UI.Blazor
 				_navigatingToComponent(logger, typeof(ImGui), path, baseUri, null);
 			}
 
-			internal static void NavigatingToExternalUri(ILogger logger, string externalUri, string path, string baseUri)
+			internal static void NavigatingToExternalUri(ILogger logger, string externalUri, string path,
+				string baseUri)
 			{
 				_navigatingToExternalUri(logger, externalUri, path, baseUri, null);
 			}

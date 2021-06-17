@@ -2,14 +2,16 @@
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
 using System.Collections.Generic;
-using System.Net.Http;
-using System.Net.Http.Json;
 using Blowdart.UI;
 
 namespace Demo
 {
 	public class DemoPages
 	{
+		private int _currentCount;
+
+		private IEnumerable<WeatherForecast> _forecasts;
+
 		public void Index(Ui ui)
 		{
 			ui.h1("Hello, world!");
@@ -17,25 +19,20 @@ namespace Demo
 			ui.SurveyPrompt("How is Blazor working for you?");
 		}
 
-		private int _currentCount;
-
 		public void Counter(Ui ui)
 		{
 			ui.h1("Counter");
 			ui.p($"Current count: {_currentCount}");
 
-			ui.PushStyle(x => x.Named("btn btn-primary"));
-			if (ui.Button("Click me"))
+			var id = ui.NextId();
+			ui.PushStyle(x => { x.Named("btn btn-primary"); });
+			if (ui.button("Click me", id).Click())
 				_currentCount++;
 		}
 
-		private IEnumerable<WeatherForecast> _forecasts;
-
 		public void FetchData(Ui ui)
 		{
-			ui.DataLoader<HttpClient, WeatherForecast[]>(
-				http => http.GetFromJsonAsync<WeatherForecast[]>("sample-data/weather.json"),
-				d => { _forecasts = d; });
+			ui.DataLoader<WeatherForecast[]>("sample-data/weather.json", d => { _forecasts = d; });
 
 			ui.h1("Weather forecast");
 			ui.p("This component demonstrates fetching data from the server.");
@@ -46,65 +43,33 @@ namespace Demo
 			}
 			else
 			{
-				ui.BeginElement("table");
+				ui.table(t =>
 				{
-					ui.BeginElement("thead");
+					t.thead(h =>
 					{
-						ui.BeginElement("tr");
+						h.tr(r =>
 						{
-							ui.BeginElement("th");
-							ui._("Date");
-							ui.EndElement("th");
+							r.th("Date");
+							r.th("Temp. (C)");
+							r.th("Temp. (F)");
+							r.th("Summary");
+						});
+					});
 
-							ui.BeginElement("th");
-							ui._("Temp. (C)");
-							ui.EndElement("th");
-
-							ui.BeginElement("th");
-							ui._("Temp. (F)");
-							ui.EndElement("th");
-
-							ui.BeginElement("th");
-							ui._("Summary");
-							ui.EndElement("th");
-
-							ui.EndElement("tr");
-						}
-
-						ui.EndElement("thead");
-					}
-
-					ui.BeginElement("tbody");
+					t.tbody(b =>
 					{
-						foreach (var forecast in _forecasts)
+						b.Repeat(_forecasts, (x, row) =>
 						{
-							ui.BeginElement("tr");
+							x.tr(r =>
 							{
-								ui.BeginElement("td");
-								ui._(forecast.Date);
-								ui.EndElement("td");
-
-								ui.BeginElement("td");
-								ui._(forecast.TemperatureC);
-								ui.EndElement("td");
-
-								ui.BeginElement("td");
-								ui._(forecast.TemperatureF);
-								ui.EndElement("td");
-
-								ui.BeginElement("td");
-								ui._(forecast.Summary);
-								ui.EndElement("td");
-
-								ui.EndElement("tr");
-							}
-						}
-
-						ui.EndElement("tbody");
-					}
-
-					ui.EndElement("table");
-				}
+								r.td(row.Date);
+								r.td(row.TemperatureC);
+								r.td(row.TemperatureF);
+								r.td(row.Summary);
+							});
+						});
+					});
+				});
 			}
 		}
 

@@ -5,11 +5,8 @@ namespace Blowdart.UI.Instructions
 {
 	public sealed class EndElementInstruction : RenderInstruction
 	{
-		public string Name { get; }
+		public EndElementInstruction(string name) => Name = name;
 
-		public EndElementInstruction(string name)
-		{
-			Name = name;
-		}
+		public string Name { get; }
 	}
 }
