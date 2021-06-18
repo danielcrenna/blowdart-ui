@@ -37,10 +37,10 @@ namespace Blowdart.UI
 
 		public ReflectionTypeResolver() : this(AppDomain.CurrentDomain.GetAssemblies(), null) { }
 
-		public Type FindFirstByName(string typeName)
+		public Type FindFirstByName(string name)
 		{
 			foreach (var type in _loadedTypes.Value)
-				if (type.Name.Equals(typeName, StringComparison.OrdinalIgnoreCase))
+				if (type.Name.Equals(name, StringComparison.OrdinalIgnoreCase))
 					return type;
 
 			return null;

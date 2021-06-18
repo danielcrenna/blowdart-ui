@@ -179,7 +179,6 @@ namespace Blowdart.UI.Blazor
         }
 
         #endregion
-
     }
 }
 

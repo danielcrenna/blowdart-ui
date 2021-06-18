@@ -10,6 +10,6 @@ namespace Blowdart.UI
 {
 	public interface ITypeResolver
 	{
-		Type FindFirstByName(string fullName);
+		Type FindFirstByName(string name);
 	}
 }

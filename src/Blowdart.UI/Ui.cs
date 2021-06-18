@@ -59,11 +59,7 @@ namespace Blowdart.UI
 			return nextIdHash;
 		}
 
-		public Value128 NextId(StringBuilder id)
-		{
-			nextIdHash = Hashing.MurmurHash3(id, nextIdHash) ^ nextIdHash;
-			return nextIdHash;
-		}
+		public Value128 NextId(StringBuilder id) => Ids.NextId(ref nextIdHash, id);
 
 		public Value128 NextId(int i)
 		{

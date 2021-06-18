@@ -51,8 +51,7 @@ namespace Blowdart.UI.Blazor.Rendering
 		{
 			var elementType = _pendingElements.Peek();
 			if (elementType != instruction.Name)
-				throw new ArgumentException(
-					$"Attempted to end a mismatched element: expected '{instruction.Name}' but was '{elementType}'");
+				throw new ArgumentException($"Attempted to end a mismatched element: expected '{instruction.Name}' but was '{elementType}'");
 			b.CloseElement();
 			_pendingElements.Pop();
 		}
