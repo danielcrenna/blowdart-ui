@@ -7,11 +7,10 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Blowdart.UI
+namespace Blowdart.UI;
+
+public static class EnumerableExtensions
 {
-	public static class EnumerableExtensions
-	{
-		public static List<T>? AsList<T>(this IEnumerable<T>? source) =>
-			(source == null || source is List<T>) ? (List<T>?) source : source.ToList();
-	}
+	public static List<T>? AsList<T>(this IEnumerable<T>? source) =>
+		source is null or List<T> ? (List<T>?) source : source.ToList();
 }

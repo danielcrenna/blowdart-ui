@@ -3,23 +3,20 @@
 
 using System.Text;
 
-namespace Blowdart.UI
+namespace Blowdart.UI;
+
+public sealed class StyleContext
 {
-	public sealed class StyleContext
+	private readonly StringBuilder _writer = new();
+
+	public StyleContext Named(string styleName)
 	{
-		private readonly StringBuilder _writer;
+		_writer.Append(styleName);
+		return this;
+	}
 
-		public StyleContext() => _writer = new StringBuilder();
-
-		public StyleContext Named(string styleName)
-		{
-			_writer.Append(styleName);
-			return this;
-		}
-
-		public override string ToString()
-		{
-			return _writer.ToString();
-		}
+	public override string ToString()
+	{
+		return _writer.ToString();
 	}
 }

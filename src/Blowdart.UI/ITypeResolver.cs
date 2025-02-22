@@ -6,10 +6,9 @@
 
 using System;
 
-namespace Blowdart.UI
+namespace Blowdart.UI;
+
+public interface ITypeResolver
 {
-	public interface ITypeResolver
-	{
-		Type FindFirstByName(string name);
-	}
+	Type? FindFirstByName(string name);
 }

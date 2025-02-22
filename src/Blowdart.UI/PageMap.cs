@@ -3,38 +3,31 @@
 
 using System.Collections.Generic;
 
-namespace Blowdart.UI
+namespace Blowdart.UI;
+
+public class PageMap
 {
-	public class PageMap
+	private readonly Dictionary<string, string> _handlers = new();
+	private readonly Dictionary<string, string> _layouts = new();
+
+	public string? GetHandler(string template)
 	{
-		private readonly Dictionary<string, string> _handlers;
-		private readonly Dictionary<string, string> _layouts;
+		return _handlers.GetValueOrDefault(template);
+	}
 
-		public PageMap()
-		{
-			_handlers = new Dictionary<string, string>();
-			_layouts = new Dictionary<string, string>();
-		}
+	public string? GetLayout(string template)
+	{
+		return _layouts.GetValueOrDefault(template);
+	}
 
-		public string GetHandler(string template)
-		{
-			return _handlers.TryGetValue(template, out var handler) ? handler : null;
-		}
+	public void AddPage(string template, string handler)
+	{
+		_handlers.Add(template, handler);
+	}
 
-		public string GetLayout(string template)
-		{
-			return _layouts.TryGetValue(template, out var handler) ? handler : null;
-		}
-
-		public void AddPage(string template, string handler)
-		{
-			_handlers.Add(template, handler);
-		}
-
-		public void AddPage(string template, string layout, string handler)
-		{
-			_layouts.Add(template, layout);
-			_handlers.Add(template, handler);
-		}
+	public void AddPage(string template, string layout, string handler)
+	{
+		_layouts.Add(template, layout);
+		_handlers.Add(template, handler);
 	}
 }

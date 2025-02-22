@@ -3,10 +3,6 @@
 
 using System;
 
-namespace Blowdart.UI
-{
-	public sealed class UiException : Exception
-	{
-		public UiException(string message) : base(message) { }
-	}
-}
+namespace Blowdart.UI;
+
+public sealed class UiException(string message) : Exception(message);

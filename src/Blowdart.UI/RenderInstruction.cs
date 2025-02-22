@@ -3,11 +3,10 @@
 
 using System.Diagnostics;
 
-namespace Blowdart.UI
+namespace Blowdart.UI;
+
+[DebuggerDisplay("{" + nameof(DebuggerDisplay) + "}")]
+public abstract class RenderInstruction
 {
-	[DebuggerDisplay("{" + nameof(DebuggerDisplay) + "}")]
-	public abstract class RenderInstruction
-	{
-		public virtual string DebuggerDisplay => GetType().Name.Replace("Instruction", string.Empty);
-	}
+	public virtual string DebuggerDisplay => GetType().Name.Replace("Instruction", string.Empty);
 }

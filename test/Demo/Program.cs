@@ -1,33 +1,25 @@
-// Copyright (c) Daniel Crenna & Contributors. All rights reserved.
-// Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
-
-using System;
-using System.Net.Http;
-using System.Threading.Tasks;
 using Blowdart.UI;
-using Microsoft.AspNetCore.Components;
+using Demo;
+using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
-using Microsoft.Extensions.DependencyInjection;
 
-namespace Demo
+var builder = WebAssemblyHostBuilder.CreateDefault(args);
+builder.RootComponents.Add<App>("#app");
+builder.RootComponents.Add<HeadOutlet>("head::after");
+
+builder.Services.AddScoped(_ => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
+
+builder.Logging.SetMinimumLevel(LogLevel.Information);
+builder.Services.AddLogging(logging => 
 {
-	public class Program
-	{
-		public static async Task Main(string[] args)
-		{
-			var builder = WebAssemblyHostBuilder.CreateDefault(args);
-			builder.RootComponents.Add<App>("app");
+	logging.SetMinimumLevel(LogLevel.Debug);
+});
 
-			builder.Services.AddSingleton(r =>
-				new HttpClient {BaseAddress = new Uri(r.GetRequiredService<NavigationManager>().BaseUri)});
-			builder.Services.AddBlowdart(bd =>
-			{
-				bd.AddPage("/", "DemoLayouts.MainLayout", "DemoPages.Index");
-				bd.AddPage("/counter", "DemoLayouts.MainLayout", "DemoPages.Counter");
-				bd.AddPage("/fetchdata", "DemoLayouts.MainLayout", "DemoPages.FetchData");
-			});
+builder.Services.AddBlowdart(bd =>
+{
+	bd.AddPage("/", "DemoLayouts.MainLayout", "DemoPages.Index");
+	bd.AddPage("/counter", "DemoLayouts.MainLayout", "DemoPages.Counter");
+	bd.AddPage("/weather", "DemoLayouts.MainLayout", "DemoPages.Weather");
+});
 
-			await builder.Build().RunAsync();
-		}
-	}
-}
+await builder.Build().RunAsync();

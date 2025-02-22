@@ -8,447 +8,448 @@ using Microsoft.AspNetCore.Components.Web;
 using Xunit;
 using Xunit.Abstractions;
 
-namespace Blowdart.UI.Tests
+namespace Blowdart.UI.Tests;
+
+public class WebElementsGenerator
 {
-    public class WebElementsGenerator
-    {
-	    private readonly ITestOutputHelper _output;
+	private readonly ITestOutputHelper _output;
 
-	    private readonly List<string> _html5Tags;
-	    private readonly Dictionary<string, string[]> _attributesToTags;
-	    private readonly Dictionary<string, string[]> _tagsToAttributes;
-	    private static readonly string[] GlobalScope = {"*"};
+	private readonly List<string> _html5Tags;
+	private readonly Dictionary<string, string[]> _attributesToTags;
+	private readonly Dictionary<string, string[]> _tagsToAttributes;
+	private static readonly string[] GlobalScope = ["*"];
 
-	    public WebElementsGenerator(ITestOutputHelper output)
-	    {
-		    _output = output;
+	public WebElementsGenerator(ITestOutputHelper output)
+	{
+		_output = output;
 
-		    #region HTML References
+		#region HTML References
 
-			// HTML5 Tags
-			// Source: https://www.w3schools.com/TAGS/default.ASP
-			//
-		    _html5Tags = new List<string>
-		    {
-			    "a", "abbr", "address", "area", "article", "aside", "audio", 
-			    "b", "@base", "bdi", "bdo", "blockquote", "body", "br", "button",
-				"canvas", "cite", "code", "col", "colgroup", "data", "datalist", "dd", "del", "details", "dfn", "dialog", "div", "dl", "dt",
-				"em", "embed",
-				"fieldset", "figcaption", "figure", "footer", "form",
-				"h1", "h2", "h3", "h4", "h5", "h6", "head", "header", "hr", "html",
-				"i", "iframe", "img", "input", "ins",
-				"kbd",
-				"label", "legend", "li", "link", "main", "map", "mark", "meta", "meter",
-				"nav", "noscript",
-				"@object", "ol", "optgroup", "option", "output",
-				"p", "param", "picture", "pre", "progress",
-				"q", 
-				"rp", "rt", "ruby", "s", "samp", "script", "section", "select", "small", "source", "span", "strong", "style", "sub", "summary", "sup", "svg",
-				"table", "tbody", "td", "template", "textarea", "tfoot", "th", "thead", "time", "title", "tr", "track", 
-				"u", "ul",
-				"var", "video",
-				"wbr"
-		    };
+		// HTML5 Tags
+		// Source: https://www.w3schools.com/TAGS/default.ASP
+		//
+		_html5Tags =
+		[
+			"a", "abbr", "address", "area", "article", "aside", "audio",
+			"b", "@base", "bdi", "bdo", "blockquote", "body", "br", "button",
+			"canvas", "cite", "code", "col", "colgroup", "data", "datalist", "dd", "del", "details", "dfn", "dialog",
+			"div", "dl", "dt",
+			"em", "embed",
+			"fieldset", "figcaption", "figure", "footer", "form",
+			"h1", "h2", "h3", "h4", "h5", "h6", "head", "header", "hr", "html",
+			"i", "iframe", "img", "input", "ins",
+			"kbd",
+			"label", "legend", "li", "link", "main", "map", "mark", "meta", "meter",
+			"nav", "noscript",
+			"@object", "ol", "optgroup", "option", "output",
+			"p", "param", "picture", "pre", "progress",
+			"q",
+			"rp", "rt", "ruby", "s", "samp", "script", "section", "select", "small", "source", "span", "strong",
+			"style", "sub", "summary", "sup", "svg",
+			"table", "tbody", "td", "template", "textarea", "tfoot", "th", "thead", "time", "title", "tr", "track",
+			"u", "ul",
+			"var", "video",
+			"wbr"
+		];
 
-			// HTML5 Attributes
-			// Source: https://www.w3schools.com/tags/ref_attributes.asp
-			//
+		// HTML5 Attributes
+		// Source: https://www.w3schools.com/tags/ref_attributes.asp
+		//
 
-			_attributesToTags = new Dictionary<string, string[]>
-			{
-				{"accept", new[] {"input"}},
-				{"action", new[] {"form"}},
-				{"alt", new[] {"area", "img", "input"}},
-				{"async", new[] {"script"}},
-				{"autocomplete", new[] {"form", "input"}},
+		_attributesToTags = new Dictionary<string, string[]>
+		{
+			{"accept", ["input"] },
+			{"action", ["form"] },
+			{"alt", ["area", "img", "input"] },
+			{"async", ["script"] },
+			{"autocomplete", ["form", "input"] },
 				
-				// Global Attributes				
-				{"accesskey", GlobalScope},
-				{"@class", GlobalScope},
-				{"contenteditable", GlobalScope},
-			};
+			// Global Attributes				
+			{"accesskey", GlobalScope},
+			{"@class", GlobalScope},
+			{"contenteditable", GlobalScope},
+		};
 
-			_tagsToAttributes = new Dictionary<string, string[]>();
+		_tagsToAttributes = new Dictionary<string, string[]>();
 
-			var tags = _attributesToTags.Values.SelectMany(x => x).OrderBy(x => x).Distinct();
+		var tags = _attributesToTags.Values.SelectMany(x => x).OrderBy(x => x).Distinct();
 
-			foreach(var tagWithAttributes in tags)
+		foreach(var tagWithAttributes in tags)
+		{
+			var attributes = new List<string>();
+
+			foreach(var (k, v) in _attributesToTags)
 			{
-				var attributes = new List<string>();
-
-				foreach(var (k, v) in _attributesToTags)
+				if(v.Contains(tagWithAttributes) || v.Contains("*"))
 				{
-					if(v.Contains(tagWithAttributes) || v.Contains("*"))
-					{
-						attributes.Add(k);
-					}
+					attributes.Add(k);
 				}
-
-				_tagsToAttributes.Add(tagWithAttributes, attributes.ToArray());
 			}
 
-			#endregion
-	    }
+			_tagsToAttributes.Add(tagWithAttributes, attributes.ToArray());
+		}
 
-	    [Fact]
-	    public void GenerateHtmlTags()
-	    {
-		    var sb = new StringBuilder();
-		    sb.AppendAutoGeneratedHeader();
+		#endregion
+	}
 
-		    sb.AppendLine("// ReSharper disable InconsistentNaming");
-		    sb.AppendLine("// ReSharper disable CheckNamespace");
-		    sb.AppendLine();
+	[Fact]
+	public void GenerateHtmlTags()
+	{
+		var sb = new StringBuilder();
+		sb.AppendAutoGeneratedHeader();
+
+		sb.AppendLine("// ReSharper disable InconsistentNaming");
+		sb.AppendLine("// ReSharper disable CheckNamespace");
+		sb.AppendLine();
 			
-		    sb.AppendLine("public static class HtmlTags");
-		    sb.AppendLine("{");
-		    foreach (var tag in _html5Tags)
-		    {
-			    var name = CultureInfo.InvariantCulture.TextInfo.ToTitleCase(tag).TrimStart('@');
-			    sb.AppendLine($"    public const string {name} = \"{tag.TrimStart('@')}\";");
-		    }
-		    sb.AppendLine("}");
+		sb.AppendLine("public static class HtmlTags");
+		sb.AppendLine("{");
+		foreach (var tag in _html5Tags)
+		{
+			var name = CultureInfo.InvariantCulture.TextInfo.ToTitleCase(tag).TrimStart('@');
+			sb.AppendLine($"    public const string {name} = \"{tag.TrimStart('@')}\";");
+		}
+		sb.AppendLine("}");
 
-		    _output.WriteLine(sb.ToString());
-	    }
+		_output.WriteLine(sb.ToString());
+	}
 
-	    [Fact]
-	    public void GenerateHtmlAttributes()
-	    {
-		    var sb = new StringBuilder();
-		    sb.AppendAutoGeneratedHeader();
+	[Fact]
+	public void GenerateHtmlAttributes()
+	{
+		var sb = new StringBuilder();
+		sb.AppendAutoGeneratedHeader();
 
-		    sb.AppendLine("// ReSharper disable InconsistentNaming");
-		    sb.AppendLine("// ReSharper disable CheckNamespace");
-		    sb.AppendLine();
+		sb.AppendLine("// ReSharper disable InconsistentNaming");
+		sb.AppendLine("// ReSharper disable CheckNamespace");
+		sb.AppendLine();
 			
-		    sb.AppendLine("public static class HtmlAttributes");
-		    sb.AppendLine("{");
-		    foreach (var tag in _attributesToTags.Keys.OrderBy(x => x))
-		    {
-			    var name = CultureInfo.InvariantCulture.TextInfo.ToTitleCase(tag).TrimStart('@');
-			    sb.AppendLine($"    public const string {name} = \"{tag.TrimStart('@')}\";");
-		    }
-		    sb.AppendLine("}");
+		sb.AppendLine("public static class HtmlAttributes");
+		sb.AppendLine("{");
+		foreach (var tag in _attributesToTags.Keys.OrderBy(x => x))
+		{
+			var name = CultureInfo.InvariantCulture.TextInfo.ToTitleCase(tag).TrimStart('@');
+			sb.AppendLine($"    public const string {name} = \"{tag.TrimStart('@')}\";");
+		}
+		sb.AppendLine("}");
 
-		    _output.WriteLine(sb.ToString());
-	    }
+		_output.WriteLine(sb.ToString());
+	}
 		
-		[Fact]
-		public void GenerateInlineDirectives()
-		{
-			var sb = new StringBuilder();
-			sb.AppendAutoGeneratedHeader();
+	[Fact]
+	public void GenerateInlineDirectives()
+	{
+		var sb = new StringBuilder();
+		sb.AppendAutoGeneratedHeader();
 
-			sb.AppendLine("// ReSharper disable InconsistentNaming");
-			sb.AppendLine("// ReSharper disable CheckNamespace");
-			sb.AppendLine();
+		sb.AppendLine("// ReSharper disable InconsistentNaming");
+		sb.AppendLine("// ReSharper disable CheckNamespace");
+		sb.AppendLine();
 
-			sb.AppendLine("using Blowdart.UI;");
-			sb.AppendLine();
+		sb.AppendLine("using Blowdart.UI;");
+		sb.AppendLine();
 
-			sb.AppendLine("public static partial class WebElements");
-			sb.AppendLine("{");
+		sb.AppendLine("public static partial class WebElements");
+		sb.AppendLine("{");
 			
-			sb.AppendLine("    #region Inline Directives");
-			sb.AppendLine();
-			foreach (var tag in _html5Tags)
-			{
-				var name = CultureInfo.InvariantCulture.TextInfo.ToTitleCase(tag).TrimStart('@');
-				sb.AppendLine($"    public static ElementRef {tag}(this Ui ui, object inner, Value128? id = default) => InlineDirective(ui, HtmlTags.{name}, inner, id);");
-			}
-			sb.AppendLine();
-			sb.AppendLine("    #endregion");
+		sb.AppendLine("    #region Inline Directives");
+		sb.AppendLine();
+		foreach (var tag in _html5Tags)
+		{
+			var name = CultureInfo.InvariantCulture.TextInfo.ToTitleCase(tag).TrimStart('@');
+			sb.AppendLine($"    public static ElementRef {tag}(this Ui ui, object inner, Value128? id = default) => InlineDirective(ui, HtmlTags.{name}, inner, id);");
+		}
+		sb.AppendLine();
+		sb.AppendLine("    #endregion");
 
-			sb.AppendLine();
-			sb.AppendLine("    #region Inline Directives w/ Attributes");
-			sb.AppendLine();
-			foreach (var tag in _html5Tags)
-			{
-				if (!_tagsToAttributes.TryGetValue(tag, out var attributes))
-					continue;
+		sb.AppendLine();
+		sb.AppendLine("    #region Inline Directives w/ Attributes");
+		sb.AppendLine();
+		foreach (var tag in _html5Tags)
+		{
+			if (!_tagsToAttributes.TryGetValue(tag, out var attributes))
+				continue;
 
-				var parameters = new StringBuilder();
-				foreach (var attribute in attributes)
-					parameters.Append($", string {attribute} = default");
+			var parameters = new StringBuilder();
+			foreach (var attribute in attributes)
+				parameters.Append($", string {attribute} = default");
 
-				sb.AppendLine($"    public static ElementRef {tag}(this Ui ui, object inner{parameters}, Value128? id = default)");
-				sb.AppendLine($"    {{");
+			sb.AppendLine($"    public static ElementRef {tag}(this Ui ui, object inner{parameters}, Value128? id = default)");
+			sb.AppendLine($"    {{");
 				
-				sb.AppendLine($"        #region Attributes");
-				sb.AppendLine();
-				foreach(var attribute in attributes)
-					sb.AppendLine($"        if({attribute} != default) ui.PushAttribute(nameof({attribute}), {attribute});");
-				sb.AppendLine();
-				sb.AppendLine($"        #endregion");
-
-				var name = CultureInfo.InvariantCulture.TextInfo.ToTitleCase(tag).TrimStart('@');
-
-				sb.AppendLine();
-				sb.AppendLine($"        return InlineDirective(ui, HtmlTags.{name}, inner, id);");
-				sb.AppendLine($"    }}");
-				sb.AppendLine();
-			}
+			sb.AppendLine($"        #region Attributes");
 			sb.AppendLine();
-			sb.AppendLine("    #endregion");
+			foreach(var attribute in attributes)
+				sb.AppendLine($"        if({attribute} != default) ui.PushAttribute(nameof({attribute}), {attribute});");
+			sb.AppendLine();
+			sb.AppendLine($"        #endregion");
+
+			var name = CultureInfo.InvariantCulture.TextInfo.ToTitleCase(tag).TrimStart('@');
 
 			sb.AppendLine();
-			sb.AppendLine("}");
-
-			_output.WriteLine(sb.ToString());
+			sb.AppendLine($"        return InlineDirective(ui, HtmlTags.{name}, inner, id);");
+			sb.AppendLine($"    }}");
+			sb.AppendLine();
 		}
+		sb.AppendLine();
+		sb.AppendLine("    #endregion");
 
-		[Fact]
-		public void GenerateNestedDirectives()
+		sb.AppendLine();
+		sb.AppendLine("}");
+
+		_output.WriteLine(sb.ToString());
+	}
+
+	[Fact]
+	public void GenerateNestedDirectives()
+	{
+		var sb = new StringBuilder();
+		sb.AppendAutoGeneratedHeader();
+
+		sb.AppendLine("// ReSharper disable InconsistentNaming");
+		sb.AppendLine("// ReSharper disable CheckNamespace");
+		sb.AppendLine();
+
+		sb.AppendLine("using System;");
+		sb.AppendLine("using Blowdart.UI;");
+		sb.AppendLine();
+
+		sb.AppendLine("public static partial class WebElements");
+		sb.AppendLine("{");
+		sb.AppendLine("    #region Nested Directives");
+		sb.AppendLine();
+		foreach (var tag in _html5Tags)
 		{
-			var sb = new StringBuilder();
-			sb.AppendAutoGeneratedHeader();
-
-			sb.AppendLine("// ReSharper disable InconsistentNaming");
-			sb.AppendLine("// ReSharper disable CheckNamespace");
-			sb.AppendLine();
-
-			sb.AppendLine("using System;");
-			sb.AppendLine("using Blowdart.UI;");
-			sb.AppendLine();
-
-			sb.AppendLine("public static partial class WebElements");
-			sb.AppendLine("{");
-			sb.AppendLine("    #region Nested Directives");
-			sb.AppendLine();
-			foreach (var tag in _html5Tags)
-			{
-				var name = CultureInfo.InvariantCulture.TextInfo.ToTitleCase(tag).TrimStart('@');
-				sb.AppendLine($"    public static ElementRef {tag}(this Ui ui, Action<Ui> closure, Value128? id = default) => NestedDirective(ui, HtmlTags.{name}, closure, id);");
-			}
-			sb.AppendLine();
-			sb.AppendLine("    #endregion");
+			var name = CultureInfo.InvariantCulture.TextInfo.ToTitleCase(tag).TrimStart('@');
+			sb.AppendLine($"    public static ElementRef {tag}(this Ui ui, Action<Ui> closure, Value128? id = default) => NestedDirective(ui, HtmlTags.{name}, closure, id);");
+		}
+		sb.AppendLine();
+		sb.AppendLine("    #endregion");
 			
-			sb.AppendLine();
-			sb.AppendLine("    #region Nested Directives w/ Attributes");
-			sb.AppendLine();
-			foreach (var tag in _html5Tags)
-			{
-				if (!_tagsToAttributes.TryGetValue(tag, out var attributes))
-					continue;
+		sb.AppendLine();
+		sb.AppendLine("    #region Nested Directives w/ Attributes");
+		sb.AppendLine();
+		foreach (var tag in _html5Tags)
+		{
+			if (!_tagsToAttributes.TryGetValue(tag, out var attributes))
+				continue;
 
-				var parameters = new StringBuilder();
-				foreach (var attribute in attributes)
-					parameters.Append($", string {attribute} = default");
+			var parameters = new StringBuilder();
+			foreach (var attribute in attributes)
+				parameters.Append($", string {attribute} = default");
 
-				sb.AppendLine($"    public static ElementRef {tag}(this Ui ui, Action<Ui> closure{parameters}, Value128? id = default)");
-				sb.AppendLine($"    {{");
+			sb.AppendLine($"    public static ElementRef {tag}(this Ui ui, Action<Ui> closure{parameters}, Value128? id = default)");
+			sb.AppendLine($"    {{");
 				
-				sb.AppendLine($"        #region Attributes");
-				sb.AppendLine();
-				foreach(var attribute in attributes)
-					sb.AppendLine($"        if({attribute} != default) ui.PushAttribute(nameof({attribute}), {attribute});");
-				sb.AppendLine();
-				sb.AppendLine($"        #endregion");
-
-				var name = CultureInfo.InvariantCulture.TextInfo.ToTitleCase(tag).TrimStart('@');
-
-				sb.AppendLine();
-				sb.AppendLine($"        return NestedDirective(ui, HtmlTags.{name}, closure, id);");
-				sb.AppendLine($"    }}");
-				sb.AppendLine();
-			}
+			sb.AppendLine($"        #region Attributes");
 			sb.AppendLine();
-			sb.AppendLine("    #endregion");
+			foreach(var attribute in attributes)
+				sb.AppendLine($"        if({attribute} != default) ui.PushAttribute(nameof({attribute}), {attribute});");
+			sb.AppendLine();
+			sb.AppendLine($"        #endregion");
 
+			var name = CultureInfo.InvariantCulture.TextInfo.ToTitleCase(tag).TrimStart('@');
 
-			sb.AppendLine("}");
-
-			_output.WriteLine(sb.ToString());
+			sb.AppendLine();
+			sb.AppendLine($"        return NestedDirective(ui, HtmlTags.{name}, closure, id);");
+			sb.AppendLine($"    }}");
+			sb.AppendLine();
 		}
+		sb.AppendLine();
+		sb.AppendLine("    #endregion");
 
-		[Fact]
-		public void GenerateElementReferenceEvents()
-		{
-			var sb = new StringBuilder();
-			sb.AppendAutoGeneratedHeader();
 
-			sb.AppendLine("// ReSharper disable InconsistentNaming");
-			sb.AppendLine("// ReSharper disable CheckNamespace");
-			sb.AppendLine();
+		sb.AppendLine("}");
 
-			sb.AppendLine("using Blowdart.UI;");
-			sb.AppendLine();
+		_output.WriteLine(sb.ToString());
+	}
 
-			sb.AppendLine("public static partial class WebElements");
-			sb.AppendLine("{");
-			sb.AppendLine("    #region Element-Bound Events");
-			sb.AppendLine();
+	[Fact]
+	public void GenerateElementReferenceEvents()
+	{
+		var sb = new StringBuilder();
+		sb.AppendAutoGeneratedHeader();
 
-			GenerateEventReferenceTest(typeof(HtmlEvents.Keyboard), sb);
-			GenerateEventReferenceTest(typeof(HtmlEvents.Mouse), sb);
-			GenerateEventReferenceTest(typeof(HtmlEvents.Clipboard), sb);
-			GenerateEventReferenceTest(typeof(HtmlEvents.Drag), sb);
+		sb.AppendLine("// ReSharper disable InconsistentNaming");
+		sb.AppendLine("// ReSharper disable CheckNamespace");
+		sb.AppendLine();
+
+		sb.AppendLine("using Blowdart.UI;");
+		sb.AppendLine();
+
+		sb.AppendLine("public static partial class WebElements");
+		sb.AppendLine("{");
+		sb.AppendLine("    #region Element-Bound Events");
+		sb.AppendLine();
+
+		GenerateEventReferenceTest(typeof(HtmlEvents.Keyboard), sb);
+		GenerateEventReferenceTest(typeof(HtmlEvents.Mouse), sb);
+		GenerateEventReferenceTest(typeof(HtmlEvents.Clipboard), sb);
+		GenerateEventReferenceTest(typeof(HtmlEvents.Drag), sb);
 			
-			sb.AppendLine("    #endregion");
-			sb.AppendLine("}");
+		sb.AppendLine("    #endregion");
+		sb.AppendLine("}");
 
-			_output.WriteLine(sb.ToString());
-		}
+		_output.WriteLine(sb.ToString());
+	}
 
-		[Fact]
-		public void GenerateImGuiEvents()
+	[Fact]
+	public void GenerateImGuiEvents()
+	{
+		var sb = new StringBuilder();
+		sb.AppendAutoGeneratedHeader();
+
+		sb.AppendLine("using Microsoft.AspNetCore.Components;");
+		sb.AppendLine("using Microsoft.AspNetCore.Components.Web;");
+		sb.AppendLine();
+
+		sb.AppendLine("namespace Blowdart.UI.Blazor");
+		sb.AppendLine("{");
+		sb.AppendLine("    partial class ImGui");
+		sb.AppendLine("    {");
+
+		GenerateEventCallbacks<KeyboardEventArgs>(typeof(HtmlEvents.Keyboard), sb);
+		GenerateEventCallbacks<MouseEventArgs>(typeof(HtmlEvents.Mouse), sb);
+		GenerateEventCallbacks<ClipboardEventArgs>(typeof(HtmlEvents.Clipboard), sb);
+		GenerateEventCallbacks<DragEventArgs>(typeof(HtmlEvents.Drag), sb);
+
+		sb.AppendLine("    }");
+		sb.AppendLine("}");
+
+		_output.WriteLine(sb.ToString());
+	}
+
+	private static void GenerateEventCallbacks<TEventArgs>(Type scope, StringBuilder sb) where TEventArgs : EventArgs
+	{
+		var declaringType = scope.DeclaringType;
+		sb.AppendLine(declaringType != null
+			? $"        #region {scope.Name.Replace(declaringType.Name, string.Empty)}"
+			: $"        #region {scope.Name}");
+		sb.AppendLine();
+
+		const BindingFlags bindingFlags = BindingFlags.Public | BindingFlags.Static | BindingFlags.FlattenHierarchy;
+
+		var events = scope.GetFields(bindingFlags)
+			.Where(fi => fi.IsLiteral && !fi.IsInitOnly).ToList();
+
+		var eventArgs = typeof(TEventArgs).Name;
+
+		foreach (var @event in events)
 		{
-			var sb = new StringBuilder();
-			sb.AppendAutoGeneratedHeader();
-
-			sb.AppendLine("using Microsoft.AspNetCore.Components;");
-			sb.AppendLine("using Microsoft.AspNetCore.Components.Web;");
-			sb.AppendLine();
-
-			sb.AppendLine("namespace Blowdart.UI.Blazor");
-			sb.AppendLine("{");
-			sb.AppendLine("    partial class ImGui");
-			sb.AppendLine("    {");
-
-			GenerateEventCallbacks<KeyboardEventArgs>(typeof(HtmlEvents.Keyboard), sb);
-			GenerateEventCallbacks<MouseEventArgs>(typeof(HtmlEvents.Mouse), sb);
-			GenerateEventCallbacks<ClipboardEventArgs>(typeof(HtmlEvents.Clipboard), sb);
-			GenerateEventCallbacks<DragEventArgs>(typeof(HtmlEvents.Drag), sb);
-
-			sb.AppendLine("    }");
-			sb.AppendLine("}");
-
-			_output.WriteLine(sb.ToString());
-		}
-
-	    private static void GenerateEventCallbacks<TEventArgs>(Type scope, StringBuilder sb) where TEventArgs : EventArgs
-		{
-			var declaringType = scope.DeclaringType;
+			sb.AppendLine($"        public EventCallback<{eventArgs}> {@event.Name}(Value128 id)");
+			sb.AppendLine($"        {{");
+			sb.AppendLine($"            return EventCallback.Factory.Create<{eventArgs}>(this, args =>");
+			sb.AppendLine($"            {{");
 			sb.AppendLine(declaringType != null
-				? $"        #region {scope.Name.Replace(declaringType.Name, string.Empty)}"
-				: $"        #region {scope.Name}");
-			sb.AppendLine();
-
-			const BindingFlags bindingFlags = BindingFlags.Public | BindingFlags.Static | BindingFlags.FlattenHierarchy;
-
-			var events = scope.GetFields(bindingFlags)
-				.Where(fi => fi.IsLiteral && !fi.IsInitOnly).ToList();
-
-			var eventArgs = typeof(TEventArgs).Name;
-
-			foreach (var @event in events)
-			{
-				sb.AppendLine($"        public EventCallback<{eventArgs}> {@event.Name}(Value128 id)");
-				sb.AppendLine($"        {{");
-				sb.AppendLine($"            return EventCallback.Factory.Create<{eventArgs}>(this, args =>");
-				sb.AppendLine($"            {{");
-				sb.AppendLine(declaringType != null
-					? $"                OnEvent(id, {declaringType.Name}.{scope.Name}.{@event.Name}, null);"
-					: $"                OnEvent(id, {scope.Name}.{@event.Name}, null);");
-				sb.AppendLine($"            }});");
-				sb.AppendLine($"        }}");
-				sb.AppendLine();
-			}
-
-			sb.AppendLine("        #endregion");
+				? $"                OnEvent(id, {declaringType.Name}.{scope.Name}.{@event.Name}, null);"
+				: $"                OnEvent(id, {scope.Name}.{@event.Name}, null);");
+			sb.AppendLine($"            }});");
+			sb.AppendLine($"        }}");
 			sb.AppendLine();
 		}
 
-	    private static void GenerateEventReferenceTest(Type scope, StringBuilder sb)
-	    {
-		    var declaringType = scope.DeclaringType;
-		    sb.AppendLine(declaringType != null
-			    ? $"        #region {scope.Name.Replace(declaringType.Name, string.Empty)}"
-			    : $"        #region {scope.Name}");
-		    sb.AppendLine();
+		sb.AppendLine("        #endregion");
+		sb.AppendLine();
+	}
 
-		    const BindingFlags bindingFlags = BindingFlags.Public | BindingFlags.Static | BindingFlags.FlattenHierarchy;
+	private static void GenerateEventReferenceTest(Type scope, StringBuilder sb)
+	{
+		var declaringType = scope.DeclaringType;
+		sb.AppendLine(declaringType != null
+			? $"        #region {scope.Name.Replace(declaringType.Name, string.Empty)}"
+			: $"        #region {scope.Name}");
+		sb.AppendLine();
 
-		    var events = scope.GetFields(bindingFlags)
-			    .Where(fi => fi.IsLiteral && !fi.IsInitOnly).ToList();
+		const BindingFlags bindingFlags = BindingFlags.Public | BindingFlags.Static | BindingFlags.FlattenHierarchy;
 
-		    foreach (var @event in events)
-		    {
-			    var eventName = declaringType != null
-				    ? $"{declaringType.Name}.{scope.Name}.{@event.Name}"
-				    : $"{scope.Name}.{@event.Name}";
+		var events = scope.GetFields(bindingFlags)
+			.Where(fi => fi is { IsLiteral: true, IsInitOnly: false }).ToList();
 
-			    var methodName = @event.Name.Replace("On", string.Empty);
+		foreach (var @event in events)
+		{
+			var eventName = declaringType != null
+				? $"{declaringType.Name}.{scope.Name}.{@event.Name}"
+				: $"{scope.Name}.{@event.Name}";
 
-			    sb.AppendLine($"        public static bool {methodName}(this ElementRef e) => e.OnEvent({eventName}, out _);");
-		    }
+			var methodName = @event.Name.Replace("On", string.Empty);
 
-		    sb.AppendLine();
-		    sb.AppendLine("        #endregion");
-		    sb.AppendLine();
-	    }
+			sb.AppendLine($"        public static bool {methodName}(this ElementRef e) => e.OnEvent({eventName}, out _);");
+		}
 
-	    [Fact]
-	    public void GenerateRenderTreeBuilderExtensionsHtmlInline()
-	    {
-			// public static RenderTreeBuilder BeginH3(this RenderTreeBuilder b) => b.ElementOpen("h3");
-			// public static RenderTreeBuilder EndH3(this RenderTreeBuilder b) => b.ElementClose("h3");
+		sb.AppendLine();
+		sb.AppendLine("        #endregion");
+		sb.AppendLine();
+	}
 
-			var sb = new StringBuilder();
-			sb.AppendAutoGeneratedHeader();
+	[Fact]
+	public void GenerateRenderTreeBuilderExtensionsHtmlInline()
+	{
+		// public static RenderTreeBuilder BeginH3(this RenderTreeBuilder b) => b.ElementOpen("h3");
+		// public static RenderTreeBuilder EndH3(this RenderTreeBuilder b) => b.ElementClose("h3");
 
-			sb.AppendLine("using System;");
-			sb.AppendLine("using System.Diagnostics.CodeAnalysis;");
-			sb.AppendLine("using Microsoft.AspNetCore.Components.Rendering;");
-			sb.AppendLine();
+		var sb = new StringBuilder();
+		sb.AppendAutoGeneratedHeader();
 
-			sb.AppendLine("// ReSharper disable InconsistentNaming");
-			sb.AppendLine("// ReSharper disable UnusedMember.Global");
-			sb.AppendLine();
+		sb.AppendLine("using System;");
+		sb.AppendLine("using System.Diagnostics.CodeAnalysis;");
+		sb.AppendLine("using Microsoft.AspNetCore.Components.Rendering;");
+		sb.AppendLine();
 
-			sb.AppendLine("namespace Blowdart.UI.Blazor");
-			sb.AppendLine("{");
-			sb.AppendLine("    [SuppressMessage(\"Style\", \"IDE1006:Naming Styles\", Justification = \"HTML elements\")]");
-			sb.AppendLine("    partial class RenderTreeBuilderExtensions");
-			sb.AppendLine("    {");
+		sb.AppendLine("// ReSharper disable InconsistentNaming");
+		sb.AppendLine("// ReSharper disable UnusedMember.Global");
+		sb.AppendLine();
+
+		sb.AppendLine("namespace Blowdart.UI.Blazor");
+		sb.AppendLine("{");
+		sb.AppendLine("    [SuppressMessage(\"Style\", \"IDE1006:Naming Styles\", Justification = \"HTML elements\")]");
+		sb.AppendLine("    partial class RenderTreeBuilderExtensions");
+		sb.AppendLine("    {");
 			
-			foreach (var tag in _html5Tags)
-			{
-				sb.AppendLine($"        public static RenderTreeBuilder {tag}(this RenderTreeBuilder b, Action<RenderTreeBuilder>? action = default) => ElementInline(b, \"{tag}\", action);");
-				sb.AppendLine();
-			}
+		foreach (var tag in _html5Tags)
+		{
+			sb.AppendLine($"        public static RenderTreeBuilder {tag}(this RenderTreeBuilder b, Action<RenderTreeBuilder>? action = default) => ElementInline(b, \"{tag}\", action);");
+			sb.AppendLine();
+		}
 
-			sb.AppendLine("    }");
-			sb.AppendLine("}");
+		sb.AppendLine("    }");
+		sb.AppendLine("}");
 
-			_output.WriteLine(sb.ToString());
-	    }
+		_output.WriteLine(sb.ToString());
+	}
 
-	    [Fact]
-	    public void GenerateRenderTreeBuilderExtensionsHtml()
-	    {
-		    var sb = new StringBuilder();
-		    sb.AppendAutoGeneratedHeader();
+	[Fact]
+	public void GenerateRenderTreeBuilderExtensionsHtml()
+	{
+		var sb = new StringBuilder();
+		sb.AppendAutoGeneratedHeader();
 
-		    sb.AppendLine("using System;");
-		    sb.AppendLine("using System.Diagnostics.CodeAnalysis;");
-		    sb.AppendLine("using Microsoft.AspNetCore.Components.Rendering;");
-		    sb.AppendLine();
+		sb.AppendLine("using System;");
+		sb.AppendLine("using System.Diagnostics.CodeAnalysis;");
+		sb.AppendLine("using Microsoft.AspNetCore.Components.Rendering;");
+		sb.AppendLine();
 
-		    sb.AppendLine("// ReSharper disable InconsistentNaming");
-		    sb.AppendLine("// ReSharper disable UnusedMember.Global");
-		    sb.AppendLine();
+		sb.AppendLine("// ReSharper disable InconsistentNaming");
+		sb.AppendLine("// ReSharper disable UnusedMember.Global");
+		sb.AppendLine();
 
-		    sb.AppendLine("namespace Blowdart.UI.Blazor");
-		    sb.AppendLine("{");
-		    sb.AppendLine("    [SuppressMessage(\"Style\", \"IDE1006:Naming Styles\", Justification = \"HTML elements\")]");
-		    sb.AppendLine("    public static partial class RenderTreeBuilderExtensions");
-		    sb.AppendLine("    {");
+		sb.AppendLine("namespace Blowdart.UI.Blazor");
+		sb.AppendLine("{");
+		sb.AppendLine("    [SuppressMessage(\"Style\", \"IDE1006:Naming Styles\", Justification = \"HTML elements\")]");
+		sb.AppendLine("    public static partial class RenderTreeBuilderExtensions");
+		sb.AppendLine("    {");
 			
-		    foreach (var tag in _html5Tags)
-		    {
-			    var name = CultureInfo.InvariantCulture.TextInfo.ToTitleCase(tag).TrimStart('@');
+		foreach (var tag in _html5Tags)
+		{
+			var name = CultureInfo.InvariantCulture.TextInfo.ToTitleCase(tag).TrimStart('@');
 
-			    sb.AppendLine($"        public static RenderTreeBuilder Begin{name}(this RenderTreeBuilder b) => b.ElementOpen(\"{tag.TrimStart('@')}\");");
-			    sb.AppendLine($"        public static RenderTreeBuilder End{name}(this RenderTreeBuilder b) => b.ElementClose(\"{tag.TrimStart('@')}\");");
-			    sb.AppendLine();
-		    }
+			sb.AppendLine($"        public static RenderTreeBuilder Begin{name}(this RenderTreeBuilder b) => b.ElementOpen(\"{tag.TrimStart('@')}\");");
+			sb.AppendLine($"        public static RenderTreeBuilder End{name}(this RenderTreeBuilder b) => b.ElementClose(\"{tag.TrimStart('@')}\");");
+			sb.AppendLine();
+		}
 
-		    sb.AppendLine("    }");
-		    sb.AppendLine("}");
+		sb.AppendLine("    }");
+		sb.AppendLine("}");
 
-		    _output.WriteLine(sb.ToString());
-	    }
-    }
+		_output.WriteLine(sb.ToString());
+	}
 }

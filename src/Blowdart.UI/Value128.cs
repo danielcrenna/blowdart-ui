@@ -30,13 +30,13 @@ namespace Blowdart.UI
 		{
 			return new Value128
 			{
-				v1 = Convert.ToUInt64(id.Substring(0, 16), 16), v2 = Convert.ToUInt64(id.Substring(16, 16), 16)
+				v1 = Convert.ToUInt64(id[..16], 16), v2 = Convert.ToUInt64(id.Substring(16, 16), 16)
 			};
 		}
 
 		#region Object guff
 
-		public override bool Equals(object obj)
+		public override bool Equals(object? obj)
 		{
 			return obj is Value128 o && o == this;
 		}

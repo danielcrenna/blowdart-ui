@@ -24,10 +24,10 @@ namespace Blowdart.UI
 		public Ui(RenderTarget target)
 		{
 			_target = target;
-			_instructions = new List<RenderInstruction>();
+			_instructions = [];
 		}
 
-		public IServiceProvider UiServices { get; internal set; }
+		public IServiceProvider UiServices { get; set; } = null!;
 
 		public int InstructionCount => _instructions.Count;
 
@@ -36,13 +36,13 @@ namespace Blowdart.UI
 			nextIdHash = default;
 
 			_count = default;
-			_instructions?.Clear();
+			_instructions.Clear();
 			_target?.Begin();
 
 			CalledLayout = default;
 		}
 
-		public void RenderToTarget<TRenderer>(TRenderer renderer)
+		public void RenderToTarget<TRenderer>(TRenderer? renderer)
 		{
 			_target.AddInstructions(_instructions);
 			_target.Render(renderer);
@@ -53,7 +53,7 @@ namespace Blowdart.UI
 			_instructions.Add(instruction);
 		}
 
-		public Value128 NextId(string id = null, [CallerMemberName] string callerMemberName = null)
+		public Value128 NextId(string? id = null, [CallerMemberName] string? callerMemberName = null)
 		{
 			nextIdHash = Hashing.MurmurHash3(id ?? $"{callerMemberName}{_count++}", nextIdHash) ^ nextIdHash;
 			return nextIdHash;
@@ -79,18 +79,18 @@ namespace Blowdart.UI
 
 		public void Dispose()
 		{
-			_instructions?.Clear();
-			_handlers?.Clear();
-			_instances?.Clear();
-			_styles?.Clear();
-			_target?.Dispose();
+			_instructions.Clear();
+			_handlers.Clear();
+			_instances.Clear();
+			_styles.Clear();
+			_target.Dispose();
 		}
 
 		#region Layouts
 
-		private string _body;
+		private string? _body;
 
-		internal bool CalledLayout { get; private set; }
+		public bool CalledLayout { get; private set; }
 
 		public void Body()
 		{
@@ -98,16 +98,19 @@ namespace Blowdart.UI
 			Invoke(_body ?? throw new UiException("Missing layout body"));
 		}
 
-		public void SetLayoutBody(string body)
+		public void SetLayoutBody(string? body)
 		{
 			_body = body;
 		}
 
-		private readonly Dictionary<string, MethodInfo> _handlers = new Dictionary<string, MethodInfo>();
-		private readonly Dictionary<string, object> _instances = new Dictionary<string, object>();
+		private readonly Dictionary<string, MethodInfo> _handlers = new();
+		private readonly Dictionary<string, object?> _instances = [];
 
-		public void Invoke(string handler)
+		public void Invoke(string? handler)
 		{
+			if (handler == null)
+				return;
+
 			if (!_handlers.TryGetValue(handler, out var accessor))
 			{
 				var tokens = handler.Split('.');
@@ -118,76 +121,83 @@ namespace Blowdart.UI
 
 					var resolver = UiServices.GetRequiredService<ITypeResolver>();
 					var type = resolver.FindFirstByName(typeString);
-					var method = type.GetMethod(methodString);
 
-					_instances[handler] = Activator.CreateInstance(type, UiServices);
-					_handlers[handler] = method;
+					if (type != null)
+					{
+						var instance = Activator.CreateInstance(type); // , UiServices);
+						_instances[handler] = instance;
+					}
+
+					var method = type?.GetMethod(methodString); // use resolver cache
+					if (method != null)
+					{
+						_handlers[handler] = method;
+					}
+
+					accessor = method;
 				}
 			}
 
-			accessor?.Invoke(_instances[handler], new object[] { UiServices });
+			{
+				var instance = _instances[handler];
+				_ = accessor?.Invoke(instance, [this]); // , [UiServices]);
+			}
 		}
 
 		#endregion
 
 		#region Data Loading
 
-		private readonly List<IPromise> _dataLoaders = new List<IPromise>();
+		private readonly List<IPromise> _dataLoaders = [];
 
 		private interface IPromise
 		{
 			Task LoadAsync(IServiceProvider serviceProvider);
 		}
 
-		private struct Promise<T> : IPromise
+		private readonly struct Promise<T>(Func<IServiceProvider, Task<T?>> getData, Action<T?> setData) : IPromise
 		{
-			private readonly Func<IServiceProvider, Task<T>> _getData;
-			private readonly Action<T> _setData;
-
-			public Promise(Func<IServiceProvider, Task<T>> getData, Action<T> setData)
-			{
-				_getData = getData;
-				_setData = setData;
-			}
-
 			public async Task LoadAsync(IServiceProvider serviceProvider)
 			{
-				var data = await _getData(serviceProvider);
-				_setData(data);
+				var data = await getData(serviceProvider);
+				setData(data);
 			}
 		}
 
-		public void DataLoader<TResult>(Func<IServiceProvider, Task<TResult>> getData, Action<TResult> setData)
+		public void DataLoader<TResult>(Func<IServiceProvider, Task<TResult?>> getData, Action<TResult?> setData)
 		{
 			_dataLoaders.Add(new Promise<TResult>(getData, setData));
 		}
 
-		public void DataLoader<TService, TResult>(Func<TService, Task<TResult>> getData, Action<TResult> setData)
+		public void DataLoader<TService, TResult>(Func<TService, Task<TResult?>> getData, Action<TResult?> setData) 
+			where TService : notnull
 		{
-			async Task<TResult> Fetch(IServiceProvider r)
+			_dataLoaders.Add(new Promise<TResult>(Fetch, setData));
+			return;
+
+			async Task<TResult?> Fetch(IServiceProvider r)
 			{
 				return await getData(r.GetRequiredService<TService>());
 			}
-
-			_dataLoaders.Add(new Promise<TResult>(Fetch, setData));
 		}
 
-		public void DataLoader<TResult>(Func<HttpClient, Task<TResult>> getData, Action<TResult> setData)
+		public void DataLoader<TResult>(Func<HttpClient, Task<TResult?>> getData, Action<TResult?> setData)
 		{
-			async Task<TResult> Fetch(IServiceProvider r)
+			_dataLoaders.Add(new Promise<TResult>(Fetch, setData));
+			return;
+
+			async Task<TResult?> Fetch(IServiceProvider r)
 			{
 				return await getData(r.GetRequiredService<HttpClient>());
 			}
-
-			_dataLoaders.Add(new Promise<TResult>(Fetch, setData));
 		}
 
-		public void DataLoader<TResult>(string requestUri, Action<TResult> setData)
+		public void DataLoader<TResult>(string requestUri, Action<TResult?> setData)
 		{
 			DataLoader(http => http.GetFromJsonAsync<TResult>(requestUri), setData);
 		}
 
-		internal async Task<bool> DispatchDataLoaders()
+		public async Task<bool> DispatchDataLoaders()
 		{
 			if (_dataLoaders.Count == 0)
 				return false;
@@ -205,9 +215,9 @@ namespace Blowdart.UI
 			_styles.Push(styleBuilder);
 		}
 
-		private readonly Stack<Action<StyleContext>> _styles = new Stack<Action<StyleContext>>();
+		private readonly Stack<Action<StyleContext>> _styles = [];
 
-		internal bool TryPopStyle(out Action<StyleContext> style)
+		public bool TryPopStyle(out Action<StyleContext>? style)
 		{
 			if (_styles.Count == 0)
 			{
@@ -224,7 +234,7 @@ namespace Blowdart.UI
 			_attributes.Push((key, value));
 		}
 
-		private readonly Stack<(string name, object value)> _attributes = new Stack<(string name, object value)>();
+		private readonly Stack<(string name, object value)> _attributes = [];
 
 		internal bool TryPopAttribute(out (string name, object value) attribute)
 		{

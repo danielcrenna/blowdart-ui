@@ -3,21 +3,12 @@
 
 namespace Blowdart.UI
 {
-	public struct ElementRef
+	public readonly struct ElementRef(Ui ui, Value128? id = default)
 	{
-		private readonly Value128? _id;
-		private readonly Ui _ui;
-
-		public ElementRef(Ui ui, Value128? id = default)
+		public bool OnEvent(string eventType, out object? data)
 		{
-			_ui = ui;
-			_id = id;
-		}
-
-		internal bool OnEvent(string eventType, out object data)
-		{
-			if (_id.HasValue)
-				return _ui.OnEvent(eventType, _id.Value, out data);
+			if (id.HasValue)
+				return ui.OnEvent(eventType, id.Value, out data);
 			data = default;
 			return false;
 		}

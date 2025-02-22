@@ -4,51 +4,61 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.Immutable;
-using Microsoft.Collections.Extensions;
 
-namespace Blowdart.UI
+namespace Blowdart.UI;
+
+public partial class Ui
 {
-	public partial class Ui
+	private static readonly ImmutableList<string> NoEvents = new List<string>().ToImmutableList();
+
+	private readonly Hashtable _eventData = new();
+
+	private readonly Dictionary<Value128, HashSet<string>> _eventsHandled = new();
+	private readonly Dictionary<string, HashSet<Value128>> _eventsRaised = new();
+ 
+	public void AddEvent(string eventType, Value128 id, object? data)
 	{
-		private static readonly ImmutableList<string> NoEvents = new List<string>().ToImmutableList();
+		if (!_eventsRaised.ContainsKey(eventType))
+			_eventsRaised[eventType] = [];
 
-		private readonly Hashtable _eventData = new Hashtable();
+		_eventsRaised[eventType].Add(id);
 
-		private readonly MultiValueDictionary<Value128, string> _eventsHandled =
-			MultiValueDictionary<Value128, string>.Create<HashSet<string>>();
+		if (data != null)
+			_eventData[id] = data;
+	}
 
-		private readonly MultiValueDictionary<string, Value128> _eventsRaised =
-			MultiValueDictionary<string, Value128>.Create<HashSet<Value128>>();
-
-		internal void AddEvent(string eventType, Value128 id, object data)
+	internal bool OnEvent(string eventType, Value128 id, out object? data)
+	{
+		if (_eventsRaised.ContainsKey(eventType) && _eventsRaised[eventType].Contains(id))
 		{
-			_eventsRaised.Add(eventType, id);
-			if (data != null)
-				_eventData[id] = data;
-		}
+			_eventsRaised[eventType].Remove(id);
+			if (_eventsRaised[eventType].Count == 0)
+				_eventsRaised.Remove(eventType);
 
-		internal bool OnEvent(string eventType, Value128 id, out object data)
-		{
-			var contains = _eventsRaised.Contains(eventType, id);
-			if (contains)
+			if (_eventsHandled.ContainsKey(id))
 			{
-				_eventsRaised.Remove(eventType, id);
-				_eventsHandled.Remove(id, eventType);
-
-				data = _eventData[id];
-				if (data != null)
-					_eventData.Remove(id);
-				return true;
+				_eventsHandled[id].Remove(eventType);
+				if (_eventsHandled[id].Count == 0)
+					_eventsHandled.Remove(id);
 			}
 
-			_eventsHandled.Add(id, eventType);
-			data = default;
-			return false;
+			data = _eventData[id];
+			if (data != null)
+				_eventData.Remove(id);
+			return true;
 		}
 
-		internal IEnumerable<string> GetEventsFor(Value128 id)
-		{
-			return _eventsHandled.TryGetValue(id, out var events) ? events : NoEvents;
-		}
+		if (!_eventsHandled.ContainsKey(id))
+			_eventsHandled[id] = [];
+
+		_eventsHandled[id].Add(eventType);
+
+		data = default;
+		return false;
+	}
+
+	public IEnumerable<string> GetEventsFor(Value128 id)
+	{
+		return _eventsHandled.TryGetValue(id, out var events) ? events : NoEvents;
 	}
 }
