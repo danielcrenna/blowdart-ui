@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Daniel Crenna & Contributors. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
+using System;
 using System.Text;
 
 namespace Blowdart.UI
@@ -10,39 +11,22 @@ namespace Blowdart.UI
 		/// <summary>
 		///     <see href="https://en.wikipedia.org/wiki/MurmurHash" />
 		/// </summary>
-		public static Value128 MurmurHash3(byte[] key, Value128 seed = default)
+		public static UInt128 MurmurHash3(byte[] key, UInt128 seed = default)
 		{
-			var len = key.Length;
-			var nblocks = len / 16;
+			int len = key.Length;
+			int nblocks = len / 16;
 
-			var h1 = seed.v1;
-			var h2 = seed.v2;
+			ulong h1 = (ulong)(seed >> 64);
+			ulong h2 = (ulong)seed;
 
-			var c1 = 0x87c37b91114253d5u;
-			var c2 = 0x4cf5ad432745937fu;
+			ulong c1 = 0x87c37b91114253d5u;
+			ulong c2 = 0x4cf5ad432745937fu;
 
-			//----------
-			// body
-			for (var i = 0; i < nblocks; i++)
+			for (int i = 0; i < nblocks; i++)
 			{
-				// Get 128 bits from key
-				ulong k1 = key[i * 16];
-				k1 |= (ulong) key[i * 16 + 1] << 8;
-				k1 |= (ulong) key[i * 16 + 2] << 16;
-				k1 |= (ulong) key[i * 16 + 3] << 24;
-				k1 |= (ulong) key[i * 16 + 4] << 32;
-				k1 |= (ulong) key[i * 16 + 5] << 40;
-				k1 |= (ulong) key[i * 16 + 6] << 48;
-				k1 |= (ulong) key[i * 16 + 7] << 56;
-
-				ulong k2 = key[i * 16 + 8];
-				k2 |= (ulong) key[i * 16 + 9] << 8;
-				k2 |= (ulong) key[i * 16 + 10] << 16;
-				k2 |= (ulong) key[i * 16 + 11] << 24;
-				k2 |= (ulong) key[i * 16 + 12] << 32;
-				k2 |= (ulong) key[i * 16 + 13] << 40;
-				k2 |= (ulong) key[i * 16 + 14] << 48;
-				k2 |= (ulong) key[i * 16 + 15] << 56;
+				int offset = i * 16;
+				ulong k1 = BitConverter.ToUInt64(key, offset);
+				ulong k2 = BitConverter.ToUInt64(key, offset + 8);
 
 				k1 *= c1;
 				k1 = Rotl64(k1, 31);
@@ -63,76 +47,36 @@ namespace Blowdart.UI
 				h2 = h2 * 5 + 0x38495ab5;
 			}
 
-			//----------
-			// tail
+			// Process tail.
+			int tailIndex = nblocks * 16;
+			ulong k1_tail = 0, k2_tail = 0;
+			int tailLength = len - tailIndex;
+			for (int i = 0; i < tailLength; i++)
 			{
-				ulong k1 = 0;
-				ulong k2 = 0;
-
-				var offset = nblocks * 16;
-
-				switch (len & ((1u << 4) - 1)) // len & 15
-				{
-					case 15:
-						k2 |= (ulong) key[offset + 14] << 48;
-						goto case 14;
-					case 14:
-						k2 |= (ulong) key[offset + 13] << 40;
-						goto case 13;
-					case 13:
-						k2 |= (ulong) key[offset + 12] << 32;
-						goto case 12;
-					case 12:
-						k2 |= (ulong) key[offset + 11] << 24;
-						goto case 11;
-					case 11:
-						k2 |= (ulong) key[offset + 10] << 16;
-						goto case 10;
-					case 10:
-						k2 |= (ulong) key[offset + 9] << 8;
-						goto case 9;
-					case 9:
-						k2 ^= (ulong) key[8] << 0;
-						k2 *= c2;
-						k2 = Rotl64(k2, 33);
-						k2 *= c1;
-						h2 ^= k2;
-						goto case 8;
-
-					case 8:
-						k1 |= (ulong) key[offset + 7] << 56;
-						goto case 7;
-					case 7:
-						k1 |= (ulong) key[offset + 6] << 48;
-						goto case 6;
-					case 6:
-						k1 |= (ulong) key[offset + 5] << 40;
-						goto case 5;
-					case 5:
-						k1 |= (ulong) key[offset + 4] << 32;
-						goto case 4;
-					case 4:
-						k1 |= (ulong) key[offset + 3] << 24;
-						goto case 3;
-					case 3:
-						k1 |= (ulong) key[offset + 2] << 16;
-						goto case 2;
-					case 2:
-						k1 |= (ulong) key[offset + 1] << 8;
-						goto case 1;
-					case 1:
-						k1 ^= (ulong) key[0] << 0;
-						k1 *= c1;
-						k1 = Rotl64(k1, 31);
-						k1 *= c2;
-						h1 ^= k1;
-						break;
-				}
+				byte b = key[tailIndex + i];
+				if (i < 8)
+					k1_tail |= ((ulong) b) << (8 * i);
+				else
+					k2_tail |= ((ulong) b) << (8 * (i - 8));
 			}
 
-			//----------
-			// finalization
+			if (tailLength > 0)
+			{
+				if (tailLength > 8)
+				{
+					k2_tail *= c2;
+					k2_tail = Rotl64(k2_tail, 33);
+					k2_tail *= c1;
+					h2 ^= k2_tail;
+				}
 
+				k1_tail *= c1;
+				k1_tail = Rotl64(k1_tail, 31);
+				k1_tail *= c2;
+				h1 ^= k1_tail;
+			}
+
+			// Finalization.
 			h1 ^= (ulong) len;
 			h2 ^= (ulong) len;
 
@@ -145,37 +89,33 @@ namespace Blowdart.UI
 			h1 += h2;
 			h2 += h1;
 
-			var retval = new Value128();
-			retval.v1 = h1;
-			retval.v2 = h2;
-			return retval;
+			// Combine the two 64-bit parts into a single UInt128 value.
+			return ((UInt128) h1 << 64) | h2;
 		}
 
-		public static Value128 MurmurHash3(string key, Value128 seed = default)
+		public static UInt128 MurmurHash3(string key, UInt128 seed = default)
 		{
-			var len = key.Length * 2; // chars are 16 bits
-			var nblocks = key.Length / 8;
+			int len = key.Length * 2;
+			int nblocks = key.Length / 8;
 
-			var h1 = seed.v1;
-			var h2 = seed.v2;
+			ulong h1 = (ulong)(seed >> 64);
+			ulong h2 = (ulong)seed;
 
-			var c1 = 0x87c37b91114253d5u;
-			var c2 = 0x4cf5ad432745937fu;
+			const ulong c1 = 0x87c37b91114253d5u;
+			const ulong c2 = 0x4cf5ad432745937fu;
 
-			//----------
-			// body
-			for (var i = 0; i < nblocks; i++)
+			for (int i = 0; i < nblocks; i++)
 			{
-				// Get 128 bits from key
-				ulong k1 = key[i * 8];
-				k1 |= (ulong) key[i * 8 + 1] << 16;
-				k1 |= (ulong) key[i * 8 + 2] << 32;
-				k1 |= (ulong) key[i * 8 + 3] << 48;
+				int index = i * 8;
+				ulong k1 = key[index];
+				k1 |= (ulong) key[index + 1] << 16;
+				k1 |= (ulong) key[index + 2] << 32;
+				k1 |= (ulong) key[index + 3] << 48;
 
-				ulong k2 = key[i * 8 + 4];
-				k2 |= (ulong) key[i * 8 + 5] << 16;
-				k2 |= (ulong) key[i * 8 + 6] << 32;
-				k2 |= (ulong) key[i * 8 + 7] << 48;
+				ulong k2 = key[index + 4];
+				k2 |= (ulong) key[index + 5] << 16;
+				k2 |= (ulong) key[index + 6] << 32;
+				k2 |= (ulong) key[index + 7] << 48;
 
 				k1 *= c1;
 				k1 = Rotl64(k1, 31);
@@ -196,51 +136,40 @@ namespace Blowdart.UI
 				h2 = h2 * 5 + 0x38495ab5;
 			}
 
-			//----------
-			// tail
+			int tailIndex = nblocks * 8;
+			ulong k1_tail = 0, k2_tail = 0;
+			switch (key.Length & 7)
 			{
-				ulong k1 = 0;
-				ulong k2 = 0;
-
-				var offset = nblocks * 8;
-
-				switch (key.Length & 7) // len & 15
-				{
-					case 7:
-						k2 |= (ulong) key[offset + 6] << 32;
-						goto case 6;
-					case 6:
-						k2 |= (ulong) key[offset + 5] << 16;
-						goto case 5;
-					case 5:
-						k2 |= (ulong) key[offset + 4] << 0;
-						k2 *= c2;
-						k2 = Rotl64(k2, 33);
-						k2 *= c1;
-						h2 ^= k2;
-						goto case 4;
-
-					case 4:
-						k1 |= (ulong) key[offset + 3] << 48;
-						goto case 3;
-					case 3:
-						k1 |= (ulong) key[offset + 2] << 32;
-						goto case 2;
-					case 2:
-						k1 |= (ulong) key[offset + 1] << 16;
-						goto case 1;
-					case 1:
-						k1 |= (ulong) key[offset + 0] << 0;
-						k1 *= c1;
-						k1 = Rotl64(k1, 31);
-						k1 *= c2;
-						h1 ^= k1;
-						break;
-				}
+				case 7:
+					k2_tail |= (ulong) key[tailIndex + 6] << 32;
+					goto case 6;
+				case 6:
+					k2_tail |= (ulong) key[tailIndex + 5] << 16;
+					goto case 5;
+				case 5:
+					k2_tail |= (ulong) key[tailIndex + 4] << 0;
+					k2_tail *= c2;
+					k2_tail = Rotl64(k2_tail, 33);
+					k2_tail *= c1;
+					h2 ^= k2_tail;
+					goto case 4;
+				case 4:
+					k1_tail |= (ulong) key[tailIndex + 3] << 48;
+					goto case 3;
+				case 3:
+					k1_tail |= (ulong) key[tailIndex + 2] << 32;
+					goto case 2;
+				case 2:
+					k1_tail |= (ulong) key[tailIndex + 1] << 16;
+					goto case 1;
+				case 1:
+					k1_tail |= (ulong) key[tailIndex + 0] << 0;
+					k1_tail *= c1;
+					k1_tail = Rotl64(k1_tail, 31);
+					k1_tail *= c2;
+					h1 ^= k1_tail;
+					break;
 			}
-
-			//----------
-			// finalization
 
 			h1 ^= (ulong) len;
 			h2 ^= (ulong) len;
@@ -254,37 +183,32 @@ namespace Blowdart.UI
 			h1 += h2;
 			h2 += h1;
 
-			var retval = new Value128();
-			retval.v1 = h1;
-			retval.v2 = h2;
-			return retval;
+			return ((UInt128) h1 << 64) | h2;
 		}
 
-		public static Value128 MurmurHash3(StringBuilder key, Value128 seed = default)
+		public static UInt128 MurmurHash3(StringBuilder key, UInt128 seed = default)
 		{
-			var len = key.Length * 2; // chars are 16 bits
-			var nblocks = key.Length / 8;
+			int len = key.Length * 2;
+			int nblocks = key.Length / 8;
 
-			var h1 = seed.v1;
-			var h2 = seed.v2;
+			ulong h1 = (ulong)(seed >> 64);
+			ulong h2 = (ulong)seed;
 
-			var c1 = 0x87c37b91114253d5u;
-			var c2 = 0x4cf5ad432745937fu;
+			const ulong c1 = 0x87c37b91114253d5u;
+			const ulong c2 = 0x4cf5ad432745937fu;
 
-			//----------
-			// body
-			for (var i = 0; i < nblocks; i++)
+			for (int i = 0; i < nblocks; i++)
 			{
-				// Get 128 bits from key
-				ulong k1 = key[i * 8];
-				k1 |= (ulong) key[i * 8 + 1] << 16;
-				k1 |= (ulong) key[i * 8 + 2] << 32;
-				k1 |= (ulong) key[i * 8 + 3] << 48;
+				int index = i * 8;
+				ulong k1 = key[index];
+				k1 |= (ulong) key[index + 1] << 16;
+				k1 |= (ulong) key[index + 2] << 32;
+				k1 |= (ulong) key[index + 3] << 48;
 
-				ulong k2 = key[i * 8 + 4];
-				k2 |= (ulong) key[i * 8 + 5] << 16;
-				k2 |= (ulong) key[i * 8 + 6] << 32;
-				k2 |= (ulong) key[i * 8 + 7] << 48;
+				ulong k2 = key[index + 4];
+				k2 |= (ulong) key[index + 5] << 16;
+				k2 |= (ulong) key[index + 6] << 32;
+				k2 |= (ulong) key[index + 7] << 48;
 
 				k1 *= c1;
 				k1 = Rotl64(k1, 31);
@@ -305,51 +229,40 @@ namespace Blowdart.UI
 				h2 = h2 * 5 + 0x38495ab5;
 			}
 
-			//----------
-			// tail
+			int tailIndex = nblocks * 8;
+			ulong k1_tail = 0, k2_tail = 0;
+			switch (key.Length & 7)
 			{
-				ulong k1 = 0;
-				ulong k2 = 0;
-
-				var offset = nblocks * 8;
-
-				switch (key.Length & 7) // len & 15
-				{
-					case 7:
-						k2 |= (ulong) key[offset + 6] << 32;
-						goto case 6;
-					case 6:
-						k2 |= (ulong) key[offset + 5] << 16;
-						goto case 5;
-					case 5:
-						k2 |= (ulong) key[offset + 4] << 0;
-						k2 *= c2;
-						k2 = Rotl64(k2, 33);
-						k2 *= c1;
-						h2 ^= k2;
-						goto case 4;
-
-					case 4:
-						k1 |= (ulong) key[offset + 3] << 48;
-						goto case 3;
-					case 3:
-						k1 |= (ulong) key[offset + 2] << 32;
-						goto case 2;
-					case 2:
-						k1 |= (ulong) key[offset + 1] << 16;
-						goto case 1;
-					case 1:
-						k1 |= (ulong) key[offset + 0] << 0;
-						k1 *= c1;
-						k1 = Rotl64(k1, 31);
-						k1 *= c2;
-						h1 ^= k1;
-						break;
-				}
+				case 7:
+					k2_tail |= (ulong) key[tailIndex + 6] << 32;
+					goto case 6;
+				case 6:
+					k2_tail |= (ulong) key[tailIndex + 5] << 16;
+					goto case 5;
+				case 5:
+					k2_tail |= (ulong) key[tailIndex + 4] << 0;
+					k2_tail *= c2;
+					k2_tail = Rotl64(k2_tail, 33);
+					k2_tail *= c1;
+					h2 ^= k2_tail;
+					goto case 4;
+				case 4:
+					k1_tail |= (ulong) key[tailIndex + 3] << 48;
+					goto case 3;
+				case 3:
+					k1_tail |= (ulong) key[tailIndex + 2] << 32;
+					goto case 2;
+				case 2:
+					k1_tail |= (ulong) key[tailIndex + 1] << 16;
+					goto case 1;
+				case 1:
+					k1_tail |= (ulong) key[tailIndex + 0] << 0;
+					k1_tail *= c1;
+					k1_tail = Rotl64(k1_tail, 31);
+					k1_tail *= c2;
+					h1 ^= k1_tail;
+					break;
 			}
-
-			//----------
-			// finalization
 
 			h1 ^= (ulong) len;
 			h2 ^= (ulong) len;
@@ -363,36 +276,26 @@ namespace Blowdart.UI
 			h1 += h2;
 			h2 += h1;
 
-			var retval = new Value128();
-			retval.v1 = h1;
-			retval.v2 = h2;
-			return retval;
+			return ((UInt128) h1 << 64) | h2;
 		}
 
-		public static Value128 MurmurHash3(ulong key, Value128 seed = default)
+		public static UInt128 MurmurHash3(ulong key, UInt128 seed = default)
 		{
 			const int len = 4;
 
-			var h1 = seed.v1;
-			var h2 = seed.v2;
+			var h1 = (ulong)(seed >> 64);
+			var h2 = (ulong)seed;
 
-			var c1 = 0x87c37b91114253d5u;
-			var c2 = 0x4cf5ad432745937fu;
+			const ulong c1 = 0x87c37b91114253d5u;
+			const ulong c2 = 0x4cf5ad432745937fu;
 
-			//----------
-			// tail
 			{
-				ulong k1 = 0;
-
-				k1 = key;
+				ulong k1 = key;
 				k1 *= c1;
 				k1 = Rotl64(k1, 31);
 				k1 *= c2;
 				h1 ^= k1;
 			}
-
-			//----------
-			// finalization
 
 			h1 ^= len;
 			h2 ^= len;
@@ -406,12 +309,10 @@ namespace Blowdart.UI
 			h1 += h2;
 			h2 += h1;
 
-			var retval = new Value128();
-			retval.v1 = h1;
-			retval.v2 = h2;
-			return retval;
+			return ((UInt128)h1 << 64) | h2;
 		}
 
+		
 		private static ulong Rotl64(ulong x, int r)
 		{
 			return (x << r) | (x >> (64 - r));

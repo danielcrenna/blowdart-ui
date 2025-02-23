@@ -11,7 +11,7 @@ using Blowdart.UI;
 [ExcludeFromCodeCoverage]
 public static partial class WebElements
 {
-	private static ElementRef InlineDirective(Ui ui, string element, object inner, Value128? id = default)
+	private static ElementRef InlineDirective(Ui ui, string element, object inner, UInt128? id = default)
 	{
 		ui.BeginElement(element, id);
 		ui._(inner);
@@ -19,7 +19,7 @@ public static partial class WebElements
 		return new ElementRef(ui, id);
 	}
 
-	public static ElementRef NestedDirective(Ui ui, string element, Action<Ui> closure, Value128? id = default)
+	public static ElementRef NestedDirective(Ui ui, string element, Action<Ui> closure, UInt128? id = default)
 	{
 		ui.BeginElement(element, id);
 		closure?.Invoke(ui);

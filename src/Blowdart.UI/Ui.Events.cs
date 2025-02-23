@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Daniel Crenna & Contributors. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.Immutable;
@@ -13,10 +14,10 @@ public partial class Ui
 
 	private readonly Hashtable _eventData = new();
 
-	private readonly Dictionary<Value128, HashSet<string>> _eventsHandled = new();
-	private readonly Dictionary<string, HashSet<Value128>> _eventsRaised = new();
+	private readonly Dictionary<UInt128, HashSet<string>> _eventsHandled = new();
+	private readonly Dictionary<string, HashSet<UInt128>> _eventsRaised = new();
  
-	public void AddEvent(string eventType, Value128 id, object? data)
+	public void AddEvent(string eventType, UInt128 id, object? data)
 	{
 		if (!_eventsRaised.ContainsKey(eventType))
 			_eventsRaised[eventType] = [];
@@ -27,7 +28,7 @@ public partial class Ui
 			_eventData[id] = data;
 	}
 
-	internal bool OnEvent(string eventType, Value128 id, out object? data)
+	internal bool OnEvent(string eventType, UInt128 id, out object? data)
 	{
 		if (_eventsRaised.ContainsKey(eventType) && _eventsRaised[eventType].Contains(id))
 		{
@@ -57,7 +58,7 @@ public partial class Ui
 		return false;
 	}
 
-	public IEnumerable<string> GetEventsFor(Value128 id)
+	public IEnumerable<string> GetEventsFor(UInt128 id)
 	{
 		return _eventsHandled.TryGetValue(id, out var events) ? events : NoEvents;
 	}

@@ -9,6 +9,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
+using System;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 
@@ -18,7 +19,7 @@ namespace Blowdart.UI.Blazor
     {
         #region Mouse
 
-        public EventCallback<MouseEventArgs> OnClick(Value128 id)
+        public EventCallback<MouseEventArgs> OnClick(UInt128 id)
         {
             return EventCallback.Factory.Create<MouseEventArgs>(this, args =>
             {
@@ -26,7 +27,7 @@ namespace Blowdart.UI.Blazor
             });
         }
 
-        public EventCallback<MouseEventArgs> OnDoubleClick(Value128 id)
+        public EventCallback<MouseEventArgs> OnDoubleClick(UInt128 id)
         {
             return EventCallback.Factory.Create<MouseEventArgs>(this, args =>
             {
@@ -34,7 +35,7 @@ namespace Blowdart.UI.Blazor
             });
         }
 
-        public EventCallback<MouseEventArgs> OnMouseDown(Value128 id)
+        public EventCallback<MouseEventArgs> OnMouseDown(UInt128 id)
         {
             return EventCallback.Factory.Create<MouseEventArgs>(this, args =>
             {
@@ -42,7 +43,7 @@ namespace Blowdart.UI.Blazor
             });
         }
 
-        public EventCallback<MouseEventArgs> OnMouseMove(Value128 id)
+        public EventCallback<MouseEventArgs> OnMouseMove(UInt128 id)
         {
             return EventCallback.Factory.Create<MouseEventArgs>(this, args =>
             {
@@ -50,7 +51,7 @@ namespace Blowdart.UI.Blazor
             });
         }
 
-        public EventCallback<MouseEventArgs> OnMouseOut(Value128 id)
+        public EventCallback<MouseEventArgs> OnMouseOut(UInt128 id)
         {
             return EventCallback.Factory.Create<MouseEventArgs>(this, args =>
             {
@@ -58,7 +59,7 @@ namespace Blowdart.UI.Blazor
             });
         }
 
-        public EventCallback<MouseEventArgs> OnMouseOver(Value128 id)
+        public EventCallback<MouseEventArgs> OnMouseOver(UInt128 id)
         {
             return EventCallback.Factory.Create<MouseEventArgs>(this, args =>
             {
@@ -66,7 +67,7 @@ namespace Blowdart.UI.Blazor
             });
         }
 
-        public EventCallback<MouseEventArgs> OnMouseUp(Value128 id)
+        public EventCallback<MouseEventArgs> OnMouseUp(UInt128 id)
         {
             return EventCallback.Factory.Create<MouseEventArgs>(this, args =>
             {
@@ -74,7 +75,7 @@ namespace Blowdart.UI.Blazor
             });
         }
 
-        public EventCallback<MouseEventArgs> OnWheel(Value128 id)
+        public EventCallback<MouseEventArgs> OnWheel(UInt128 id)
         {
             return EventCallback.Factory.Create<MouseEventArgs>(this, args =>
             {
@@ -86,7 +87,7 @@ namespace Blowdart.UI.Blazor
 
         #region Clipboard
 
-        public EventCallback<ClipboardEventArgs> OnCopy(Value128 id)
+        public EventCallback<ClipboardEventArgs> OnCopy(UInt128 id)
         {
             return EventCallback.Factory.Create<ClipboardEventArgs>(this, args =>
             {
@@ -94,7 +95,7 @@ namespace Blowdart.UI.Blazor
             });
         }
 
-        public EventCallback<ClipboardEventArgs> OnCut(Value128 id)
+        public EventCallback<ClipboardEventArgs> OnCut(UInt128 id)
         {
             return EventCallback.Factory.Create<ClipboardEventArgs>(this, args =>
             {
@@ -102,7 +103,7 @@ namespace Blowdart.UI.Blazor
             });
         }
 
-        public EventCallback<ClipboardEventArgs> OnPaste(Value128 id)
+        public EventCallback<ClipboardEventArgs> OnPaste(UInt128 id)
         {
             return EventCallback.Factory.Create<ClipboardEventArgs>(this, args =>
             {
@@ -114,7 +115,7 @@ namespace Blowdart.UI.Blazor
 
         #region Drag
 
-        public EventCallback<DragEventArgs> OnDrag(Value128 id)
+        public EventCallback<DragEventArgs> OnDrag(UInt128 id)
         {
             return EventCallback.Factory.Create<DragEventArgs>(this, args =>
             {
@@ -122,7 +123,7 @@ namespace Blowdart.UI.Blazor
             });
         }
 
-        public EventCallback<DragEventArgs> OnDragEnd(Value128 id)
+        public EventCallback<DragEventArgs> OnDragEnd(UInt128 id)
         {
             return EventCallback.Factory.Create<DragEventArgs>(this, args =>
             {
@@ -130,7 +131,7 @@ namespace Blowdart.UI.Blazor
             });
         }
 
-        public EventCallback<DragEventArgs> OnDragEnter(Value128 id)
+        public EventCallback<DragEventArgs> OnDragEnter(UInt128 id)
         {
             return EventCallback.Factory.Create<DragEventArgs>(this, args =>
             {
@@ -138,7 +139,7 @@ namespace Blowdart.UI.Blazor
             });
         }
 
-        public EventCallback<DragEventArgs> OnDragLeave(Value128 id)
+        public EventCallback<DragEventArgs> OnDragLeave(UInt128 id)
         {
             return EventCallback.Factory.Create<DragEventArgs>(this, args =>
             {
@@ -146,7 +147,7 @@ namespace Blowdart.UI.Blazor
             });
         }
 
-        public EventCallback<DragEventArgs> OnDragOver(Value128 id)
+        public EventCallback<DragEventArgs> OnDragOver(UInt128 id)
         {
             return EventCallback.Factory.Create<DragEventArgs>(this, args =>
             {
@@ -154,7 +155,7 @@ namespace Blowdart.UI.Blazor
             });
         }
 
-        public EventCallback<DragEventArgs> OnDragStart(Value128 id)
+        public EventCallback<DragEventArgs> OnDragStart(UInt128 id)
         {
             return EventCallback.Factory.Create<DragEventArgs>(this, args =>
             {
@@ -162,7 +163,7 @@ namespace Blowdart.UI.Blazor
             });
         }
 
-        public EventCallback<DragEventArgs> OnDrop(Value128 id)
+        public EventCallback<DragEventArgs> OnDrop(UInt128 id)
         {
             return EventCallback.Factory.Create<DragEventArgs>(this, args =>
             {
@@ -170,7 +171,7 @@ namespace Blowdart.UI.Blazor
             });
         }
 
-        public EventCallback<DragEventArgs> OnScroll(Value128 id)
+        public EventCallback<DragEventArgs> OnScroll(UInt128 id)
         {
             return EventCallback.Factory.Create<DragEventArgs>(this, args =>
             {

@@ -81,7 +81,7 @@ public sealed partial class ImGui : ComponentBase, IDisposable
 
 	#region Events
 
-	private void OnEvent(Value128 id, string eventType, object? data)
+	private void OnEvent(UInt128 id, string eventType, object? data)
 	{
 		var instructionCount = Ui.InstructionCount;
 

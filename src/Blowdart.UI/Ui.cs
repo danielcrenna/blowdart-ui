@@ -19,7 +19,7 @@ namespace Blowdart.UI
 		private readonly RenderTarget _target;
 		private int _count;
 
-		internal Value128 nextIdHash;
+		internal UInt128 nextIdHash;
 
 		public Ui(RenderTarget target)
 		{
@@ -53,15 +53,15 @@ namespace Blowdart.UI
 			_instructions.Add(instruction);
 		}
 
-		public Value128 NextId(string? id = null, [CallerMemberName] string? callerMemberName = null)
+		public UInt128 NextId(string? id = null, [CallerMemberName] string? callerMemberName = null)
 		{
 			nextIdHash = Hashing.MurmurHash3(id ?? $"{callerMemberName}{_count++}", nextIdHash) ^ nextIdHash;
 			return nextIdHash;
 		}
 
-		public Value128 NextId(StringBuilder id) => Ids.NextId(ref nextIdHash, id);
+		public UInt128 NextId(StringBuilder id) => Ids.NextId(ref nextIdHash, id);
 
-		public Value128 NextId(int i)
+		public UInt128 NextId(int i)
 		{
 			nextIdHash = Hashing.MurmurHash3((ulong) i, nextIdHash) ^ nextIdHash;
 			return nextIdHash;

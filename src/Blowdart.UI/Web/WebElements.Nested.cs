@@ -18,121 +18,121 @@ public static partial class WebElements
 {
     #region Nested Directives
 
-    public static ElementRef a(this Ui ui, Action<Ui> closure, Value128? id = default) => NestedDirective(ui, HtmlTags.A, closure, id);
-    public static ElementRef abbr(this Ui ui, Action<Ui> closure, Value128? id = default) => NestedDirective(ui, HtmlTags.Abbr, closure, id);
-    public static ElementRef address(this Ui ui, Action<Ui> closure, Value128? id = default) => NestedDirective(ui, HtmlTags.Address, closure, id);
-    public static ElementRef area(this Ui ui, Action<Ui> closure, Value128? id = default) => NestedDirective(ui, HtmlTags.Area, closure, id);
-    public static ElementRef article(this Ui ui, Action<Ui> closure, Value128? id = default) => NestedDirective(ui, HtmlTags.Article, closure, id);
-    public static ElementRef aside(this Ui ui, Action<Ui> closure, Value128? id = default) => NestedDirective(ui, HtmlTags.Aside, closure, id);
-    public static ElementRef audio(this Ui ui, Action<Ui> closure, Value128? id = default) => NestedDirective(ui, HtmlTags.Audio, closure, id);
-    public static ElementRef b(this Ui ui, Action<Ui> closure, Value128? id = default) => NestedDirective(ui, HtmlTags.B, closure, id);
-    public static ElementRef @base(this Ui ui, Action<Ui> closure, Value128? id = default) => NestedDirective(ui, HtmlTags.Base, closure, id);
-    public static ElementRef bdi(this Ui ui, Action<Ui> closure, Value128? id = default) => NestedDirective(ui, HtmlTags.Bdi, closure, id);
-    public static ElementRef bdo(this Ui ui, Action<Ui> closure, Value128? id = default) => NestedDirective(ui, HtmlTags.Bdo, closure, id);
-    public static ElementRef blockquote(this Ui ui, Action<Ui> closure, Value128? id = default) => NestedDirective(ui, HtmlTags.Blockquote, closure, id);
-    public static ElementRef body(this Ui ui, Action<Ui> closure, Value128? id = default) => NestedDirective(ui, HtmlTags.Body, closure, id);
-    public static ElementRef br(this Ui ui, Action<Ui> closure, Value128? id = default) => NestedDirective(ui, HtmlTags.Br, closure, id);
-    public static ElementRef button(this Ui ui, Action<Ui> closure, Value128? id = default) => NestedDirective(ui, HtmlTags.Button, closure, id);
-    public static ElementRef canvas(this Ui ui, Action<Ui> closure, Value128? id = default) => NestedDirective(ui, HtmlTags.Canvas, closure, id);
-    public static ElementRef cite(this Ui ui, Action<Ui> closure, Value128? id = default) => NestedDirective(ui, HtmlTags.Cite, closure, id);
-    public static ElementRef code(this Ui ui, Action<Ui> closure, Value128? id = default) => NestedDirective(ui, HtmlTags.Code, closure, id);
-    public static ElementRef col(this Ui ui, Action<Ui> closure, Value128? id = default) => NestedDirective(ui, HtmlTags.Col, closure, id);
-    public static ElementRef colgroup(this Ui ui, Action<Ui> closure, Value128? id = default) => NestedDirective(ui, HtmlTags.Colgroup, closure, id);
-    public static ElementRef data(this Ui ui, Action<Ui> closure, Value128? id = default) => NestedDirective(ui, HtmlTags.Data, closure, id);
-    public static ElementRef datalist(this Ui ui, Action<Ui> closure, Value128? id = default) => NestedDirective(ui, HtmlTags.Datalist, closure, id);
-    public static ElementRef dd(this Ui ui, Action<Ui> closure, Value128? id = default) => NestedDirective(ui, HtmlTags.Dd, closure, id);
-    public static ElementRef del(this Ui ui, Action<Ui> closure, Value128? id = default) => NestedDirective(ui, HtmlTags.Del, closure, id);
-    public static ElementRef details(this Ui ui, Action<Ui> closure, Value128? id = default) => NestedDirective(ui, HtmlTags.Details, closure, id);
-    public static ElementRef dfn(this Ui ui, Action<Ui> closure, Value128? id = default) => NestedDirective(ui, HtmlTags.Dfn, closure, id);
-    public static ElementRef dialog(this Ui ui, Action<Ui> closure, Value128? id = default) => NestedDirective(ui, HtmlTags.Dialog, closure, id);
-    public static ElementRef div(this Ui ui, Action<Ui> closure, Value128? id = default) => NestedDirective(ui, HtmlTags.Div, closure, id);
-    public static ElementRef dl(this Ui ui, Action<Ui> closure, Value128? id = default) => NestedDirective(ui, HtmlTags.Dl, closure, id);
-    public static ElementRef dt(this Ui ui, Action<Ui> closure, Value128? id = default) => NestedDirective(ui, HtmlTags.Dt, closure, id);
-    public static ElementRef em(this Ui ui, Action<Ui> closure, Value128? id = default) => NestedDirective(ui, HtmlTags.Em, closure, id);
-    public static ElementRef embed(this Ui ui, Action<Ui> closure, Value128? id = default) => NestedDirective(ui, HtmlTags.Embed, closure, id);
-    public static ElementRef fieldset(this Ui ui, Action<Ui> closure, Value128? id = default) => NestedDirective(ui, HtmlTags.Fieldset, closure, id);
-    public static ElementRef figcaption(this Ui ui, Action<Ui> closure, Value128? id = default) => NestedDirective(ui, HtmlTags.Figcaption, closure, id);
-    public static ElementRef figure(this Ui ui, Action<Ui> closure, Value128? id = default) => NestedDirective(ui, HtmlTags.Figure, closure, id);
-    public static ElementRef footer(this Ui ui, Action<Ui> closure, Value128? id = default) => NestedDirective(ui, HtmlTags.Footer, closure, id);
-    public static ElementRef form(this Ui ui, Action<Ui> closure, Value128? id = default) => NestedDirective(ui, HtmlTags.Form, closure, id);
-    public static ElementRef h1(this Ui ui, Action<Ui> closure, Value128? id = default) => NestedDirective(ui, HtmlTags.H1, closure, id);
-    public static ElementRef h2(this Ui ui, Action<Ui> closure, Value128? id = default) => NestedDirective(ui, HtmlTags.H2, closure, id);
-    public static ElementRef h3(this Ui ui, Action<Ui> closure, Value128? id = default) => NestedDirective(ui, HtmlTags.H3, closure, id);
-    public static ElementRef h4(this Ui ui, Action<Ui> closure, Value128? id = default) => NestedDirective(ui, HtmlTags.H4, closure, id);
-    public static ElementRef h5(this Ui ui, Action<Ui> closure, Value128? id = default) => NestedDirective(ui, HtmlTags.H5, closure, id);
-    public static ElementRef h6(this Ui ui, Action<Ui> closure, Value128? id = default) => NestedDirective(ui, HtmlTags.H6, closure, id);
-    public static ElementRef head(this Ui ui, Action<Ui> closure, Value128? id = default) => NestedDirective(ui, HtmlTags.Head, closure, id);
-    public static ElementRef header(this Ui ui, Action<Ui> closure, Value128? id = default) => NestedDirective(ui, HtmlTags.Header, closure, id);
-    public static ElementRef hr(this Ui ui, Action<Ui> closure, Value128? id = default) => NestedDirective(ui, HtmlTags.Hr, closure, id);
-    public static ElementRef html(this Ui ui, Action<Ui> closure, Value128? id = default) => NestedDirective(ui, HtmlTags.Html, closure, id);
-    public static ElementRef i(this Ui ui, Action<Ui> closure, Value128? id = default) => NestedDirective(ui, HtmlTags.I, closure, id);
-    public static ElementRef iframe(this Ui ui, Action<Ui> closure, Value128? id = default) => NestedDirective(ui, HtmlTags.Iframe, closure, id);
-    public static ElementRef img(this Ui ui, Action<Ui> closure, Value128? id = default) => NestedDirective(ui, HtmlTags.Img, closure, id);
-    public static ElementRef input(this Ui ui, Action<Ui> closure, Value128? id = default) => NestedDirective(ui, HtmlTags.Input, closure, id);
-    public static ElementRef ins(this Ui ui, Action<Ui> closure, Value128? id = default) => NestedDirective(ui, HtmlTags.Ins, closure, id);
-    public static ElementRef kbd(this Ui ui, Action<Ui> closure, Value128? id = default) => NestedDirective(ui, HtmlTags.Kbd, closure, id);
-    public static ElementRef label(this Ui ui, Action<Ui> closure, Value128? id = default) => NestedDirective(ui, HtmlTags.Label, closure, id);
-    public static ElementRef legend(this Ui ui, Action<Ui> closure, Value128? id = default) => NestedDirective(ui, HtmlTags.Legend, closure, id);
-    public static ElementRef li(this Ui ui, Action<Ui> closure, Value128? id = default) => NestedDirective(ui, HtmlTags.Li, closure, id);
-    public static ElementRef link(this Ui ui, Action<Ui> closure, Value128? id = default) => NestedDirective(ui, HtmlTags.Link, closure, id);
-    public static ElementRef main(this Ui ui, Action<Ui> closure, Value128? id = default) => NestedDirective(ui, HtmlTags.Main, closure, id);
-    public static ElementRef map(this Ui ui, Action<Ui> closure, Value128? id = default) => NestedDirective(ui, HtmlTags.Map, closure, id);
-    public static ElementRef mark(this Ui ui, Action<Ui> closure, Value128? id = default) => NestedDirective(ui, HtmlTags.Mark, closure, id);
-    public static ElementRef meta(this Ui ui, Action<Ui> closure, Value128? id = default) => NestedDirective(ui, HtmlTags.Meta, closure, id);
-    public static ElementRef meter(this Ui ui, Action<Ui> closure, Value128? id = default) => NestedDirective(ui, HtmlTags.Meter, closure, id);
-    public static ElementRef nav(this Ui ui, Action<Ui> closure, Value128? id = default) => NestedDirective(ui, HtmlTags.Nav, closure, id);
-    public static ElementRef noscript(this Ui ui, Action<Ui> closure, Value128? id = default) => NestedDirective(ui, HtmlTags.Noscript, closure, id);
-    public static ElementRef @object(this Ui ui, Action<Ui> closure, Value128? id = default) => NestedDirective(ui, HtmlTags.Object, closure, id);
-    public static ElementRef ol(this Ui ui, Action<Ui> closure, Value128? id = default) => NestedDirective(ui, HtmlTags.Ol, closure, id);
-    public static ElementRef optgroup(this Ui ui, Action<Ui> closure, Value128? id = default) => NestedDirective(ui, HtmlTags.Optgroup, closure, id);
-    public static ElementRef option(this Ui ui, Action<Ui> closure, Value128? id = default) => NestedDirective(ui, HtmlTags.Option, closure, id);
-    public static ElementRef output(this Ui ui, Action<Ui> closure, Value128? id = default) => NestedDirective(ui, HtmlTags.Output, closure, id);
-    public static ElementRef p(this Ui ui, Action<Ui> closure, Value128? id = default) => NestedDirective(ui, HtmlTags.P, closure, id);
-    public static ElementRef param(this Ui ui, Action<Ui> closure, Value128? id = default) => NestedDirective(ui, HtmlTags.Param, closure, id);
-    public static ElementRef picture(this Ui ui, Action<Ui> closure, Value128? id = default) => NestedDirective(ui, HtmlTags.Picture, closure, id);
-    public static ElementRef pre(this Ui ui, Action<Ui> closure, Value128? id = default) => NestedDirective(ui, HtmlTags.Pre, closure, id);
-    public static ElementRef progress(this Ui ui, Action<Ui> closure, Value128? id = default) => NestedDirective(ui, HtmlTags.Progress, closure, id);
-    public static ElementRef q(this Ui ui, Action<Ui> closure, Value128? id = default) => NestedDirective(ui, HtmlTags.Q, closure, id);
-    public static ElementRef rp(this Ui ui, Action<Ui> closure, Value128? id = default) => NestedDirective(ui, HtmlTags.Rp, closure, id);
-    public static ElementRef rt(this Ui ui, Action<Ui> closure, Value128? id = default) => NestedDirective(ui, HtmlTags.Rt, closure, id);
-    public static ElementRef ruby(this Ui ui, Action<Ui> closure, Value128? id = default) => NestedDirective(ui, HtmlTags.Ruby, closure, id);
-    public static ElementRef s(this Ui ui, Action<Ui> closure, Value128? id = default) => NestedDirective(ui, HtmlTags.S, closure, id);
-    public static ElementRef samp(this Ui ui, Action<Ui> closure, Value128? id = default) => NestedDirective(ui, HtmlTags.Samp, closure, id);
-    public static ElementRef script(this Ui ui, Action<Ui> closure, Value128? id = default) => NestedDirective(ui, HtmlTags.Script, closure, id);
-    public static ElementRef section(this Ui ui, Action<Ui> closure, Value128? id = default) => NestedDirective(ui, HtmlTags.Section, closure, id);
-    public static ElementRef select(this Ui ui, Action<Ui> closure, Value128? id = default) => NestedDirective(ui, HtmlTags.Select, closure, id);
-    public static ElementRef small(this Ui ui, Action<Ui> closure, Value128? id = default) => NestedDirective(ui, HtmlTags.Small, closure, id);
-    public static ElementRef source(this Ui ui, Action<Ui> closure, Value128? id = default) => NestedDirective(ui, HtmlTags.Source, closure, id);
-    public static ElementRef span(this Ui ui, Action<Ui> closure, Value128? id = default) => NestedDirective(ui, HtmlTags.Span, closure, id);
-    public static ElementRef strong(this Ui ui, Action<Ui> closure, Value128? id = default) => NestedDirective(ui, HtmlTags.Strong, closure, id);
-    public static ElementRef style(this Ui ui, Action<Ui> closure, Value128? id = default) => NestedDirective(ui, HtmlTags.Style, closure, id);
-    public static ElementRef sub(this Ui ui, Action<Ui> closure, Value128? id = default) => NestedDirective(ui, HtmlTags.Sub, closure, id);
-    public static ElementRef summary(this Ui ui, Action<Ui> closure, Value128? id = default) => NestedDirective(ui, HtmlTags.Summary, closure, id);
-    public static ElementRef sup(this Ui ui, Action<Ui> closure, Value128? id = default) => NestedDirective(ui, HtmlTags.Sup, closure, id);
-    public static ElementRef svg(this Ui ui, Action<Ui> closure, Value128? id = default) => NestedDirective(ui, HtmlTags.Svg, closure, id);
-    public static ElementRef table(this Ui ui, Action<Ui> closure, Value128? id = default) => NestedDirective(ui, HtmlTags.Table, closure, id);
-    public static ElementRef tbody(this Ui ui, Action<Ui> closure, Value128? id = default) => NestedDirective(ui, HtmlTags.Tbody, closure, id);
-    public static ElementRef td(this Ui ui, Action<Ui> closure, Value128? id = default) => NestedDirective(ui, HtmlTags.Td, closure, id);
-    public static ElementRef template(this Ui ui, Action<Ui> closure, Value128? id = default) => NestedDirective(ui, HtmlTags.Template, closure, id);
-    public static ElementRef textarea(this Ui ui, Action<Ui> closure, Value128? id = default) => NestedDirective(ui, HtmlTags.Textarea, closure, id);
-    public static ElementRef tfoot(this Ui ui, Action<Ui> closure, Value128? id = default) => NestedDirective(ui, HtmlTags.Tfoot, closure, id);
-    public static ElementRef th(this Ui ui, Action<Ui> closure, Value128? id = default) => NestedDirective(ui, HtmlTags.Th, closure, id);
-    public static ElementRef thead(this Ui ui, Action<Ui> closure, Value128? id = default) => NestedDirective(ui, HtmlTags.Thead, closure, id);
-    public static ElementRef time(this Ui ui, Action<Ui> closure, Value128? id = default) => NestedDirective(ui, HtmlTags.Time, closure, id);
-    public static ElementRef title(this Ui ui, Action<Ui> closure, Value128? id = default) => NestedDirective(ui, HtmlTags.Title, closure, id);
-    public static ElementRef tr(this Ui ui, Action<Ui> closure, Value128? id = default) => NestedDirective(ui, HtmlTags.Tr, closure, id);
-    public static ElementRef track(this Ui ui, Action<Ui> closure, Value128? id = default) => NestedDirective(ui, HtmlTags.Track, closure, id);
-    public static ElementRef u(this Ui ui, Action<Ui> closure, Value128? id = default) => NestedDirective(ui, HtmlTags.U, closure, id);
-    public static ElementRef ul(this Ui ui, Action<Ui> closure, Value128? id = default) => NestedDirective(ui, HtmlTags.Ul, closure, id);
-    public static ElementRef var(this Ui ui, Action<Ui> closure, Value128? id = default) => NestedDirective(ui, HtmlTags.Var, closure, id);
-    public static ElementRef video(this Ui ui, Action<Ui> closure, Value128? id = default) => NestedDirective(ui, HtmlTags.Video, closure, id);
-    public static ElementRef wbr(this Ui ui, Action<Ui> closure, Value128? id = default) => NestedDirective(ui, HtmlTags.Wbr, closure, id);
+    public static ElementRef a(this Ui ui, Action<Ui> closure, UInt128? id = default) => NestedDirective(ui, HtmlTags.A, closure, id);
+    public static ElementRef abbr(this Ui ui, Action<Ui> closure, UInt128? id = default) => NestedDirective(ui, HtmlTags.Abbr, closure, id);
+    public static ElementRef address(this Ui ui, Action<Ui> closure, UInt128? id = default) => NestedDirective(ui, HtmlTags.Address, closure, id);
+    public static ElementRef area(this Ui ui, Action<Ui> closure, UInt128? id = default) => NestedDirective(ui, HtmlTags.Area, closure, id);
+    public static ElementRef article(this Ui ui, Action<Ui> closure, UInt128? id = default) => NestedDirective(ui, HtmlTags.Article, closure, id);
+    public static ElementRef aside(this Ui ui, Action<Ui> closure, UInt128? id = default) => NestedDirective(ui, HtmlTags.Aside, closure, id);
+    public static ElementRef audio(this Ui ui, Action<Ui> closure, UInt128? id = default) => NestedDirective(ui, HtmlTags.Audio, closure, id);
+    public static ElementRef b(this Ui ui, Action<Ui> closure, UInt128? id = default) => NestedDirective(ui, HtmlTags.B, closure, id);
+    public static ElementRef @base(this Ui ui, Action<Ui> closure, UInt128? id = default) => NestedDirective(ui, HtmlTags.Base, closure, id);
+    public static ElementRef bdi(this Ui ui, Action<Ui> closure, UInt128? id = default) => NestedDirective(ui, HtmlTags.Bdi, closure, id);
+    public static ElementRef bdo(this Ui ui, Action<Ui> closure, UInt128? id = default) => NestedDirective(ui, HtmlTags.Bdo, closure, id);
+    public static ElementRef blockquote(this Ui ui, Action<Ui> closure, UInt128? id = default) => NestedDirective(ui, HtmlTags.Blockquote, closure, id);
+    public static ElementRef body(this Ui ui, Action<Ui> closure, UInt128? id = default) => NestedDirective(ui, HtmlTags.Body, closure, id);
+    public static ElementRef br(this Ui ui, Action<Ui> closure, UInt128? id = default) => NestedDirective(ui, HtmlTags.Br, closure, id);
+    public static ElementRef button(this Ui ui, Action<Ui> closure, UInt128? id = default) => NestedDirective(ui, HtmlTags.Button, closure, id);
+    public static ElementRef canvas(this Ui ui, Action<Ui> closure, UInt128? id = default) => NestedDirective(ui, HtmlTags.Canvas, closure, id);
+    public static ElementRef cite(this Ui ui, Action<Ui> closure, UInt128? id = default) => NestedDirective(ui, HtmlTags.Cite, closure, id);
+    public static ElementRef code(this Ui ui, Action<Ui> closure, UInt128? id = default) => NestedDirective(ui, HtmlTags.Code, closure, id);
+    public static ElementRef col(this Ui ui, Action<Ui> closure, UInt128? id = default) => NestedDirective(ui, HtmlTags.Col, closure, id);
+    public static ElementRef colgroup(this Ui ui, Action<Ui> closure, UInt128? id = default) => NestedDirective(ui, HtmlTags.Colgroup, closure, id);
+    public static ElementRef data(this Ui ui, Action<Ui> closure, UInt128? id = default) => NestedDirective(ui, HtmlTags.Data, closure, id);
+    public static ElementRef datalist(this Ui ui, Action<Ui> closure, UInt128? id = default) => NestedDirective(ui, HtmlTags.Datalist, closure, id);
+    public static ElementRef dd(this Ui ui, Action<Ui> closure, UInt128? id = default) => NestedDirective(ui, HtmlTags.Dd, closure, id);
+    public static ElementRef del(this Ui ui, Action<Ui> closure, UInt128? id = default) => NestedDirective(ui, HtmlTags.Del, closure, id);
+    public static ElementRef details(this Ui ui, Action<Ui> closure, UInt128? id = default) => NestedDirective(ui, HtmlTags.Details, closure, id);
+    public static ElementRef dfn(this Ui ui, Action<Ui> closure, UInt128? id = default) => NestedDirective(ui, HtmlTags.Dfn, closure, id);
+    public static ElementRef dialog(this Ui ui, Action<Ui> closure, UInt128? id = default) => NestedDirective(ui, HtmlTags.Dialog, closure, id);
+    public static ElementRef div(this Ui ui, Action<Ui> closure, UInt128? id = default) => NestedDirective(ui, HtmlTags.Div, closure, id);
+    public static ElementRef dl(this Ui ui, Action<Ui> closure, UInt128? id = default) => NestedDirective(ui, HtmlTags.Dl, closure, id);
+    public static ElementRef dt(this Ui ui, Action<Ui> closure, UInt128? id = default) => NestedDirective(ui, HtmlTags.Dt, closure, id);
+    public static ElementRef em(this Ui ui, Action<Ui> closure, UInt128? id = default) => NestedDirective(ui, HtmlTags.Em, closure, id);
+    public static ElementRef embed(this Ui ui, Action<Ui> closure, UInt128? id = default) => NestedDirective(ui, HtmlTags.Embed, closure, id);
+    public static ElementRef fieldset(this Ui ui, Action<Ui> closure, UInt128? id = default) => NestedDirective(ui, HtmlTags.Fieldset, closure, id);
+    public static ElementRef figcaption(this Ui ui, Action<Ui> closure, UInt128? id = default) => NestedDirective(ui, HtmlTags.Figcaption, closure, id);
+    public static ElementRef figure(this Ui ui, Action<Ui> closure, UInt128? id = default) => NestedDirective(ui, HtmlTags.Figure, closure, id);
+    public static ElementRef footer(this Ui ui, Action<Ui> closure, UInt128? id = default) => NestedDirective(ui, HtmlTags.Footer, closure, id);
+    public static ElementRef form(this Ui ui, Action<Ui> closure, UInt128? id = default) => NestedDirective(ui, HtmlTags.Form, closure, id);
+    public static ElementRef h1(this Ui ui, Action<Ui> closure, UInt128? id = default) => NestedDirective(ui, HtmlTags.H1, closure, id);
+    public static ElementRef h2(this Ui ui, Action<Ui> closure, UInt128? id = default) => NestedDirective(ui, HtmlTags.H2, closure, id);
+    public static ElementRef h3(this Ui ui, Action<Ui> closure, UInt128? id = default) => NestedDirective(ui, HtmlTags.H3, closure, id);
+    public static ElementRef h4(this Ui ui, Action<Ui> closure, UInt128? id = default) => NestedDirective(ui, HtmlTags.H4, closure, id);
+    public static ElementRef h5(this Ui ui, Action<Ui> closure, UInt128? id = default) => NestedDirective(ui, HtmlTags.H5, closure, id);
+    public static ElementRef h6(this Ui ui, Action<Ui> closure, UInt128? id = default) => NestedDirective(ui, HtmlTags.H6, closure, id);
+    public static ElementRef head(this Ui ui, Action<Ui> closure, UInt128? id = default) => NestedDirective(ui, HtmlTags.Head, closure, id);
+    public static ElementRef header(this Ui ui, Action<Ui> closure, UInt128? id = default) => NestedDirective(ui, HtmlTags.Header, closure, id);
+    public static ElementRef hr(this Ui ui, Action<Ui> closure, UInt128? id = default) => NestedDirective(ui, HtmlTags.Hr, closure, id);
+    public static ElementRef html(this Ui ui, Action<Ui> closure, UInt128? id = default) => NestedDirective(ui, HtmlTags.Html, closure, id);
+    public static ElementRef i(this Ui ui, Action<Ui> closure, UInt128? id = default) => NestedDirective(ui, HtmlTags.I, closure, id);
+    public static ElementRef iframe(this Ui ui, Action<Ui> closure, UInt128? id = default) => NestedDirective(ui, HtmlTags.Iframe, closure, id);
+    public static ElementRef img(this Ui ui, Action<Ui> closure, UInt128? id = default) => NestedDirective(ui, HtmlTags.Img, closure, id);
+    public static ElementRef input(this Ui ui, Action<Ui> closure, UInt128? id = default) => NestedDirective(ui, HtmlTags.Input, closure, id);
+    public static ElementRef ins(this Ui ui, Action<Ui> closure, UInt128? id = default) => NestedDirective(ui, HtmlTags.Ins, closure, id);
+    public static ElementRef kbd(this Ui ui, Action<Ui> closure, UInt128? id = default) => NestedDirective(ui, HtmlTags.Kbd, closure, id);
+    public static ElementRef label(this Ui ui, Action<Ui> closure, UInt128? id = default) => NestedDirective(ui, HtmlTags.Label, closure, id);
+    public static ElementRef legend(this Ui ui, Action<Ui> closure, UInt128? id = default) => NestedDirective(ui, HtmlTags.Legend, closure, id);
+    public static ElementRef li(this Ui ui, Action<Ui> closure, UInt128? id = default) => NestedDirective(ui, HtmlTags.Li, closure, id);
+    public static ElementRef link(this Ui ui, Action<Ui> closure, UInt128? id = default) => NestedDirective(ui, HtmlTags.Link, closure, id);
+    public static ElementRef main(this Ui ui, Action<Ui> closure, UInt128? id = default) => NestedDirective(ui, HtmlTags.Main, closure, id);
+    public static ElementRef map(this Ui ui, Action<Ui> closure, UInt128? id = default) => NestedDirective(ui, HtmlTags.Map, closure, id);
+    public static ElementRef mark(this Ui ui, Action<Ui> closure, UInt128? id = default) => NestedDirective(ui, HtmlTags.Mark, closure, id);
+    public static ElementRef meta(this Ui ui, Action<Ui> closure, UInt128? id = default) => NestedDirective(ui, HtmlTags.Meta, closure, id);
+    public static ElementRef meter(this Ui ui, Action<Ui> closure, UInt128? id = default) => NestedDirective(ui, HtmlTags.Meter, closure, id);
+    public static ElementRef nav(this Ui ui, Action<Ui> closure, UInt128? id = default) => NestedDirective(ui, HtmlTags.Nav, closure, id);
+    public static ElementRef noscript(this Ui ui, Action<Ui> closure, UInt128? id = default) => NestedDirective(ui, HtmlTags.Noscript, closure, id);
+    public static ElementRef @object(this Ui ui, Action<Ui> closure, UInt128? id = default) => NestedDirective(ui, HtmlTags.Object, closure, id);
+    public static ElementRef ol(this Ui ui, Action<Ui> closure, UInt128? id = default) => NestedDirective(ui, HtmlTags.Ol, closure, id);
+    public static ElementRef optgroup(this Ui ui, Action<Ui> closure, UInt128? id = default) => NestedDirective(ui, HtmlTags.Optgroup, closure, id);
+    public static ElementRef option(this Ui ui, Action<Ui> closure, UInt128? id = default) => NestedDirective(ui, HtmlTags.Option, closure, id);
+    public static ElementRef output(this Ui ui, Action<Ui> closure, UInt128? id = default) => NestedDirective(ui, HtmlTags.Output, closure, id);
+    public static ElementRef p(this Ui ui, Action<Ui> closure, UInt128? id = default) => NestedDirective(ui, HtmlTags.P, closure, id);
+    public static ElementRef param(this Ui ui, Action<Ui> closure, UInt128? id = default) => NestedDirective(ui, HtmlTags.Param, closure, id);
+    public static ElementRef picture(this Ui ui, Action<Ui> closure, UInt128? id = default) => NestedDirective(ui, HtmlTags.Picture, closure, id);
+    public static ElementRef pre(this Ui ui, Action<Ui> closure, UInt128? id = default) => NestedDirective(ui, HtmlTags.Pre, closure, id);
+    public static ElementRef progress(this Ui ui, Action<Ui> closure, UInt128? id = default) => NestedDirective(ui, HtmlTags.Progress, closure, id);
+    public static ElementRef q(this Ui ui, Action<Ui> closure, UInt128? id = default) => NestedDirective(ui, HtmlTags.Q, closure, id);
+    public static ElementRef rp(this Ui ui, Action<Ui> closure, UInt128? id = default) => NestedDirective(ui, HtmlTags.Rp, closure, id);
+    public static ElementRef rt(this Ui ui, Action<Ui> closure, UInt128? id = default) => NestedDirective(ui, HtmlTags.Rt, closure, id);
+    public static ElementRef ruby(this Ui ui, Action<Ui> closure, UInt128? id = default) => NestedDirective(ui, HtmlTags.Ruby, closure, id);
+    public static ElementRef s(this Ui ui, Action<Ui> closure, UInt128? id = default) => NestedDirective(ui, HtmlTags.S, closure, id);
+    public static ElementRef samp(this Ui ui, Action<Ui> closure, UInt128? id = default) => NestedDirective(ui, HtmlTags.Samp, closure, id);
+    public static ElementRef script(this Ui ui, Action<Ui> closure, UInt128? id = default) => NestedDirective(ui, HtmlTags.Script, closure, id);
+    public static ElementRef section(this Ui ui, Action<Ui> closure, UInt128? id = default) => NestedDirective(ui, HtmlTags.Section, closure, id);
+    public static ElementRef select(this Ui ui, Action<Ui> closure, UInt128? id = default) => NestedDirective(ui, HtmlTags.Select, closure, id);
+    public static ElementRef small(this Ui ui, Action<Ui> closure, UInt128? id = default) => NestedDirective(ui, HtmlTags.Small, closure, id);
+    public static ElementRef source(this Ui ui, Action<Ui> closure, UInt128? id = default) => NestedDirective(ui, HtmlTags.Source, closure, id);
+    public static ElementRef span(this Ui ui, Action<Ui> closure, UInt128? id = default) => NestedDirective(ui, HtmlTags.Span, closure, id);
+    public static ElementRef strong(this Ui ui, Action<Ui> closure, UInt128? id = default) => NestedDirective(ui, HtmlTags.Strong, closure, id);
+    public static ElementRef style(this Ui ui, Action<Ui> closure, UInt128? id = default) => NestedDirective(ui, HtmlTags.Style, closure, id);
+    public static ElementRef sub(this Ui ui, Action<Ui> closure, UInt128? id = default) => NestedDirective(ui, HtmlTags.Sub, closure, id);
+    public static ElementRef summary(this Ui ui, Action<Ui> closure, UInt128? id = default) => NestedDirective(ui, HtmlTags.Summary, closure, id);
+    public static ElementRef sup(this Ui ui, Action<Ui> closure, UInt128? id = default) => NestedDirective(ui, HtmlTags.Sup, closure, id);
+    public static ElementRef svg(this Ui ui, Action<Ui> closure, UInt128? id = default) => NestedDirective(ui, HtmlTags.Svg, closure, id);
+    public static ElementRef table(this Ui ui, Action<Ui> closure, UInt128? id = default) => NestedDirective(ui, HtmlTags.Table, closure, id);
+    public static ElementRef tbody(this Ui ui, Action<Ui> closure, UInt128? id = default) => NestedDirective(ui, HtmlTags.Tbody, closure, id);
+    public static ElementRef td(this Ui ui, Action<Ui> closure, UInt128? id = default) => NestedDirective(ui, HtmlTags.Td, closure, id);
+    public static ElementRef template(this Ui ui, Action<Ui> closure, UInt128? id = default) => NestedDirective(ui, HtmlTags.Template, closure, id);
+    public static ElementRef textarea(this Ui ui, Action<Ui> closure, UInt128? id = default) => NestedDirective(ui, HtmlTags.Textarea, closure, id);
+    public static ElementRef tfoot(this Ui ui, Action<Ui> closure, UInt128? id = default) => NestedDirective(ui, HtmlTags.Tfoot, closure, id);
+    public static ElementRef th(this Ui ui, Action<Ui> closure, UInt128? id = default) => NestedDirective(ui, HtmlTags.Th, closure, id);
+    public static ElementRef thead(this Ui ui, Action<Ui> closure, UInt128? id = default) => NestedDirective(ui, HtmlTags.Thead, closure, id);
+    public static ElementRef time(this Ui ui, Action<Ui> closure, UInt128? id = default) => NestedDirective(ui, HtmlTags.Time, closure, id);
+    public static ElementRef title(this Ui ui, Action<Ui> closure, UInt128? id = default) => NestedDirective(ui, HtmlTags.Title, closure, id);
+    public static ElementRef tr(this Ui ui, Action<Ui> closure, UInt128? id = default) => NestedDirective(ui, HtmlTags.Tr, closure, id);
+    public static ElementRef track(this Ui ui, Action<Ui> closure, UInt128? id = default) => NestedDirective(ui, HtmlTags.Track, closure, id);
+    public static ElementRef u(this Ui ui, Action<Ui> closure, UInt128? id = default) => NestedDirective(ui, HtmlTags.U, closure, id);
+    public static ElementRef ul(this Ui ui, Action<Ui> closure, UInt128? id = default) => NestedDirective(ui, HtmlTags.Ul, closure, id);
+    public static ElementRef var(this Ui ui, Action<Ui> closure, UInt128? id = default) => NestedDirective(ui, HtmlTags.Var, closure, id);
+    public static ElementRef video(this Ui ui, Action<Ui> closure, UInt128? id = default) => NestedDirective(ui, HtmlTags.Video, closure, id);
+    public static ElementRef wbr(this Ui ui, Action<Ui> closure, UInt128? id = default) => NestedDirective(ui, HtmlTags.Wbr, closure, id);
 
     #endregion
 
     #region Nested Directives w/ Attributes
 
-    public static ElementRef area(this Ui ui, Action<Ui> closure, string alt = default, string accesskey = default, string @class = default, string contenteditable = default, Value128? id = default)
+    public static ElementRef area(this Ui ui, Action<Ui> closure, string alt = default, string accesskey = default, string @class = default, string contenteditable = default, UInt128? id = default)
     {
         #region Attributes
 
@@ -146,7 +146,7 @@ public static partial class WebElements
         return NestedDirective(ui, HtmlTags.Area, closure, id);
     }
 
-    public static ElementRef form(this Ui ui, Action<Ui> closure, string action = default, string autocomplete = default, string accesskey = default, string @class = default, string contenteditable = default, Value128? id = default)
+    public static ElementRef form(this Ui ui, Action<Ui> closure, string action = default, string autocomplete = default, string accesskey = default, string @class = default, string contenteditable = default, UInt128? id = default)
     {
         #region Attributes
 
@@ -161,7 +161,7 @@ public static partial class WebElements
         return NestedDirective(ui, HtmlTags.Form, closure, id);
     }
 
-    public static ElementRef img(this Ui ui, Action<Ui> closure, string alt = default, string accesskey = default, string @class = default, string contenteditable = default, Value128? id = default)
+    public static ElementRef img(this Ui ui, Action<Ui> closure, string alt = default, string accesskey = default, string @class = default, string contenteditable = default, UInt128? id = default)
     {
         #region Attributes
 
@@ -175,7 +175,7 @@ public static partial class WebElements
         return NestedDirective(ui, HtmlTags.Img, closure, id);
     }
 
-    public static ElementRef input(this Ui ui, Action<Ui> closure, string accept = default, string alt = default, string autocomplete = default, string accesskey = default, string @class = default, string contenteditable = default, Value128? id = default)
+    public static ElementRef input(this Ui ui, Action<Ui> closure, string accept = default, string alt = default, string autocomplete = default, string accesskey = default, string @class = default, string contenteditable = default, UInt128? id = default)
     {
         #region Attributes
 
@@ -191,7 +191,7 @@ public static partial class WebElements
         return NestedDirective(ui, HtmlTags.Input, closure, id);
     }
 
-    public static ElementRef script(this Ui ui, Action<Ui> closure, string async = default, string accesskey = default, string @class = default, string contenteditable = default, Value128? id = default)
+    public static ElementRef script(this Ui ui, Action<Ui> closure, string async = default, string accesskey = default, string @class = default, string contenteditable = default, UInt128? id = default)
     {
         #region Attributes
 
