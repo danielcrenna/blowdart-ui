@@ -12,6 +12,9 @@ namespace Blowdart.UI.Blazor;
 
 public sealed partial class ImGui : ComponentBase, IDisposable
 {
+	[Inject] private IServiceProvider? ServiceProvider { get; set; }
+	[Inject] private ILogger<ImGui> Logger { get; set; } = null!;
+
 	public ImGui()
 	{
 		var target = new WebRenderTarget();
@@ -50,21 +53,11 @@ public sealed partial class ImGui : ComponentBase, IDisposable
 		Ui.Begin();
 	}
 
-	#region Service Location
-
-	// ReSharper disable once UnusedAutoPropertyAccessor.Local
-	[Inject] private IServiceProvider? ServiceProvider { get; set; }
-	[Inject] private ILogger<ImGui> Logger { get; set; } = null!;
-
-	protected override async Task OnInitializedAsync()
+    protected override async Task OnInitializedAsync()
 	{
 		Ui.UiServices = new VirtualResolver(ServiceProvider, Ui, Logger);
 		await base.OnInitializedAsync();
 	}
-
-	#endregion
-
-	#region Data Loading
 
 	protected override async Task OnAfterRenderAsync(bool firstRender)
 	{
@@ -77,11 +70,7 @@ public sealed partial class ImGui : ComponentBase, IDisposable
 		}
 	}
 
-	#endregion
-
-	#region Events
-
-	private void OnEvent(UInt128 id, string eventType, object? data)
+	private void OnEvent<TEvent>(UInt128 id, string eventType, TEvent? data)
 	{
 		var instructionCount = Ui.InstructionCount;
 
@@ -93,14 +82,8 @@ public sealed partial class ImGui : ComponentBase, IDisposable
 			Ui.Invoke(Handler);
 
 		if (Ui.InstructionCount != instructionCount)
-		{
 			Trace.TraceInformation("Pending update");
-		}
 	}
-
-	#endregion
-
-	#region Virtual Resolver
 
 	private class VirtualResolver(IServiceProvider? inner, Ui ui, ILogger logger) : IServiceProvider
 	{
@@ -113,6 +96,4 @@ public sealed partial class ImGui : ComponentBase, IDisposable
 			return service;
 		}
 	}
-
-	#endregion
 }

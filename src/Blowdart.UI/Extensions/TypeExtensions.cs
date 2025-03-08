@@ -3,7 +3,7 @@
 
 using System;
 
-namespace Blowdart.UI;
+namespace Blowdart.UI.Extensions;
 
 internal static class TypeExtensions
 {
@@ -22,6 +22,6 @@ internal static class TypeExtensions
 			return true;
 
 		var baseType = c.BaseType;
-		return baseType != null && IsAssignableFromGeneric(baseType, type);
+		return baseType != null && baseType.IsAssignableFromGeneric(type);
 	}
 }

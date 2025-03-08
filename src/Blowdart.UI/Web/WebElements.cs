@@ -19,7 +19,7 @@ public static partial class WebElements
 		return new ElementRef(ui, id);
 	}
 
-	public static ElementRef NestedDirective(Ui ui, string element, Action<Ui> closure, UInt128? id = default)
+	public static ElementRef NestedDirective(Ui ui, string element, Action<Ui>? closure, UInt128? id = default)
 	{
 		ui.BeginElement(element, id);
 		closure?.Invoke(ui);

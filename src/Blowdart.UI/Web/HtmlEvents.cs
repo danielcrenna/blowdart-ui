@@ -7,7 +7,9 @@
 ///     HTML Events
 ///     Source: https://www.w3schools.com/TAGS/ref_eventattributes.asp
 /// </summary>
+#pragma warning disable CA1050
 public static class HtmlEvents
+#pragma warning restore CA1050
 {
 	public static class Window
 	{

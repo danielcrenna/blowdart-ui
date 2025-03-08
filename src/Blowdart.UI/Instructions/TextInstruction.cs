@@ -5,7 +5,7 @@ namespace Blowdart.UI.Instructions;
 
 public sealed class TextInstruction(object text) : RenderInstruction
 {
-	public object Text { get; } = text;
+	public object? Text { get; } = text;
 
-	public override string DebuggerDisplay => Text.ToString() ?? string.Empty;
+	public override string DebuggerDisplay => Text?.ToString() ?? string.Empty;
 }

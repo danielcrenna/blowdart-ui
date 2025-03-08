@@ -23,5 +23,6 @@ public static class HtmlAttributes
     public const string Contenteditable = "contenteditable";
     public const string Id = "id";
     public const string Role = "role";
+    public const string Style = "style";
 }
 

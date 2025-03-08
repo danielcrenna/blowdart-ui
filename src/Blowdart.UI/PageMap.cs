@@ -10,14 +10,14 @@ public class PageMap
 	private readonly Dictionary<string, string> _handlers = new();
 	private readonly Dictionary<string, string> _layouts = new();
 
-	public string? GetHandler(string template)
+	public string? GetHandler(string route)
 	{
-		return _handlers.GetValueOrDefault(template);
+		return _handlers.GetValueOrDefault(route);
 	}
 
-	public string? GetLayout(string template)
+	public string? GetLayout(string route)
 	{
-		return _layouts.GetValueOrDefault(template);
+		return _layouts.GetValueOrDefault(route);
 	}
 
 	public void AddPage(string template, string handler)

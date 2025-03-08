@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Components.Rendering;
 
 namespace Blowdart.UI.Blazor.Rendering;
 
+// ReSharper disable once UnusedMember.Global
 internal sealed class AttributeRenderer : IRenderer<AttributeInstruction, RenderTreeBuilder>
 {
 	public void Render(RenderTreeBuilder b, AttributeInstruction instruction)

@@ -80,13 +80,13 @@ public sealed class ImGuiRouter : IComponent, IHandleAfterRender, IDisposable
 		_locationAbsolute = NavigationManager.Uri;
 		NavigationManager.LocationChanged += OnLocationChanged;
 
-		var path = $"/{locationPath}";
+		var route = $"/{locationPath}";
 
-		var handler = Pages.GetHandler(path);
+		var handler = Pages.GetHandler(route);
 
 		if (handler != null)
 		{
-			var layout = Pages.GetLayout(path);
+			var layout = Pages.GetLayout(route);
 			if (layout != null)
 			{
 				_renderFragment = builder =>

@@ -3,9 +3,6 @@
 
 using Microsoft.AspNetCore.Components.Rendering;
 
-namespace Blowdart.UI.Blazor
-{
-	internal sealed class WebRenderTarget : RenderTarget<RenderTreeBuilder>
-	{
-	}
-}
+namespace Blowdart.UI.Blazor;
+
+internal sealed class WebRenderTarget : RenderTarget<RenderTreeBuilder>;

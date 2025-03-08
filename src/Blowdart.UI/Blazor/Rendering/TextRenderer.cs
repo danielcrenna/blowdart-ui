@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Components.Rendering;
 
 namespace Blowdart.UI.Blazor.Rendering;
 
+// ReSharper disable once UnusedMember.Global
 internal sealed class TextRenderer : IRenderer<TextInstruction, RenderTreeBuilder>
 {
 	public void Render(RenderTreeBuilder b, TextInstruction instruction)

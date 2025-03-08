@@ -4,62 +4,87 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Collections.Immutable;
 
 namespace Blowdart.UI;
 
 public partial class Ui
 {
-	private static readonly ImmutableList<string> NoEvents = new List<string>().ToImmutableList();
+    private readonly Hashtable _eventData = new();
+    private readonly Dictionary<UInt128, HashSet<string>> _eventsHandled = new();
+    private readonly Dictionary<string, HashSet<UInt128>> _eventsRaised = new();
+    private readonly Dictionary<(UInt128 id, string eventType), Delegate> _eventPredicates = new();
 
-	private readonly Hashtable _eventData = new();
+    internal void AddEvent<TEvent>(string eventType, UInt128 id, TEvent? data)
+    {
+        if (!_eventsRaised.ContainsKey(eventType))
+            _eventsRaised[eventType] = [];
 
-	private readonly Dictionary<UInt128, HashSet<string>> _eventsHandled = new();
-	private readonly Dictionary<string, HashSet<UInt128>> _eventsRaised = new();
- 
-	public void AddEvent(string eventType, UInt128 id, object? data)
-	{
-		if (!_eventsRaised.ContainsKey(eventType))
-			_eventsRaised[eventType] = [];
+        _eventsRaised[eventType].Add(id);
 
-		_eventsRaised[eventType].Add(id);
+        if (data != null)
+            _eventData[id] = data;
+    }
 
-		if (data != null)
-			_eventData[id] = data;
-	}
+    internal Func<TEvent, bool>? GetEventPredicate<TEvent>(UInt128 id, string eventType)
+    {
+	    if (!_eventPredicates.TryGetValue((id, eventType), out var predicate)) 
+		    return default;
 
-	internal bool OnEvent(string eventType, UInt128 id, out object? data)
-	{
-		if (_eventsRaised.ContainsKey(eventType) && _eventsRaised[eventType].Contains(id))
-		{
-			_eventsRaised[eventType].Remove(id);
-			if (_eventsRaised[eventType].Count == 0)
-				_eventsRaised.Remove(eventType);
+	    try
+	    {
+		    return predicate as Func<TEvent, bool>;
+	    }
+	    finally
+	    {
+		    _eventPredicates.Remove((id, eventType));
+	    }
+    }
 
-			if (_eventsHandled.ContainsKey(id))
-			{
-				_eventsHandled[id].Remove(eventType);
-				if (_eventsHandled[id].Count == 0)
-					_eventsHandled.Remove(id);
-			}
+    internal bool OnEvent<TEvent>(string eventType, UInt128 id, out TEvent? data, Func<TEvent, bool>? predicate)
+    {
+	    if (_eventsRaised.TryGetValue(eventType, out var ids) && ids.Contains(id))
+        {
+	        data = (TEvent?) _eventData[id];
 
-			data = _eventData[id];
+			if (data != null && predicate != null && !predicate(data))
+				return false;
+
 			if (data != null)
-				_eventData.Remove(id);
-			return true;
-		}
+		        _eventData.Remove(id);
 
-		if (!_eventsHandled.ContainsKey(id))
-			_eventsHandled[id] = [];
+            ids.Remove(id);
 
-		_eventsHandled[id].Add(eventType);
+            if (_eventsRaised[eventType].Count == 0)
+                _eventsRaised.Remove(eventType);
 
-		data = default;
-		return false;
-	}
+            if (!_eventsHandled.TryGetValue(id, out var handled))
+	            return true;
 
-	public IEnumerable<string> GetEventsFor(UInt128 id)
-	{
-		return _eventsHandled.TryGetValue(id, out var events) ? events : NoEvents;
-	}
+            handled.Remove(eventType);
+            if (_eventsHandled[id].Count == 0)
+	            _eventsHandled.Remove(id);
+
+            return true;
+        }
+	   
+	    if (!_eventsHandled.ContainsKey(id))
+            _eventsHandled[id] = [];
+
+        _eventsHandled[id].Add(eventType);
+
+        if(predicate != null)
+	        _eventPredicates[(id, eventType)] = predicate;
+
+        data = default;
+        return false;
+    }
+
+    public IEnumerable<(string eventType, object? eventData)> GetEventsFor(UInt128 id)
+    {
+	    if (!_eventsHandled.TryGetValue(id, out var events))
+		    yield break;
+
+	    foreach (var evt in events)
+		    yield return (evt,  _eventData.ContainsKey(id) ? _eventData[id] : null);
+    }
 }

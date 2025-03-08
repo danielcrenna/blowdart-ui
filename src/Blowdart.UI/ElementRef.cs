@@ -3,16 +3,15 @@
 
 using System;
 
-namespace Blowdart.UI
+namespace Blowdart.UI;
+
+public readonly struct ElementRef(Ui ui, UInt128? id = default)
 {
-	public readonly struct ElementRef(Ui ui, UInt128? id = default)
+	public bool OnEvent<TEvent>(string eventType, out TEvent? data, Func<TEvent, bool>? predicate)
 	{
-		public bool OnEvent(string eventType, out object? data)
-		{
-			if (id.HasValue)
-				return ui.OnEvent(eventType, id.Value, out data);
-			data = default;
-			return false;
-		}
+		if (id.HasValue)
+			return ui.OnEvent(eventType, id.Value, out data, predicate);
+		data = default;
+		return false;
 	}
 }

@@ -4,9 +4,9 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Blowdart.UI;
+namespace Blowdart.UI.Extensions;
 
-public static class EnumerableExtensions
+internal static class EnumerableExtensions
 {
 	public static List<T>? AsList<T>(this IEnumerable<T>? source) =>
 		source is null or List<T> ? (List<T>?) source : source.ToList();

@@ -5,8 +5,7 @@ namespace Blowdart.UI.Instructions;
 
 public sealed class AttributeInstruction(object key, object value) : RenderInstruction
 {
-	public object Key { get; } = key;
-	public object Value { get; } = value;
-
+	public object? Key { get; } = key;
+	public object? Value { get; } = value;
 	public string KeyString => Key is string key ? key : Key?.ToString() ?? string.Empty;
 }

@@ -49,7 +49,7 @@ public sealed class ReflectionTypeResolver : ITypeResolver
 			yield return method;
 	}
 
-	private IEnumerable<Type> LoadTypes(IEnumerable<Assembly> assemblies, ILogger logger,
+	private HashSet<Type> LoadTypes(IEnumerable<Assembly> assemblies, ILogger logger,
 		params Assembly[] skipAssemblies)
 	{
 		var types = new HashSet<Type>();
